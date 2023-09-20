@@ -10,10 +10,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @EnableCartoesFeignClient
 @EnableBffCartoesWebHandler
 @SpringBootApplication
-public class BffContaDigitalTimelineApplication {
+public class BffContaDigitalGerenciarApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BffContaDigitalTimelineApplication.class, args);
+		SpringApplication.run(BffContaDigitalGerenciarApplication.class, args);
 	}
 
 }
