@@ -80,6 +80,7 @@ public interface GerenciamentoContasControllerOperations {
     @PatchMapping("/conta/{contaId}")
     ResponseEntity<ContaEditadaResponseDto> ediatarStatusConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
                                                                @RequestHeader("x-accountProvider") String xAccountProvider,
+                                                               @RequestHeader("x-itau-auth") String xItauAuth,
                                                                @RequestHeader("x-account-id") String xAccountId,
                                                                @PathVariable("accountId") String contaId,
                                                                @RequestBody ContaRequestDto requestDto);
@@ -107,6 +108,7 @@ public interface GerenciamentoContasControllerOperations {
     ResponseEntity<Void> apagarConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
                                                         @RequestHeader("x-accountProvider") String xAccountProvider,
                                                         @RequestHeader("x-account-id") String xAccountId,
+                                                        @RequestHeader("x-itau-auth") String xItauAuth,
                                                         @RequestHeader("x-external-id") String xExternalId,
                                                         @PathVariable("accountId") String contaId);
 
@@ -132,6 +134,7 @@ public interface GerenciamentoContasControllerOperations {
     @GetMapping("/conta/{accountId}/saldo")
     ResponseEntity<ContaEditadaResponseDto> consultarSaldoConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
                                                                 @RequestHeader("x-accountProvider") String xAccountProvider,
+                                                                @RequestHeader("x-itau-auth") String xItauAuth,
                                                                 @RequestHeader("x-account-id") String xAccountId,
                                                                 @PathVariable("accountId") String contaId);
 }

@@ -41,7 +41,7 @@ public class GerenciamentoContasController implements GerenciamentoContasControl
     }
 
     @Override
-    public ResponseEntity<ContaEditadaResponseDto> ediatarStatusConta(String tokenCognito, String xAccountProvider, String xAccountId, String contaId, ContaRequestDto requestDto) {
+    public ResponseEntity<ContaEditadaResponseDto> ediatarStatusConta(String tokenCognito, String xAccountProvider, String xItauAuth, String xAccountId, String contaId, ContaRequestDto requestDto) {
         return null;
     }
 
@@ -50,15 +50,16 @@ public class GerenciamentoContasController implements GerenciamentoContasControl
             String tokenCognito,
             String xAccountProvider,
             String xAccountId,
+            String xItauAuth,
             String xExternalId,
             String contaId) {
         return null;
     }
 
-
-
     @Override
-    public ResponseEntity<ContaEditadaResponseDto> consultarSaldoConta(String tokenCognito, String xAccountProvider, String xAccountId, String contaId) {
+    public ResponseEntity<ContaEditadaResponseDto> consultarSaldoConta(String tokenCognito, String xAccountProvider, String xItauAuth, String xAccountId, String contaId) {
         return null;
     }
+
+
 }
