@@ -1,0 +1,92 @@
+# kubetpl:syntax:$
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bff-conta-digital-timeline
+  labels:
+    app: bff-conta-digital-timeline
+  namespace: ns-conta-digital-timeline
+spec:
+  selector:
+    matchLabels:
+      app: bff-conta-digital-timeline
+  template:
+    metadata:
+      labels:
+        app: bff-conta-digital-timeline
+    spec:
+      securityContext:
+        runAsUser: 1000
+      nodeSelector:
+        eks.amazonaws.com/nodegroup: $NODE_GROUP
+      containers:
+      - image: $CONTAINER_REGISTRY
+        imagePullPolicy: Always
+        name: bff-conta-digital-timeline
+        securityContext:
+          allowPrivilegeEscalation: false
+        env:
+          - name: JAVA_OPTIONS
+            value: >-
+              -Duser.timezone=GMT-3 $HEAP_CONFIG
+              -javaagent:/opt/appdynamics/javaagent.jar
+              -Dappdynamics.controller.hostName=$APPDYNAMICS_CONTROLLER_HOSTNAME
+              -Dappdynamics.controller.port=$APPDYNAMICS_CONTROLLER_PORT
+              -Dappdynamics.agent.accountName=$APPDYNAMICS_AGENT_ACCOUNTNAME
+              -Dappdynamics.agent.accountAccessKey=$APPDYNAMICS_AGENT_ACCOUNTACCESSKEY
+              -Dappdynamics.controller.ssl.enabled=$APPDYNAMICS_CONTROLLER_SSL_ENABLED
+              -Dappdynamics.agent.applicationName=$APPDYNAMICS_AGENT_APPLICATIONNAME
+              -Dappdynamics.agent.tierName=$APPDYNAMICS_AGENT_TIERNAME
+              -Dappdynamics.agent.reuse.nodeName=$APPDYNAMICS_AGENT_REUSE_NODENAME
+              -Dappdynamics.agent.reuse.nodeName.prefix=$APPDYNAMICS_AGENT_REUSE_NODENAME_PREFIX
+          - name: HTTP_PROXY
+            value: ""
+          - name: HTTPS_PROXY
+            value: ""
+          - name: http_proxy
+            value: ""  
+          - name: https_proxy
+            value: ""   
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: bff-conta-digital-timeline-configmap
+        - secretRef:
+            name: bff-conta-digital-timeline-secret
+        volumeMounts:
+          - mountPath: /deployments/certificados/keystore
+            name: superapp-keystore
+          - mountPath: /deployments/certificados/truststore
+            name: superapp-truststore
+        resources:
+          requests:
+            cpu: $DEPLOY_REQ_CPU
+            memory: $DEPLOY_REQ_MEM
+          limits:
+            cpu: $DEPLOY_LIM_CPU
+            memory: $DEPLOY_LIM_MEM
+        readinessProbe:
+          httpGet:
+            path: /cliente/v3/conta-digital/timeline/services/health/readiness
+            port: 8080
+          initialDelaySeconds: $DEPLOY_READINESS_PROBE_DELAY
+          periodSeconds: 20
+          timeoutSeconds: $DEPLOY_READINESS_PROBE_TIMEOUT
+        livenessProbe:
+          httpGet:
+            path: /cliente/v3/conta-digital/timeline/services/health/liveness
+            port: 8080
+          initialDelaySeconds: $DEPLOY_LIVENESS_PROBE_DELAY
+          periodSeconds: 20
+          timeoutSeconds: $DEPLOY_LIVENESS_PROBE_TIMEOUT
+      volumes:
+        - name: superapp-keystore
+          secret:
+            secretName: superapp-keystore
+        - name: superapp-truststore
+          secret:
+            secretName: superapp-truststore

@@ -1,0 +1,66 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "method": "GET",
+        "urlPattern": "/porto-backend/v1/elegivel"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json",
+          "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+        },
+        "jsonBody": {
+          "elegivel": 0,
+          "naturalPersonAccounts": {
+            "correlationId": 6089298216484864,
+            "provider": "account-pf",
+            "customer": {
+              "documentNumber": "47558714842",
+              "nickname": null,
+              "name": "MIGUEL WYCHOVANIEC",
+              "socialName": null,
+              "motherName": "ERIKA MARIA WYCHOVANIEC",
+              "incomeInvoicing": 9000,
+              "dateOfBirth": "1999-03-31",
+              "birthCity": null,
+              "birthState": null,
+              "birthCountry": null,
+              "gender": "M",
+              "occupationId": "212405",
+              "addresses": [
+                {
+                  "purpose": "HOME",
+                  "streetAddress": "MARTINHO DA SILVA",
+                  "number": "45",
+                  "complementaryAddress": "11",
+                  "neighborhood": "VILA FIRMIANO PINTO",
+                  "city": "SAO PAULO",
+                  "state": "SP",
+                  "country": "BRA",
+                  "zipCode": "04124080"
+                }]
+            ,
+              "phones": [
+                {
+                  "type": "MOBILE",
+                  "purpose": "PERSONAL",
+                  "ddi": "55",
+                  "ddd": "11",
+                  "number": "996993103"
+                }
+              ],
+              "emails": [
+                {
+                  "email": "MIGUELWYCHOI@GMAIL.COM",
+                  "purpose": "PERSONAL"
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  ]
+}

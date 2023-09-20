@@ -1,0 +1,34 @@
+version: "3.1"
+services:
+  wiremock:
+    image: rodolpheche/wiremock
+    volumes:
+      - ./wiremock/__files:/home/wiremock/__files
+      - ./wiremock/mappings:/home/wiremock/mappings
+    ports:
+      - 9999:8080
+    command: --verbose --disable-banner --local-response-templating
+#  zookeeper:
+#    image: wurstmeister/zookeeper
+#  kafka:
+#    image: wurstmeister/kafka:2.12-2.4.1
+#    hostname: kafka
+#    environment:
+#      KAFKA_ADVERTISED_HOST_NAME: localhost
+#      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+#      KAFKA_CREATE_TOPICS: "ACCOUNT_EVENT:4:1,ACCOUNT_SERVICE_EVENT:4:1"
+#    ports:
+#      - 9092:9092
+#  mongo:
+#    image: mongo:4.4.18
+#    environment:
+#      MONGO_INITDB_DATABASE: account-service
+#    volumes:
+#      - ./mongodb:/docker-entrypoint-initdb.d
+#    ports:
+#      - 27017:27017
+#  smtp:
+#    image: kurzdigital/fake-smtp
+#    ports:
+#      - 5025:5025
+#      - 5080:5080
