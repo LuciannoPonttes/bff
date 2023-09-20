@@ -3,8 +3,8 @@
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: bff-conta-digital-timeline-configmap
-  namespace: ns-conta-digital-timeline
+  name: bff-conta-digital-gerenciar-configmap
+  namespace: ns-conta-digital-gerenciar
 data:
   KUB_NAMESPACE_NAME: '$KUB_NAMESPACE_NAME'
   APPDYNAMICS_AGENT_APPLICATIONNAME: '$APPDYNAMICS_AGENT_APPLICATIONNAME'

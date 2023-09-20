@@ -1,25 +1,25 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: bff-conta-digital-timeline-ingress
-  namespace: ns-conta-digital-timeline
+  name: bff-conta-digital-gerenciar-ingress
+  namespace: ns-conta-digital-gerenciar
 spec:
   rules:
     - http:
         paths:
-          - path: /cliente/v3/conta-digital/timeline/contas/{accountId}
+          - path: /cliente/v3/conta-digital/gerenciar/contas/{accountId}
             pathType: ImplementationSpecific
             backend:
               service:
-                name: bff-conta-digital-timeline
+                name: bff-conta-digital-gerenciar
                 port:
                   number: 8080
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: bff-conta-digital-timeline-ingress-swagger
-  namespace: ns-conta-digital-timeline
+  name: bff-conta-digital-gerenciar-ingress-swagger
+  namespace: ns-conta-digital-gerenciar
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /cliente/v3/api-docs
 spec:
@@ -30,6 +30,7 @@ spec:
             pathType: ImplementationSpecific
             backend:
               service:
-                name: bff-conta-digital-timeline #.ns-config.svc.cluster.local
+                name: bff-conta-digital-gerenciar #.ns-config.svc.cluster.local
                 port:
                   number: 8080
+
