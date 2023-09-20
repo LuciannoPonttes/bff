@@ -2,7 +2,7 @@ package com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.cont
 
 import java.time.LocalDateTime;
 
-public record ContasIdRespostaDto(
+public record ContaResponseDto(
         String id,
         ContaBancariaDto contaBancaria,
         String status,
