@@ -9,8 +9,13 @@ public interface GerenciarContaIaasService {
     DadosResponseDto<ContaResponseDto> getConta(
             String tokenCognito,
             String xAccountProvider,
+            String xItauAuth,
             String xAccountId,
             String contaId,
             String campos
     );
+    void apagarConta(String tokenCognito,
+                     String xAccountProvider,
+                     String xAccountId,
+                     String contaId);
 }

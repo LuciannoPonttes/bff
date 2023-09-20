@@ -5,7 +5,7 @@ import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.conta
 
 public interface ContaFindByIdIassPortoAdapter {
 
-    DadosResponseDto<ContaResponseDto> getConta(String tokenCognito,
+    DadosResponseDto<ContaResponseDto> getConta(String xItauAuth,
                                                 String xAccountProvider,
                                                 String xAccountId,
                                                 String contaId,

@@ -12,22 +12,32 @@ import org.springframework.stereotype.Service;
 public class GerenciarContaIaasServiceImpl implements GerenciarContaIaasService{
 
     private final ContaFindByIdIassPortoAdapter adapter;
+
+
     @Override
     public DadosResponseDto<ContaResponseDto> getConta(
             String tokenCognito,
             String xAccountProvider,
+            String xItauAuth,
             String xAccountId,
             String contaId,
-            String campos) {
+            String campos
+    ) {
         var respostaAdapter = adapter.getConta(
-                tokenCognito,
+                xItauAuth,
                 xAccountProvider,
                 xAccountId,
                 contaId,
                 campos
         );
-
-
         return respostaAdapter;
     }
+
+    @Override
+    public void apagarConta(String tokenCognito, String xAccountProvider, String xAccountId, String contaId) {
+
+    }
 }
+
+// A gente vai receber o  Authorization da porto via front, ou temos que chamar o bff-sdk /token
+

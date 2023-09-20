@@ -53,6 +53,7 @@ public interface GerenciamentoContasControllerOperations {
     @GetMapping("/conta/{contaId}")
     ResponseEntity<DadosResponseDto<ContaResponseDto>> buscarConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
                                                                    @RequestHeader("x-accountProvider") String xAccountProvider,
+                                                                   @RequestHeader("x-itau-auth") String xItauAuth,
                                                                    @RequestHeader("x-account-id") String xAccountId,
                                                                    @PathVariable("accountId") String contaId,
                                                                    @RequestParam(required = false) String campos);
@@ -103,9 +104,10 @@ public interface GerenciamentoContasControllerOperations {
                     })
     })
     @DeleteMapping("/conta/{contaId}")
-    ResponseEntity<ContaEditadaResponseDto> apagarConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
+    ResponseEntity<Void> apagarConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
                                                         @RequestHeader("x-accountProvider") String xAccountProvider,
                                                         @RequestHeader("x-account-id") String xAccountId,
+                                                        @RequestHeader("x-external-id") String xExternalId,
                                                         @PathVariable("accountId") String contaId);
 
 

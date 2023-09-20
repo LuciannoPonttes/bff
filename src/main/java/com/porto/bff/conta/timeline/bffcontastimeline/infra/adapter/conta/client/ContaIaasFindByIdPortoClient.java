@@ -21,7 +21,7 @@ public interface ContaIaasFindByIdPortoClient {
 
 
     @GetMapping("${feign.client.config.porto.gerenciar.id.endpoint}")
-    DataResponseIassPorto<AccountResponseIaasPorto> getTimelineIaas(@RequestHeader(AUTHORIZATION) String tokenCognito,
+    DataResponseIassPorto<AccountResponseIaasPorto> findByIdContaIaas(@RequestHeader(AUTHORIZATION) String xItauAuth,
                                                                     @RequestHeader("x-accountProvider") String xAccountProvider,
                                                                     @RequestHeader("x-account-id") String xAccountId,
                                                                     @PathVariable("accountId") String contaId,

@@ -24,6 +24,7 @@ public class GerenciamentoContasController implements GerenciamentoContasControl
     public ResponseEntity<DadosResponseDto<ContaResponseDto>> buscarConta(
             String tokenCognito,
             String xAccountProvider,
+            String xItauAuth,
             String xAccountId,
             String contaId,
             String campos) {
@@ -31,6 +32,7 @@ public class GerenciamentoContasController implements GerenciamentoContasControl
         var respostaService = gerenciarContaIaasService.getConta(
                  tokenCognito,
                  xAccountProvider,
+                 xItauAuth,
                  xAccountId,
                  contaId,
                  campos
@@ -44,9 +46,16 @@ public class GerenciamentoContasController implements GerenciamentoContasControl
     }
 
     @Override
-    public ResponseEntity<ContaEditadaResponseDto> apagarConta(String tokenCognito, String xAccountProvider, String xAccountId, String contaId) {
+    public ResponseEntity<Void> apagarConta(
+            String tokenCognito,
+            String xAccountProvider,
+            String xAccountId,
+            String xExternalId,
+            String contaId) {
         return null;
     }
+
+
 
     @Override
     public ResponseEntity<ContaEditadaResponseDto> consultarSaldoConta(String tokenCognito, String xAccountProvider, String xAccountId, String contaId) {

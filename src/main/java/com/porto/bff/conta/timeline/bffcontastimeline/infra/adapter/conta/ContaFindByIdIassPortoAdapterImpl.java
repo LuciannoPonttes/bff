@@ -22,15 +22,15 @@ public class ContaFindByIdIassPortoAdapterImpl implements ContaFindByIdIassPorto
 
     @Override
     public DadosResponseDto<ContaResponseDto> getConta(
-            String tokenCognito,
+            String xItauAuth,
             String xAccountProvider,
             String xAccountId,
             String contaId,
             String campos) {
 
         try {
-            var responseIaas = client.getTimelineIaas(
-                    tokenCognito,
+            var responseIaas = client.findByIdContaIaas(
+                    xItauAuth,
                     xAccountProvider,
                     xAccountId,
                     contaId,
