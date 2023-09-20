@@ -48,13 +48,15 @@ public class GerenciamentoContasController implements GerenciamentoContasControl
     @Override
     public ResponseEntity<Void> apagarConta(
             String tokenCognito,
-            String xAccountProvider,
             String xAccountId,
             String xItauAuth,
             String xExternalId,
-            String contaId) {
-        return null;
+            String contaId
+    ) {
+        gerenciarContaIaasService.apagarConta(tokenCognito, xAccountId, xItauAuth, xExternalId, contaId);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
+
 
     @Override
     public ResponseEntity<ContaEditadaResponseDto> consultarSaldoConta(String tokenCognito, String xAccountProvider, String xItauAuth, String xAccountId, String contaId) {

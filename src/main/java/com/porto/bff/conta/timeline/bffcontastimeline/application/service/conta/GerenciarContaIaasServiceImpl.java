@@ -34,7 +34,13 @@ public class GerenciarContaIaasServiceImpl implements GerenciarContaIaasService{
     }
 
     @Override
-    public void apagarConta(String tokenCognito, String xAccountProvider, String xAccountId, String contaId) {
+    public void apagarConta(String tokenCognito,
+                            String xAccountId,
+                            String xItauAuth,
+                            String xExternalId,
+                            String contaId) {
+
+        adapter.apagarConta(xAccountId, xItauAuth, xExternalId, contaId);
 
     }
 }

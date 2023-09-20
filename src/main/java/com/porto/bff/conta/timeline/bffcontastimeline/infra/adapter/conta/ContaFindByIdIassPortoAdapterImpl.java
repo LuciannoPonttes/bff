@@ -48,6 +48,28 @@ public class ContaFindByIdIassPortoAdapterImpl implements ContaFindByIdIassPorto
         }
     }
 
+    @Override
+    public void apagarConta(String xAccountId,
+                            String xItauAuth,
+                            String xExternalId,
+                            String contaId) {
+        try {
+          client.deleteByIdContaIaas(
+                    xItauAuth,
+                    xAccountId,
+                    xExternalId,
+                    contaId
+            );
+        } catch (Exception e) {
+            throw new TimelineIaasPortoException("Problema gerando no gerenciamento da consulta da Porto",
+                    "407",
+                    Collections.singletonList(TimelineIaasPortoException.TimelineIaasPortoErroItem.builder()
+                            .field("accessToken")
+                            .message("Falha ao gerar accessToken")
+                            .build()));
+        }
+    }
+
     private DadosResponseDto<ContaResponseDto> converteRespostaIaas(DataResponseIassPorto<AccountResponseIaasPorto> porto) {
         var contaBancariaDto = new ContaBancariaDto(
                 porto.data().bankAccount().bank(),

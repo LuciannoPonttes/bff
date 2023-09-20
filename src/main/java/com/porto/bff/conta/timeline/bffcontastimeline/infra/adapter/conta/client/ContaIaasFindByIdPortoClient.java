@@ -20,10 +20,17 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 public interface ContaIaasFindByIdPortoClient {
 
 
-    @GetMapping("${feign.client.config.porto.gerenciar.id.endpoint}")
+    @GetMapping("${feign.client.config.porto.gerenciar.contas.endpoint}")
     DataResponseIassPorto<AccountResponseIaasPorto> findByIdContaIaas(@RequestHeader(AUTHORIZATION) String xItauAuth,
                                                                     @RequestHeader("x-accountProvider") String xAccountProvider,
                                                                     @RequestHeader("x-account-id") String xAccountId,
                                                                     @PathVariable("accountId") String contaId,
                                                                     @RequestParam(required = false) String campos);
+
+
+    @GetMapping("${feign.client.config.porto.gerenciar.contas.endpoint}")
+    DataResponseIassPorto<AccountResponseIaasPorto> deleteByIdContaIaas(@RequestHeader("x-account-id") String xAccountId,
+                                                                        @RequestHeader("x-itau-auth") String xItauAuth,
+                                                                        @RequestHeader("x-external-id") String xExternalId,
+                                                                        @PathVariable("accountId") String contaId);
 }

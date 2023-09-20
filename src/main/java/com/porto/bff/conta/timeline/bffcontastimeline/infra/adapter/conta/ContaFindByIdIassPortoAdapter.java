@@ -10,4 +10,9 @@ public interface ContaFindByIdIassPortoAdapter {
                                                 String xAccountId,
                                                 String contaId,
                                                 String campos);
+
+    void apagarConta(String xAccountId,
+                     String xItauAuth,
+                     String xExternalId,
+                     String contaId);
 }

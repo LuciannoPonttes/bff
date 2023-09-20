@@ -15,7 +15,8 @@ public interface GerenciarContaIaasService {
             String campos
     );
     void apagarConta(String tokenCognito,
-                     String xAccountProvider,
                      String xAccountId,
+                     String xItauAuth,
+                     String xExternalId,
                      String contaId);
 }

@@ -106,7 +106,6 @@ public interface GerenciamentoContasControllerOperations {
     })
     @DeleteMapping("/conta/{contaId}")
     ResponseEntity<Void> apagarConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
-                                                        @RequestHeader("x-accountProvider") String xAccountProvider,
                                                         @RequestHeader("x-account-id") String xAccountId,
                                                         @RequestHeader("x-itau-auth") String xItauAuth,
                                                         @RequestHeader("x-external-id") String xExternalId,
