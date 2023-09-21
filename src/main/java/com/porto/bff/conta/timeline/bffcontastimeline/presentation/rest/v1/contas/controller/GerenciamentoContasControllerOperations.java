@@ -50,7 +50,7 @@ public interface GerenciamentoContasControllerOperations {
     ResponseEntity<DadosResponseDto<ContaResponseDto>> buscarConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
                                                                    @RequestHeader("x-itau-auth") String xItauAuth,
                                                                    @RequestHeader("x-account-id") String xAccountId,
-                                                                   @PathVariable("accountId") String contaId,
+                                                                   @PathVariable("contaId") String contaId,
                                                                    @RequestParam(required = false) String campos);
 
     @Operation(
@@ -71,11 +71,11 @@ public interface GerenciamentoContasControllerOperations {
                             @Schema(implementation = ResponseErrorApi.class))
                     })
     })
-    @GetMapping("/conta/{accountId}/saldo")
+    @GetMapping("/conta/{contaId}/saldo")
     ResponseEntity<DadosResponseDto<ContaSaldoResponseDto>> consultarSaldoConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
                                                                                 @RequestHeader("x-itau-auth") String xItauAuth,
                                                                                 @RequestHeader("x-account-id") String xAccountId,
-                                                                                @PathVariable("accountId") String contaId);
+                                                                                @PathVariable("contaId") String contaId);
 
 
     @Operation(
@@ -100,7 +100,7 @@ public interface GerenciamentoContasControllerOperations {
     ResponseEntity<ContaEditadaResponseDto> ediatarStatusConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
                                                                @RequestHeader("x-itau-auth") String xItauAuth,
                                                                @RequestHeader("x-account-id") String xAccountId,
-                                                               @PathVariable("accountId") String contaId,
+                                                               @PathVariable("contaId") String contaId,
                                                                @RequestBody ContaRequestDto requestDto);
 
 
@@ -133,5 +133,5 @@ public interface GerenciamentoContasControllerOperations {
                                      @RequestHeader("x-itau-auth") String xItauAuth,
                                      @RequestHeader("x-account-id") String xAccountId,
                                      @RequestHeader("x-external-id") String xExternalId,
-                                     @PathVariable("accountId") String contaId);
+                                     @PathVariable("contaId") String contaId);
 }
