@@ -20,26 +20,18 @@ public class GerenciamentoContasController implements GerenciamentoContasControl
     @Override
     public ResponseEntity<DadosResponseDto<ContaResponseDto>> buscarConta(
             String tokenCognito,
-            String xAccountProvider,
             String xItauAuth,
             String xAccountId,
             String contaId,
             String campos) {
 
         var respostaService = gerenciarContaIaasService.getConta(
-                 tokenCognito,
-                 xAccountProvider,
                  xItauAuth,
                  xAccountId,
                  contaId,
                  campos
         );
         return ResponseEntity.status(HttpStatus.OK).body(respostaService);
-    }
-
-    @Override
-    public ResponseEntity<ContaEditadaResponseDto> ediatarStatusConta(String tokenCognito, String xAccountProvider, String xItauAuth, String xAccountId, String contaId, ContaRequestDto requestDto) {
-        return null;
     }
 
     @Override
@@ -50,26 +42,35 @@ public class GerenciamentoContasController implements GerenciamentoContasControl
             String xExternalId,
             String contaId
     ) {
-        gerenciarContaIaasService.apagarConta(tokenCognito, xAccountId, xItauAuth, xExternalId, contaId);
+        gerenciarContaIaasService.apagarConta(
+                 xItauAuth,
+                 xAccountId,
+                 xExternalId,
+                 contaId);
+
+
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
     @Override
     public ResponseEntity<DadosResponseDto<ContaSaldoResponseDto>> consultarSaldoConta(
             String tokenCognito,
-            String xAccountProvider,
             String xItauAuth,
             String xAccountId,
             String contaId) {
+
         var respostaService = gerenciarContaIaasService
                 .getContaSaldo(
-                        tokenCognito,
-                        xAccountProvider,
-                        xItauAuth,
-                        xAccountId,
-                        contaId
+                         xItauAuth,
+                         xAccountId,
+                         contaId
                 );
         return ResponseEntity.status(HttpStatus.OK).body(respostaService);
+    }
+
+    @Override
+    public ResponseEntity<ContaEditadaResponseDto> ediatarStatusConta(String tokenCognito, String xItauAuth, String xAccountId, String contaId, ContaRequestDto requestDto) {
+        return null;
     }
 
 

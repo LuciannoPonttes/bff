@@ -7,7 +7,6 @@ import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.conta
 public interface ContaIassPortoAdapter {
 
     DadosResponseDto<ContaResponseDto> getConta(String xItauAuth,
-                                                String xAccountProvider,
                                                 String xAccountId,
                                                 String contaId,
                                                 String campos);
@@ -18,7 +17,7 @@ public interface ContaIassPortoAdapter {
                      String contaId);
 
 
-    DadosResponseDto<ContaSaldoResponseDto> getContaSaldo(String xAccountProvider,
+    DadosResponseDto<ContaSaldoResponseDto> getContaSaldo(
                                                          String xItauAuth,
                                                          String xAccountId,
                                                          String contaId);

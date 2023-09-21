@@ -26,7 +26,6 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
     @Override
     public DadosResponseDto<ContaResponseDto> getConta(
             String xItauAuth,
-            String xAccountProvider,
             String xAccountId,
             String contaId,
             String campos) {
@@ -34,7 +33,7 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
         try {
             var responseIaas = client.findByIdContaIaas(
                     xItauAuth,
-                    xAccountProvider,
+                    "IAAS",
                     xAccountId,
                     contaId,
                     campos
@@ -59,6 +58,7 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
         try {
           client.deleteByIdContaIaas(
                     xItauAuth,
+                  "IAAS",
                     xAccountId,
                     xExternalId,
                     contaId
@@ -75,7 +75,6 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
 
     @Override
     public DadosResponseDto<ContaSaldoResponseDto> getContaSaldo(
-            String xAccountProvider,
             String xItauAuth,
             String xAccountId,
             String contaId) {
@@ -84,7 +83,7 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
         try {
             var responseIaas = client.findBySaldoContaIaas(
                     xItauAuth,
-                    xAccountProvider,
+                    "IAAS",
                     xAccountId,
                     contaId
             );

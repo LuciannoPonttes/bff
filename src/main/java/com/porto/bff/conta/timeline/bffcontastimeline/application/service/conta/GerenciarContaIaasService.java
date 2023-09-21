@@ -10,24 +10,21 @@ public interface GerenciarContaIaasService {
 
 
     DadosResponseDto<ContaResponseDto> getConta(
-            String tokenCognito,
-            String xAccountProvider,
             String xItauAuth,
             String xAccountId,
             String contaId,
             String campos
     );
-    void apagarConta(String tokenCognito,
-                     String xAccountId,
-                     String xItauAuth,
-                     String xExternalId,
-                     String contaId);
+
 
     DadosResponseDto<ContaSaldoResponseDto> getContaSaldo(
-            String tokenCognito,
-            String xAccountProvider,
             String xItauAuth,
             String xAccountId,
             String contaId
     );
+
+    void apagarConta(String xItauAuth,
+                     String xAccountId,
+                     String xExternalId,
+                     String contaId);
 }

@@ -2,7 +2,6 @@ package com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.cont
 
 import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.*;
 import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.exception.ResponseErrorApi;
-import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.timeline.dto.TimelineIaasResponseDto;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.info.Info;
@@ -49,11 +48,34 @@ public interface GerenciamentoContasControllerOperations {
     })
     @GetMapping("/conta/{contaId}")
     ResponseEntity<DadosResponseDto<ContaResponseDto>> buscarConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
-                                                                   @RequestHeader("x-accountProvider") String xAccountProvider,
                                                                    @RequestHeader("x-itau-auth") String xItauAuth,
                                                                    @RequestHeader("x-account-id") String xAccountId,
                                                                    @PathVariable("accountId") String contaId,
                                                                    @RequestParam(required = false) String campos);
+
+    @Operation(
+            summary = "Consulta de saldo",
+            description = "para acessar tem que ter o escopo tipo iaas-accounts.read",
+            tags = { "Gerenciar" }
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Sucesso"),
+            @ApiResponse(responseCode = "400", description = "Parâmetros obrigatórios não enviados", content =
+                    {
+                            @Content(mediaType = "application/json", schema =
+                            @Schema(implementation = ResponseErrorApi.class))
+                    }),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor", content =
+                    {
+                            @Content(mediaType = "application/json", schema =
+                            @Schema(implementation = ResponseErrorApi.class))
+                    })
+    })
+    @GetMapping("/conta/{accountId}/saldo")
+    ResponseEntity<DadosResponseDto<ContaSaldoResponseDto>> consultarSaldoConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
+                                                                                @RequestHeader("x-itau-auth") String xItauAuth,
+                                                                                @RequestHeader("x-account-id") String xAccountId,
+                                                                                @PathVariable("accountId") String contaId);
 
 
     @Operation(
@@ -76,11 +98,16 @@ public interface GerenciamentoContasControllerOperations {
     })
     @PatchMapping("/conta/{contaId}")
     ResponseEntity<ContaEditadaResponseDto> ediatarStatusConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
-                                                               @RequestHeader("x-accountProvider") String xAccountProvider,
                                                                @RequestHeader("x-itau-auth") String xItauAuth,
                                                                @RequestHeader("x-account-id") String xAccountId,
                                                                @PathVariable("accountId") String contaId,
                                                                @RequestBody ContaRequestDto requestDto);
+
+
+
+
+
+
 
 
     @Operation(
@@ -103,34 +130,8 @@ public interface GerenciamentoContasControllerOperations {
     })
     @DeleteMapping("/conta/{contaId}")
     ResponseEntity<Void> apagarConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
-                                                        @RequestHeader("x-account-id") String xAccountId,
-                                                        @RequestHeader("x-itau-auth") String xItauAuth,
-                                                        @RequestHeader("x-external-id") String xExternalId,
-                                                        @PathVariable("accountId") String contaId);
-
-
-    @Operation(
-            summary = "Consulta de saldo",
-            description = "para acessar tem que ter o escopo tipo iaas-accounts.read",
-            tags = { "Gerenciar" }
-    )
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Sucesso"),
-            @ApiResponse(responseCode = "400", description = "Parâmetros obrigatórios não enviados", content =
-                    {
-                            @Content(mediaType = "application/json", schema =
-                            @Schema(implementation = ResponseErrorApi.class))
-                    }),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor", content =
-                    {
-                            @Content(mediaType = "application/json", schema =
-                            @Schema(implementation = ResponseErrorApi.class))
-                    })
-    })
-    @GetMapping("/conta/{accountId}/saldo")
-    ResponseEntity<DadosResponseDto<ContaSaldoResponseDto>> consultarSaldoConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
-                                                                                @RequestHeader("x-accountProvider") String xAccountProvider,
-                                                                                @RequestHeader("x-itau-auth") String xItauAuth,
-                                                                                @RequestHeader("x-account-id") String xAccountId,
-                                                                                @PathVariable("accountId") String contaId);
+                                     @RequestHeader("x-itau-auth") String xItauAuth,
+                                     @RequestHeader("x-account-id") String xAccountId,
+                                     @RequestHeader("x-external-id") String xExternalId,
+                                     @PathVariable("accountId") String contaId);
 }

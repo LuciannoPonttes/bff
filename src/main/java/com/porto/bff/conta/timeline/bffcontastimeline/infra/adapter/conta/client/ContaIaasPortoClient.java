@@ -27,10 +27,11 @@ public interface ContaIaasPortoClient {
 
 
     @DeleteMapping("${feign.client.config.porto.gerenciar.contas.endpoint}")
-    void deleteByIdContaIaas(@RequestHeader("x-account-id") String xAccountId,
-                                                                        @RequestHeader("x-itau-auth") String xItauAuth,
-                                                                        @RequestHeader("x-external-id") String xExternalId,
-                                                                        @PathVariable("accountId") String contaId);
+    void deleteByIdContaIaas(@RequestHeader(AUTHORIZATION) String xItauAuth,
+                             @RequestHeader("x-accountProvider") String xAccountProvider,
+                             @RequestHeader("x-account-id") String xAccountId,
+                             @RequestHeader("x-external-id") String xExternalId,
+                             @PathVariable("accountId") String contaId);
 
 
     @GetMapping("${feign.client.config.porto.gerenciar.contas.saldo.endpoint}")

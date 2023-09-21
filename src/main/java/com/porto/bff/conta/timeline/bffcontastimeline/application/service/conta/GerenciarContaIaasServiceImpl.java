@@ -17,8 +17,6 @@ public class GerenciarContaIaasServiceImpl implements GerenciarContaIaasService{
 
     @Override
     public DadosResponseDto<ContaResponseDto> getConta(
-            String tokenCognito,
-            String xAccountProvider,
             String xItauAuth,
             String xAccountId,
             String contaId,
@@ -26,7 +24,6 @@ public class GerenciarContaIaasServiceImpl implements GerenciarContaIaasService{
     ) {
         var respostaAdapter = adapter.getConta(
                 xItauAuth,
-                xAccountProvider,
                 xAccountId,
                 contaId,
                 campos
@@ -34,29 +31,28 @@ public class GerenciarContaIaasServiceImpl implements GerenciarContaIaasService{
         return respostaAdapter;
     }
 
+
+
     @Override
-    public void apagarConta(String tokenCognito,
-                            String xAccountId,
+    public DadosResponseDto<ContaSaldoResponseDto> getContaSaldo(
+            String xItauAuth,
+            String xAccountId,
+            String contaId) {
+
+        var respostaAdapter = adapter.getContaSaldo(
+                 xItauAuth,
+                 xAccountId,
+                 contaId);
+        return respostaAdapter;
+    }
+
+    @Override
+    public void apagarConta(String xAccountId,
                             String xItauAuth,
                             String xExternalId,
                             String contaId) {
 
         adapter.apagarConta(xAccountId, xItauAuth, xExternalId, contaId);
 
-    }
-
-    @Override
-    public DadosResponseDto<ContaSaldoResponseDto> getContaSaldo(
-            String tokenCognito,
-            String xAccountProvider,
-            String xItauAuth,
-            String xAccountId,
-            String contaId) {
-
-        var respostaAdapter = adapter.getContaSaldo(xAccountProvider,
-                 xItauAuth,
-                 xAccountId,
-                 contaId);
-        return respostaAdapter;
     }
 }
