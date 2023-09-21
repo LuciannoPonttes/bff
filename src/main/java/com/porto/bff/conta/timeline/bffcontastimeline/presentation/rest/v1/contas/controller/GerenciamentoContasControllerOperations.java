@@ -78,6 +78,40 @@ public interface GerenciamentoContasControllerOperations {
                                                                                 @PathVariable("contaId") String contaId);
 
 
+
+
+
+
+
+
+
+    @Operation(
+            summary = "Consulta do sumario",
+            description = "para acessar tem que ter o escopo tipo iaas-accounts.read",
+            tags = { "Gerenciar" }
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Sucesso"),
+            @ApiResponse(responseCode = "400", description = "Parâmetros obrigatórios não enviados", content =
+                    {
+                            @Content(mediaType = "application/json", schema =
+                            @Schema(implementation = ResponseErrorApi.class))
+                    }),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor", content =
+                    {
+                            @Content(mediaType = "application/json", schema =
+                            @Schema(implementation = ResponseErrorApi.class))
+                    })
+    })
+    @GetMapping("/conta/{contaId}/sumario")
+    ResponseEntity<DadosResponseDto<ContaSumarioResponseDto>> sumarioConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
+                                                                                @RequestHeader("x-itau-auth") String xItauAuth,
+                                                                                @PathVariable("contaId") String contaId);
+
+
+
+
+
     @Operation(
             summary = "Atualização de status da conta",
             description = "para acessar tem que ter o escopo tipo iaas-accounts.write",

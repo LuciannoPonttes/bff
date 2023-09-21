@@ -53,6 +53,12 @@ public class GerenciamentoContasController implements GerenciamentoContasControl
     }
 
     @Override
+    public ResponseEntity<DadosResponseDto<ContaSumarioResponseDto>> sumarioConta(String tokenCognito, String xItauAuth, String contaId) {
+        return null;
+    }
+
+
+    @Override
     public ResponseEntity<Void> ediatarStatusConta(
             String tokenCognito,
             String xItauAuth,
