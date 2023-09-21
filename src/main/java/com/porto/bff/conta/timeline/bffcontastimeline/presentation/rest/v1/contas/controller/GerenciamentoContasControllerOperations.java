@@ -131,7 +131,7 @@ public interface GerenciamentoContasControllerOperations {
                     })
     })
     @GetMapping("/conta/{accountId}/saldo")
-    ResponseEntity<ContaEditadaResponseDto> consultarSaldoConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
+    ResponseEntity<DadosResponseDto<ContaResponseDto>> consultarSaldoConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
                                                                 @RequestHeader("x-accountProvider") String xAccountProvider,
                                                                 @RequestHeader("x-itau-auth") String xItauAuth,
                                                                 @RequestHeader("x-account-id") String xAccountId,
