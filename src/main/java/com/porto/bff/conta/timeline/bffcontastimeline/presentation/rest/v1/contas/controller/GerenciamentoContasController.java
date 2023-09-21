@@ -34,23 +34,7 @@ public class GerenciamentoContasController implements GerenciamentoContasControl
         return ResponseEntity.status(HttpStatus.OK).body(respostaService);
     }
 
-    @Override
-    public ResponseEntity<Void> apagarConta(
-            String tokenCognito,
-            String xAccountId,
-            String xItauAuth,
-            String xExternalId,
-            String contaId
-    ) {
-        gerenciarContaIaasService.apagarConta(
-                 xItauAuth,
-                 xAccountId,
-                 xExternalId,
-                 contaId);
 
-
-        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
-    }
 
     @Override
     public ResponseEntity<DadosResponseDto<ContaSaldoResponseDto>> consultarSaldoConta(
@@ -69,8 +53,41 @@ public class GerenciamentoContasController implements GerenciamentoContasControl
     }
 
     @Override
-    public ResponseEntity<ContaEditadaResponseDto> ediatarStatusConta(String tokenCognito, String xItauAuth, String xAccountId, String contaId, ContaRequestDto requestDto) {
-        return null;
+    public ResponseEntity<Void> ediatarStatusConta(
+            String tokenCognito,
+            String xItauAuth,
+            String xAccountId,
+            String xExternalId,
+            String contaId,
+            ContaRequestDto requestDto) {
+
+         gerenciarContaIaasService.editarStatusConta(
+                 xItauAuth,
+                 xAccountId,
+                 xExternalId,
+                 contaId,
+                 requestDto
+        );
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
+
+    @Override
+    public ResponseEntity<Void> apagarConta(
+            String tokenCognito,
+            String xAccountId,
+            String xItauAuth,
+            String xExternalId,
+            String contaId
+    ) {
+        gerenciarContaIaasService.apagarConta(
+                xItauAuth,
+                xAccountId,
+                xExternalId,
+                contaId);
+
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
 

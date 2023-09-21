@@ -6,10 +6,7 @@ import com.porto.bff.conta.timeline.bffcontastimeline.domain.model.conta.DadosCo
 import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.client.ContaIaasPortoClient;
 import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.AccountResponseIaasPorto;
 import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.DataResponseIassPorto;
-import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.ContaBancariaDto;
-import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.ContaResponseDto;
-import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.ContaSaldoResponseDto;
-import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.DadosResponseDto;
+import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.*;
 import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.exception.TimelineIaasPortoException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -64,13 +61,42 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
                     contaId
             );
         } catch (Exception e) {
-            throw new TimelineIaasPortoException("Problema gerando no gerenciamento da consulta da Porto",
+            throw new TimelineIaasPortoException("Problema gerando apagar conta Porto",
                     "407",
                     Collections.singletonList(TimelineIaasPortoException.TimelineIaasPortoErroItem.builder()
                             .field("accessToken")
                             .message("Falha ao gerar accessToken")
                             .build()));
         }
+    }
+
+    @Override
+    public void editarStatusConta(
+            String xItauAuth,
+            String xAccountId,
+            String xExternalId,
+            String contaId,
+            ContaRequestDto requestDto) {
+
+        try {
+//            client.editarStatusContaIaas(
+//                    xItauAuth,
+//                    "IAAS",
+//                    xAccountId,
+//                    xExternalId,
+//                    contaId,
+//                    requestDto
+            );
+        } catch (Exception e) {
+            throw new TimelineIaasPortoException("Problema gerando no editar status da conta Porto",
+                    "407",
+                    Collections.singletonList(TimelineIaasPortoException.TimelineIaasPortoErroItem.builder()
+                            .field("accessToken")
+                            .message("Falha ao gerar accessToken")
+                            .build()));
+        }
+
+
     }
 
     @Override

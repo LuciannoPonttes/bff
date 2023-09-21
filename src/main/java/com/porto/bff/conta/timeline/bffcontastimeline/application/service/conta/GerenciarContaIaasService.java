@@ -1,5 +1,6 @@
 package com.porto.bff.conta.timeline.bffcontastimeline.application.service.conta;
 
+import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.ContaRequestDto;
 import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.ContaResponseDto;
 import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.ContaSaldoResponseDto;
 import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.DadosResponseDto;
@@ -27,4 +28,12 @@ public interface GerenciarContaIaasService {
                      String xAccountId,
                      String xExternalId,
                      String contaId);
+
+    void editarStatusConta(
+            String xItauAuth,
+            String xAccountId,
+            String xExternalId,
+            String contaId,
+            ContaRequestDto requestDto
+    );
 }

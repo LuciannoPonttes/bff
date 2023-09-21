@@ -97,18 +97,12 @@ public interface GerenciamentoContasControllerOperations {
                     })
     })
     @PatchMapping("/conta/{contaId}")
-    ResponseEntity<ContaEditadaResponseDto> ediatarStatusConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
+    ResponseEntity<Void> ediatarStatusConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
                                                                @RequestHeader("x-itau-auth") String xItauAuth,
                                                                @RequestHeader("x-account-id") String xAccountId,
+                                                               @RequestHeader("x-external-id") String xExternalId,
                                                                @PathVariable("contaId") String contaId,
                                                                @RequestBody ContaRequestDto requestDto);
-
-
-
-
-
-
-
 
     @Operation(
             summary = "Encerramento da conta",
