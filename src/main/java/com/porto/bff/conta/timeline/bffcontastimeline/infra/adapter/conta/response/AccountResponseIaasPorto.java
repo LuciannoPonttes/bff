@@ -7,7 +7,7 @@ public record AccountResponseIaasPorto(
         BankAccountResponseIassPorto bankAccount,
         String status,
         String type,
-        LocalDateTime createdAt,
-        LocalDateTime updatedAt
+        String createdAt,
+        String updatedAt
 ) {
 }

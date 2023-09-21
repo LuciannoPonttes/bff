@@ -38,7 +38,7 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
             var reponse = converteRespostaContaIaas(responseIaas);
             return reponse;
         } catch (Exception e) {
-            throw new TimelineIaasPortoException("Problema gerando no gerenciamento da consulta da Porto",
+            throw new TimelineIaasPortoException("Problema gerando ao consultar dados da conta Porto.",
                     "407",
                     Collections.singletonList(TimelineIaasPortoException.TimelineIaasPortoErroItem.builder()
                             .field("accessToken")

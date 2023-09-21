@@ -7,8 +7,8 @@ public record ContaResponseDto(
         ContaBancariaDto contaBancaria,
         String status,
         String tipo,
-        LocalDateTime criando,
-        LocalDateTime atualizado
+        String criando,
+        String atualizado
 ) {
 }
 
