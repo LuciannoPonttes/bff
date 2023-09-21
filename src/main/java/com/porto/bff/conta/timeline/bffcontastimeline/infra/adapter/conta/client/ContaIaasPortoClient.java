@@ -25,7 +25,7 @@ public interface ContaIaasPortoClient {
     DataResponseIassPorto<AccountResponseIaasPorto> findByIdContaIaas(@RequestHeader(AUTHORIZATION) String xItauAuth,
                                                                     @RequestHeader("x-accountProvider") String xAccountProvider,
                                                                     @RequestHeader("x-account-id") String xAccountId,
-                                                                    @PathVariable("contaId") String contaId,
+                                                                    @PathVariable("accountId") String accountId,
                                                                     @RequestParam(required = false) String campos);
 
 

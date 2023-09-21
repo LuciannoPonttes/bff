@@ -5,6 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.porto.bff.conta.timeline.bffcontastimeline.application.service.timeline.model.TimelineIaasResponse;
+import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.AccountResponseIaasPorto;
+import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.BankAccountResponseIassPorto;
+import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.DataResponseIassPorto;
 import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.ContaBancariaDto;
 import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.ContaResponseDto;
 import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.DadosResponseDto;
@@ -76,8 +79,8 @@ public class WiremockConfig {
     }
 
     private void findIdContaIaaSStub() throws JsonProcessingException {
-        var contaBancariaDto = new ContaBancariaDto("itau", "itau", "123", "1");
-        var contaResponseDto = new ContaResponseDto(
+        var contaBancariaDto = new BankAccountResponseIassPorto("itau", "itau", "123", "1");
+        var contaResponseDto = new AccountResponseIaasPorto(
                 "5386ec67-3d85-47c9-b97c-38129e73c519",
                 contaBancariaDto,
                 "ATIVO",
@@ -86,7 +89,7 @@ public class WiremockConfig {
                 "2023-09-21T18:14:56.868Z"
 
                 );
-        var respostaFinal  = new DadosResponseDto<ContaResponseDto>(contaResponseDto);
+        var respostaFinal  = new DataResponseIassPorto<AccountResponseIaasPorto>(contaResponseDto);
         wireMockServer
                 .stubFor(get(urlEqualTo("/porto-backend/v1/account/1"))
                         .willReturn(aResponse()
