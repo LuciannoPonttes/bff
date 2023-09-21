@@ -1,9 +1,6 @@
 package com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.controller;
 
-import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.ContaEditadaResponseDto;
-import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.ContaRequestDto;
-import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.ContaResponseDto;
-import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.DadosResponseDto;
+import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.*;
 import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.exception.ResponseErrorApi;
 import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.timeline.dto.TimelineIaasResponseDto;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
@@ -131,9 +128,9 @@ public interface GerenciamentoContasControllerOperations {
                     })
     })
     @GetMapping("/conta/{accountId}/saldo")
-    ResponseEntity<DadosResponseDto<ContaResponseDto>> consultarSaldoConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
-                                                                @RequestHeader("x-accountProvider") String xAccountProvider,
-                                                                @RequestHeader("x-itau-auth") String xItauAuth,
-                                                                @RequestHeader("x-account-id") String xAccountId,
-                                                                @PathVariable("accountId") String contaId);
+    ResponseEntity<DadosResponseDto<ContaSaldoResponseDto>> consultarSaldoConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
+                                                                                @RequestHeader("x-accountProvider") String xAccountProvider,
+                                                                                @RequestHeader("x-itau-auth") String xItauAuth,
+                                                                                @RequestHeader("x-account-id") String xAccountId,
+                                                                                @PathVariable("accountId") String contaId);
 }

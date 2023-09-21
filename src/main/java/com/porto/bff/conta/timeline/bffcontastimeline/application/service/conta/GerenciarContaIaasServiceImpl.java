@@ -1,7 +1,8 @@
 package com.porto.bff.conta.timeline.bffcontastimeline.application.service.conta;
 
-import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.ContaFindByIdIassPortoAdapter;
+import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.ContaIassPortoAdapter;
 import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.ContaResponseDto;
+import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.ContaSaldoResponseDto;
 import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.DadosResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class GerenciarContaIaasServiceImpl implements GerenciarContaIaasService{
 
-    private final ContaFindByIdIassPortoAdapter adapter;
+    private final ContaIassPortoAdapter adapter;
 
 
     @Override
@@ -43,7 +44,19 @@ public class GerenciarContaIaasServiceImpl implements GerenciarContaIaasService{
         adapter.apagarConta(xAccountId, xItauAuth, xExternalId, contaId);
 
     }
+
+    @Override
+    public DadosResponseDto<ContaSaldoResponseDto> getContaSaldo(
+            String tokenCognito,
+            String xAccountProvider,
+            String xItauAuth,
+            String xAccountId,
+            String contaId) {
+
+        var respostaAdapter = adapter.getContaSaldo(xAccountProvider,
+                 xItauAuth,
+                 xAccountId,
+                 contaId);
+        return respostaAdapter;
+    }
 }
-
-// A gente vai receber o  Authorization da porto via front, ou temos que chamar o bff-sdk /token
-

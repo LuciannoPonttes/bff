@@ -1,10 +1,7 @@
 package com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.controller;
 
 import com.porto.bff.conta.timeline.bffcontastimeline.application.service.conta.GerenciarContaIaasService;
-import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.ContaEditadaResponseDto;
-import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.ContaRequestDto;
-import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.ContaResponseDto;
-import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.DadosResponseDto;
+import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,10 +54,22 @@ public class GerenciamentoContasController implements GerenciamentoContasControl
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
-
     @Override
-    public ResponseEntity<ContaEditadaResponseDto> consultarSaldoConta(String tokenCognito, String xAccountProvider, String xItauAuth, String xAccountId, String contaId) {
-        return null;
+    public ResponseEntity<DadosResponseDto<ContaSaldoResponseDto>> consultarSaldoConta(
+            String tokenCognito,
+            String xAccountProvider,
+            String xItauAuth,
+            String xAccountId,
+            String contaId) {
+        var respostaService = gerenciarContaIaasService
+                .getContaSaldo(
+                        tokenCognito,
+                        xAccountProvider,
+                        xItauAuth,
+                        xAccountId,
+                        contaId
+                );
+        return ResponseEntity.status(HttpStatus.OK).body(respostaService);
     }
 
 
