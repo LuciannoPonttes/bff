@@ -125,6 +125,42 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
         }
     }
 
+    @Override
+    public DadosResponseDto<ContaSumarioResponseDto> sumarioConta(String xItauAuth, String contaId) {
+
+
+        try {
+            var conta = getConta(xItauAuth, contaId, contaId, null);
+            var contaSaldo = getContaSaldo(xItauAuth,contaId, contaId);
+
+            DadosResponseDto<ContaSumarioResponseDto> reponse = getSumarioContaConverte(conta, contaSaldo);
+            return reponse;
+        } catch (Exception e) {
+            throw new TimelineIaasPortoException("Problema gerando no gerenciamento da consulta do buscar saldo da Porto",
+                    "407",
+                    Collections.singletonList(TimelineIaasPortoException.TimelineIaasPortoErroItem.builder()
+                            .field("accessToken")
+                            .message("Falha ao gerar accessToken")
+                            .build()));
+        }
+    }
+
+    private DadosResponseDto<ContaSumarioResponseDto> getSumarioContaConverte(
+            DadosResponseDto<ContaResponseDto> conta,
+            DadosResponseDto<ContaSaldoResponseDto> contaSaldo) {
+
+        ContaSumarioResponseDto contaSumarioResponseDto = new ContaSumarioResponseDto(
+                conta.dados().contaBancaria().banco(),
+                conta.dados().contaBancaria().filial(),
+                conta.dados().contaBancaria().numero(),
+                conta.dados().contaBancaria().numero(),
+                String.valueOf(contaSaldo.dados().disponivel()),
+                conta.dados().status()
+                );
+
+        return new DadosResponseDto(contaSumarioResponseDto);
+    }
+
     private DadosResponseDto<ContaSaldoResponseDto> converteRespostaContaSaldoIaas(DadosContaDomain<ContaSaldoDomain> porto) {
         var contaSaldoDto = new ContaSaldoResponseDto(
                 porto.dados().getAccountId(),

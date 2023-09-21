@@ -53,7 +53,17 @@ public class GerenciamentoContasController implements GerenciamentoContasControl
     }
 
     @Override
-    public ResponseEntity<DadosResponseDto<ContaSumarioResponseDto>> sumarioConta(String tokenCognito, String xItauAuth, String contaId) {
+    public ResponseEntity<DadosResponseDto<ContaSumarioResponseDto>> sumarioConta(
+            String tokenCognito,
+            String xItauAuth,
+            String contaId) {
+
+        var responseService = gerenciarContaIaasService.contaSumario(
+                tokenCognito,
+                xItauAuth,
+                contaId
+        );
+
         return null;
     }
 
