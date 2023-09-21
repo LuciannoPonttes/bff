@@ -64,7 +64,7 @@ public class GerenciamentoContasController implements GerenciamentoContasControl
                 contaId
         );
 
-        return null;
+        return ResponseEntity.status(HttpStatus.OK).body(responseService);
     }
 
 
