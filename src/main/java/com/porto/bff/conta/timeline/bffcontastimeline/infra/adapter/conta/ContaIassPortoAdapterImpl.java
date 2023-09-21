@@ -1,10 +1,10 @@
 package com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta;
 
 
-import com.porto.bff.conta.timeline.bffcontastimeline.domain.model.conta.ContaSaldoDomain;
 import com.porto.bff.conta.timeline.bffcontastimeline.domain.model.conta.DadosContaDomain;
 import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.client.ContaIaasPortoClient;
 import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.AccountResponseIaasPorto;
+import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.ContaSaldoResponseIaasPorto;
 import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.DataResponseIassPorto;
 import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.*;
 import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.exception.TimelineIaasPortoException;
@@ -161,12 +161,12 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
         return new DadosResponseDto(contaSumarioResponseDto);
     }
 
-    private DadosResponseDto<ContaSaldoResponseDto> converteRespostaContaSaldoIaas(DadosContaDomain<ContaSaldoDomain> porto) {
+    private DadosResponseDto<ContaSaldoResponseDto> converteRespostaContaSaldoIaas(DataResponseIassPorto<ContaSaldoResponseIaasPorto> porto) {
         var contaSaldoDto = new ContaSaldoResponseDto(
-                porto.dados().getAccountId(),
-                porto.dados().getAvailable(),
-                porto.dados().getReserved(),
-                porto.dados().getBlocked()
+                porto.data().accountId(),
+                porto.data().available(),
+                porto.data().reserved(),
+                porto.data().blocked()
                 );
         var contaSaldo = new DadosResponseDto<>(contaSaldoDto);
 

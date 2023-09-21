@@ -7,10 +7,8 @@ import com.github.tomakehurst.wiremock.WireMockServer;
 import com.porto.bff.conta.timeline.bffcontastimeline.application.service.timeline.model.TimelineIaasResponse;
 import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.AccountResponseIaasPorto;
 import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.BankAccountResponseIassPorto;
+import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.ContaSaldoResponseIaasPorto;
 import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.DataResponseIassPorto;
-import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.ContaBancariaDto;
-import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.ContaResponseDto;
-import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.DadosResponseDto;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
@@ -19,9 +17,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
@@ -49,6 +44,8 @@ public class WiremockConfig {
     @Value("${feign.client.config.porto.gerenciar.contas.endpoint}")
     private String contaFindIdPortoUrl;
 
+    @Value("${feign.client.config.porto.gerenciar.contas.saldo.endpoint}")
+    private String contaSaldoFindIdPortoUrl;
 
     @PostConstruct
     private void setUp() {
@@ -61,6 +58,7 @@ public class WiremockConfig {
             timelineIaaSStub();
             findIdContaIaaSStub();
             deleteContaIaaSStub();
+            saldoContaIaaSStub();
         } catch (Exception e) {
             log.error("Erro ao rodar WireMock Server. Erro: {}", e.getMessage());
         }
@@ -81,12 +79,12 @@ public class WiremockConfig {
     }
 
     private void findIdContaIaaSStub() throws JsonProcessingException {
-        var contaBancariaDto = new BankAccountResponseIassPorto("itau", "itau", "123", "1");
+        var contaBancariaDto = new BankAccountResponseIassPorto("Portoseg S.A.", "Porto", "123456", "8");
         var contaResponseDto = new AccountResponseIaasPorto(
                 "5386ec67-3d85-47c9-b97c-38129e73c519",
                 contaBancariaDto,
                 "ATIVO",
-                "ATIVO",
+                "PF",
                 "2023-09-21T18:14:56.868Z",
                 "2023-09-21T18:14:56.868Z"
 
@@ -101,12 +99,12 @@ public class WiremockConfig {
 
 
     private void deleteContaIaaSStub() throws JsonProcessingException {
-        var contaBancariaDto = new BankAccountResponseIassPorto("itau", "itau", "123", "1");
+        var contaBancariaDto = new BankAccountResponseIassPorto("Portoseg S.A.", "Porto", "123456", "8");
         var contaResponseDto = new AccountResponseIaasPorto(
                 "5386ec67-3d85-47c9-b97c-38129e73c519",
                 contaBancariaDto,
                 "ATIVO",
-                "ATIVO",
+                "PF",
                 "2023-09-21T18:14:56.868Z",
                 "2023-09-21T18:14:56.868Z"
 
@@ -117,6 +115,17 @@ public class WiremockConfig {
                         .willReturn(aResponse()
                                 .withHeader("Content-Type", "application/json")
                                 .withBody(ow.writeValueAsString(HttpStatus.ACCEPTED))));
+    }
+
+    private void saldoContaIaaSStub() throws JsonProcessingException {
+
+        var contaResponseDto = new ContaSaldoResponseIaasPorto("124657256", 2000, 750, 190);
+        var respostaFinal  = new DataResponseIassPorto<ContaSaldoResponseIaasPorto>(contaResponseDto);
+        wireMockServer
+                .stubFor(get(urlEqualTo("/porto-backend/v1/accounts/1/balances"))
+                        .willReturn(aResponse()
+                                .withHeader("Content-Type", "application/json")
+                                .withBody(ow.writeValueAsString(respostaFinal))));
     }
 
     @PreDestroy
