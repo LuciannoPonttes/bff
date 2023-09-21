@@ -42,7 +42,7 @@ public interface ContaIaasPortoClient {
                              @RequestHeader("x-accountProvider") String xAccountProvider,
                              @RequestHeader("x-account-id") String xAccountId,
                              @RequestHeader("x-external-id") String xExternalId,
-                             @PathVariable("contaId") String contaId);
+                             @PathVariable("accountId") String accountId);
 
 //    @RequestMapping( method = RequestMethod.PATCH, value = "${feign.client.config.porto.gerenciar.contas.endpoint}")
 //    void editarStatusContaIaas(
