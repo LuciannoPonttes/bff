@@ -29,7 +29,7 @@ Passos para executar "//contas/{accountId}" em ambiente local:
 A seguir tem exemplos das requisições e caso prefira, acesse o Swagger: `GET /swagger-ui/index.html`
 
 **Endpoint:**
-`GET - /cliente/v1/conta-timeline/contas/{accountId}`
+`GET - /portobank/v1/conta-timeline/contas/{accountId}`
 - Headers
     - Authorization: Bearer {token}
     - x-account-id: Identificador da conta.
@@ -81,7 +81,7 @@ A seguir tem exemplos das requisições e caso prefira, acesse o Swagger: `GET /
 - Curl exemplo:
 ```json
 curl --request POST \
-  --url http://localhost:8080/cliente/v3/conta-digital/timeline/contas/1\
+  --url http://localhost:8080/portobank/v3/conta-digital/timeline/contas/1\
   --header 'Authorization: Bearer sadasdsad' \
   --header 'Content-Type: application/json' \
   --header 'x-account-id: 123' \
