@@ -9,9 +9,20 @@ import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.respon
 import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.*;
 import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.exception.TimelineIaasPortoException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpRequest;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Component
 @RequiredArgsConstructor
@@ -19,6 +30,8 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
 
     private final ContaIaasPortoClient client;
 
+    @Value("${feign.client.config.porto.gerenciar.contas.saldo.endpoint}")
+    private String contaSaldoFindIdPortoUrl;
 
     @Override
     public DadosResponseDto<ContaResponseDto> getConta(
@@ -79,14 +92,15 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
             ContaRequestDto requestDto) {
 
         try {
-//            client.editarStatusContaIaas(
-//                    xItauAuth,
-//                    "IAAS",
-//                    xAccountId,
-//                    xExternalId,
-//                    contaId,
-//                    requestDto
-//            );
+            client.editarStatusContaIaas(
+                    xItauAuth,
+                    "IAAS",
+                    xAccountId,
+                    xExternalId,
+                    contaId,
+                    requestDto
+            );
+
         } catch (Exception e) {
             throw new TimelineIaasPortoException("Problema gerando no editar status da conta Porto",
                     "407",

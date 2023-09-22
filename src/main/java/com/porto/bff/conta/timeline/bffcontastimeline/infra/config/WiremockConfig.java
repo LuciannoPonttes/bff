@@ -59,6 +59,7 @@ public class WiremockConfig {
             findIdContaIaaSStub();
             deleteContaIaaSStub();
             saldoContaIaaSStub();
+            editarContaIaaSStub();
         } catch (Exception e) {
             log.error("Erro ao rodar WireMock Server. Erro: {}", e.getMessage());
         }
@@ -97,6 +98,24 @@ public class WiremockConfig {
                                 .withBody(ow.writeValueAsString(respostaFinal))));
     }
 
+    private void editarContaIaaSStub() throws JsonProcessingException {
+        var contaBancariaDto = new BankAccountResponseIassPorto("Portoseg S.A.", "Porto", "123456", "8");
+        var contaResponseDto = new AccountResponseIaasPorto(
+                "5386ec67-3d85-47c9-b97c-38129e73c519",
+                contaBancariaDto,
+                "ATIVO",
+                "PF",
+                "2023-09-21T18:14:56.868Z",
+                "2023-09-21T18:14:56.868Z"
+
+        );
+        var respostaFinal  = new DataResponseIassPorto<AccountResponseIaasPorto>(contaResponseDto);
+        wireMockServer
+                .stubFor(patch(urlEqualTo("/porto-backend/v1/account/1"))
+                        .willReturn(aResponse()
+                                .withHeader("Content-Type", "application/json")
+                                .withBody(ow.writeValueAsString(HttpStatus.ACCEPTED))));
+    }
 
     private void deleteContaIaaSStub() throws JsonProcessingException {
         var contaBancariaDto = new BankAccountResponseIassPorto("Portoseg S.A.", "Porto", "123456", "8");

@@ -5,6 +5,7 @@ import com.porto.bff.conta.timeline.bffcontastimeline.domain.model.conta.DadosCo
 import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.AccountResponseIaasPorto;
 import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.ContaSaldoResponseIaasPorto;
 import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.DataResponseIassPorto;
+import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.ContaRequestDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,12 +43,11 @@ public interface ContaIaasPortoClient {
                              @RequestHeader("x-external-id") String xExternalId,
                              @PathVariable("accountId") String accountId);
 
-//    @RequestMapping( method = RequestMethod.PATCH, value = "${feign.client.config.porto.gerenciar.contas.endpoint}")
-//    void editarStatusContaIaas(
-//            @RequestHeader(AUTHORIZATION) String xItauAuth,
-//            @RequestHeader("x-accountProvider") String xAccountProvider,
-//            @RequestHeader("x-account-id") String xAccountId,
-//            @RequestHeader("x-external-id") String xExternalId,
-//            @PathVariable("contaId") String contaId,
-//            @RequestBody ContaRequestDto requestDto);
+    @RequestMapping(value = "${feign.client.config.porto.gerenciar.contas.endpoint}", method = RequestMethod.PATCH)
+    void editarStatusContaIaas(@RequestHeader(AUTHORIZATION) String xItauAuth,
+            @RequestHeader("x-accountProvider") String xAccountProvider,
+            @RequestHeader("x-account-id") String xAccountId,
+            @RequestHeader("x-external-id") String xExternalId,
+                               @PathVariable(value = "accountId")String contaId,
+            @RequestBody ContaRequestDto requestDto);
 }

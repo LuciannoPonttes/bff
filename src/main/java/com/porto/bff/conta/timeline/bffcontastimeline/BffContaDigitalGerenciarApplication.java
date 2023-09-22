@@ -5,10 +5,11 @@ import com.porto.experiencia.cliente.cartoes.commons.openapi.EnableCartoesOpenAp
 import com.porto.experiencia.cliente.cartoes.commons.web.EnableBffCartoesWebHandler;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @EnableCartoesOpenApi
-@EnableCartoesFeignClient
 @EnableBffCartoesWebHandler
+@EnableFeignClients
 @SpringBootApplication
 public class BffContaDigitalGerenciarApplication {
 
