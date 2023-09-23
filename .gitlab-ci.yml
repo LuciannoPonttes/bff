@@ -1,0 +1,132 @@
+image: "967353112876.dkr.ecr.us-east-1.amazonaws.com/java/mvn:3.8.3-openjdk-17-slim"
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+  ECR_REGISTRY: "967353112876.dkr.ecr.us-east-1.amazonaws.com/superapp/${CI_PROJECT_NAME}"
+  JENKINS_WEBHOOK_DEV: "https://jenkinsciportoprd.portoseguro.brasil/job/ExperienciaCliente/job/BFF/job/${CI_PROJECT_NAME}/job/deploy-dev/buildWithParameters"
+  JENKINS_DEPLOY_TOKEN: "6jUhhtRQlilSc6jUhhtRQlilSc6jUhhtRQlilSc"
+
+stages:
+# - sonarqube_check
+  - test
+  - build_jar
+  - build_push_image_dev
+  - trigger_deploy_dev
+  - build_push_image_release
+
+#SonarQube:
+#  stage: sonarqube_check
+#  only:
+#    - develop
+#  before_script:
+#    - openssl s_client -connect nexusportoprd.portoseguro.brasil:443 </dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > nexusportoprd.cer
+#    - openssl s_client -connect sonarqubehml.portoseguro.brasil:443 </dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > sonarqubehml.cer
+#    - keytool -import -file sonarqubehml.cer -alias "sonarqubehml" -storepass changeit -cacerts -noprompt
+#    - keytool -import -file nexusportoprd.cer -alias "nexusportoprd" -storepass changeit -cacerts -noprompt
+#  variables:
+#    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
+#    GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task.
+#  script:
+#    - echo "SonarQube Host = $SONAR_HOST_URL"
+#    - mvn verify sonar:sonar -Dsonar.qualitygate.wait=true -B
+#  cache:
+#    key: "${CI_PROJECT_NAME}"
+#    paths:
+#      - .m2/repository
+
+Testes:
+  stage: test
+# image: maven:3.8.3-openjdk-17-slim
+  only:
+    - develop
+  before_script:
+    - openssl s_client -connect nexusportoprd.portoseguro.brasil:443 </dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > nexusportoprd.cer
+    - keytool -import -file nexusportoprd.cer -storepass changeit -cacerts -noprompt
+  script:
+    - mvn clean compile -B -X
+    - mvn test
+    - awk -F"," '{ instructions += $4 + $5; covered += $5 } END { print covered, "/", instructions, "instructions covered"; print 100*covered/instructions, "% covered" }' target/site/jacoco/jacoco.csv
+  cache:
+    key: "${CI_PROJECT_NAME}"
+    paths:
+      - .m2/repository
+
+Build jar:
+  stage: build_jar
+# image: maven:3.8.3-openjdk-17-slim
+  only:
+    - develop
+    - tags
+  before_script:
+    - openssl s_client -connect nexusportoprd.portoseguro.brasil:443 </dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > nexusportoprd.cer
+    - keytool -import -file nexusportoprd.cer -storepass changeit -cacerts -noprompt
+  script:
+    - mvn org.jacoco:jacoco-maven-plugin:prepare-agent package -B -Doutput=./tree.txt -DoutputFile=./tree.txt -DappendOutput=true -DskipTests
+  cache:
+    key: "${CI_PROJECT_NAME}"
+    paths:
+      - .m2/repository
+  artifacts:
+    paths:
+      - target/${CI_PROJECT_NAME}.jar
+
+build and push docker image to develop env:
+  stage: build_push_image_dev
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  only:
+    - develop
+  variables:
+    AWS_DEFAULT_REGION: us-east-1
+  script:
+    - mkdir -p /kaniko/.docker
+    - echo "{\"credsStore\":\"ecr-login\",\"credHelpers\":{\"$ECR_REGISTRY\":\"ecr-login\"}}" > /kaniko/.docker/config.json
+    - >-
+      /kaniko/executor
+      --context "${CI_PROJECT_DIR}"
+      --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
+      --destination "${ECR_REGISTRY}:latest"
+
+Deploying to dev eks cluster:
+  stage: trigger_deploy_dev
+# image: openjdk:17-alpine
+  dependencies: []
+  only:
+    - develop
+  before_script:
+#   - apk add --no-cache openssl
+#   - echo -e  'nameserver 172.16.234.228\nnameserver 172.16.234.229\nsearch portoseguro.brasil' >> /etc/resolv.conf
+#   - keytool -import -file jenkinsciportoprd.crt -alias "jenkinsciportoprd" -storepass changeit -cacerts -noprompt
+    - openssl s_client -connect jenkinsciportoprd.portoseguro.brasil:443 </dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > jenkinsciportoprd.crt
+    - cp jenkinsciportoprd.crt /usr/local/share/ca-certificates/ca-certificates.crt
+    - update-ca-certificates
+  script:
+    - echo "iniciando deploy [${GITLAB_USER_LOGIN} - ${GITLAB_USER_NAME}]"
+    - >- 
+      curl -i -K
+      -X ${JENKINS_WEBHOOK_DEV}
+      --data-urlencode "userId=${GITLAB_USER_LOGIN}" 
+      --data-urlencode "userName=${GITLAB_USER_NAME}"
+      --data-urlencode "gitlabBranch=${CI_COMMIT_REF_NAME}"
+      --data-urlencode "token=${JENKINS_DEPLOY_TOKEN}"
+      --data-urlencode "appImageRepo=superapp/${CI_PROJECT_NAME}:latest"
+
+build and push docker image to release env:
+  stage: build_push_image_release
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  only:
+    - /^v[0-9]+\.[0-9]+\.[0-9]+$/
+  variables:
+    AWS_DEFAULT_REGION: us-east-1
+  script:
+    - echo "$CI_COMMIT_REF_NAME"
+    - mkdir -p /kaniko/.docker
+    - echo "{\"credsStore\":\"ecr-login\",\"credHelpers\":{\"$ECR_REGISTRY\":\"ecr-login\"}}" > /kaniko/.docker/config.json
+    - >-
+      /kaniko/executor
+      --context "${CI_PROJECT_DIR}"
+      --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
+      --destination "${ECR_REGISTRY}:${CI_COMMIT_REF_NAME}"

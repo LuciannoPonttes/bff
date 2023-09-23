@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+  <property name="LOG_FILE" value="c:/temp/spring.log}"/>
+  <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+  <springProfile name="default | infra">
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+
+      <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+    </appender>
+
+    <root level="info">
+      <appender-ref ref="STDOUT"/>
+    </root>
+  </springProfile>
+
+  <springProfile name="!default &amp; !infra">
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+      <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+        <pattern>%black(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%class{0}.%M): %msg %replace({%mdc}){' \{\}', ''}%n%throwable</pattern>
+      </encoder>
+<!--      <encoder class="net.logstash.logback.encoder.LogstashEncoder" />-->
+
+    </appender>
+
+    <!-- LOG everything at INFO level -->
+    <root level="info">
+      <appender-ref ref="Console"/>
+    </root>
+  </springProfile>
+
+</configuration>
