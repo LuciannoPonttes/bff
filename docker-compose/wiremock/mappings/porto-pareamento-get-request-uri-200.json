@@ -1,0 +1,28 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "method": "POST",
+        "urlPattern": "/conta/iaas-oauth/v1/challenge",
+        "bodyPatterns" : [
+          {
+            "equalToJson" : "{ \"nonce\": \"9f76e291-3a22-43f0-a7d5-8794904f2a9f\"  }",
+            "ignoreArrayOrder" : true,
+            "ignoreExtraElements" : true
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json",
+          "User-Agent": "Android"
+        },
+        "jsonBody": {
+          "expires_in": 300,
+          "request_uri": "urn:ietf:params:oauth:request_uri:D4tkFRKEGzSqQSLE7IpC2PW27FcjdRwA"
+        }
+      }
+    }
+  ]
+}
