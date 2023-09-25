@@ -30,6 +30,14 @@ public class GerenciamentoContasController implements GerenciamentoContasControl
         return ResponseEntity.status(HttpStatus.OK).body(respostaService);
     }
 
+    @Override
+    public ResponseEntity<DadosResponseDto<ContaSaldoResponseDto>> saldoConta(String tokenCognito, String xItauAuth, String contaId) {
+        var respostaService = gerenciarContaIaasService.getContaSaldo(
+                xItauAuth,
+                contaId
+        );
+        return ResponseEntity.status(HttpStatus.OK).body(respostaService);
+    }
 
 
     @Override

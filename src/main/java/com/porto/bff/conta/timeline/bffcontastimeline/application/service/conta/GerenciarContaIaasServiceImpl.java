@@ -30,12 +30,10 @@ public class GerenciarContaIaasServiceImpl implements GerenciarContaIaasService{
     @Override
     public DadosResponseDto<ContaSaldoResponseDto> getContaSaldo(
             String xItauAuth,
-            String xAccountId,
             String contaId) {
 
         var respostaAdapter = adapter.getContaSaldo(
                  xItauAuth,
-                 xAccountId,
                  contaId);
         return respostaAdapter;
     }

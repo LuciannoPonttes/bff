@@ -10,9 +10,7 @@ public interface ContaIassPortoAdapter {
 
 
 
-    DadosResponseDto<ContaSaldoResponseDto> getContaSaldo(
-                                                         String xItauAuth,
-                                                         String xAccountId,
+    DadosResponseDto<ContaSaldoResponseDto> getContaSaldo(String xItauAuth,
                                                          String contaId);
 
 

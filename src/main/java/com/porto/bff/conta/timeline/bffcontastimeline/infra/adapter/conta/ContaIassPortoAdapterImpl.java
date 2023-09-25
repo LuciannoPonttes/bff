@@ -29,6 +29,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
 
     private final ContaIaasPortoClient client;
+    private static String BEARER = "Bearer ";
 
     @Value("${feign.client.config.porto.gerenciar.contas.saldo.endpoint}")
     private String contaSaldoFindIdPortoUrl;
@@ -40,7 +41,7 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
 
         try {
             var responseIaas = client.findByIdContaIaas(
-                    xItauAuth, "IAAS",
+                    getBearerInput(xItauAuth), "IAAS",
                     contaId
             );
             var reponse = converteRespostaContaIaas(responseIaas);
@@ -84,7 +85,7 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
 
         try {
             client.editarStatusContaIaas(
-                    xItauAuth,
+                    getBearerInput(xItauAuth),
                     "IAAS",
                     contaId,
                     requestDto
@@ -105,15 +106,13 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
     @Override
     public DadosResponseDto<ContaSaldoResponseDto> getContaSaldo(
             String xItauAuth,
-            String xAccountId,
             String contaId) {
 
 
         try {
             var responseIaas = client.findBySaldoContaIaas(
-                    xItauAuth,
+                    getBearerInput(xItauAuth),
                     "IAAS",
-                    xAccountId,
                     contaId
             );
             var reponse = converteRespostaContaSaldoIaas(responseIaas);
@@ -133,8 +132,8 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
 
 
         try {
-            var conta = getConta(xItauAuth, contaId);
-            var contaSaldo = getContaSaldo(xItauAuth,contaId, contaId);
+            var conta = getConta( getBearerInput(xItauAuth), contaId);
+            var contaSaldo = getContaSaldo( getBearerInput(xItauAuth),contaId);
 
             DadosResponseDto<ContaSumarioResponseDto> reponse = getSumarioContaConverte(conta, contaSaldo);
             return reponse;
@@ -193,5 +192,10 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
                 );
 
         return new DadosResponseDto(contaResponseDto);
+    }
+
+    private String getBearerInput(String xItauAuth) {
+        var resposta = BEARER+xItauAuth;
+        return resposta;
     }
 }

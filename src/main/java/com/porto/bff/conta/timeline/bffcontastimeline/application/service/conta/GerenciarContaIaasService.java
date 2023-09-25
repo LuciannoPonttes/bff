@@ -15,7 +15,6 @@ public interface GerenciarContaIaasService {
 
     DadosResponseDto<ContaSaldoResponseDto> getContaSaldo(
             String xItauAuth,
-            String xAccountId,
             String contaId
     );
 
