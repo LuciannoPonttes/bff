@@ -46,15 +46,16 @@ public interface GerenciamentoContasControllerOperations {
                             @Schema(implementation = ResponseErrorApi.class))
                     })
     })
-    @GetMapping("/conta/{contaId}")
+    @GetMapping("/conta")
     ResponseEntity<DadosResponseDto<ContaResponseDto>> buscarConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
                                                                    @RequestHeader("x-itau-auth") String xItauAuth,
-                                                                   @RequestHeader("x-account-id") String xAccountId,
-                                                                   @PathVariable("contaId") String contaId,
-                                                                   @RequestParam(required = false) String campos);
+                                                                   @RequestHeader("x-account-id") String contaId);
+
+
+
 
     @Operation(
-            summary = "Consulta de saldo",
+            summary = "Consulta de dados da conta",
             description = "para acessar tem que ter o escopo tipo iaas-accounts.read",
             tags = { "Gerenciar" }
     )
@@ -71,17 +72,10 @@ public interface GerenciamentoContasControllerOperations {
                             @Schema(implementation = ResponseErrorApi.class))
                     })
     })
-    @GetMapping("/conta/{contaId}/saldo")
-    ResponseEntity<DadosResponseDto<ContaSaldoResponseDto>> consultarSaldoConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
-                                                                                @RequestHeader("x-itau-auth") String xItauAuth,
-                                                                                @RequestHeader("x-account-id") String xAccountId,
-                                                                                @PathVariable("contaId") String contaId);
-
-
-
-
-
-
+    @GetMapping("/conta/saldo")
+    ResponseEntity<DadosResponseDto<ContaSaldoResponseDto>> saldoConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
+                                                                       @RequestHeader("x-itau-auth") String xItauAuth,
+                                                                       @RequestHeader("x-account-id") String contaId);
 
 
 
@@ -103,10 +97,10 @@ public interface GerenciamentoContasControllerOperations {
                             @Schema(implementation = ResponseErrorApi.class))
                     })
     })
-    @GetMapping("/conta/{contaId}/sumario")
+    @GetMapping("/conta/sumario")
     ResponseEntity<DadosResponseDto<ContaSumarioResponseDto>> sumarioConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
                                                                                 @RequestHeader("x-itau-auth") String xItauAuth,
-                                                                                @PathVariable("contaId") String contaId);
+                                                                                @RequestHeader("x-account-id") String contaId);
 
 
 
@@ -130,12 +124,10 @@ public interface GerenciamentoContasControllerOperations {
                             @Schema(implementation = ResponseErrorApi.class))
                     })
     })
-    @PatchMapping("/conta/{contaId}")
+    @PatchMapping("/conta")
     ResponseEntity<Void> ediatarStatusConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
                                                                @RequestHeader("x-itau-auth") String xItauAuth,
-                                                               @RequestHeader("x-account-id") String xAccountId,
-                                                               @RequestHeader("x-external-id") String xExternalId,
-                                                               @PathVariable("contaId") String contaId,
+                                                               @RequestHeader("x-account-id") String contaId,
                                                                @RequestBody ContaRequestDto requestDto);
 
     @Operation(
@@ -156,10 +148,9 @@ public interface GerenciamentoContasControllerOperations {
                             @Schema(implementation = ResponseErrorApi.class))
                     })
     })
-    @DeleteMapping("/conta/{contaId}")
+    @DeleteMapping("/conta")
     ResponseEntity<Void> apagarConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
                                      @RequestHeader("x-itau-auth") String xItauAuth,
-                                     @RequestHeader("x-account-id") String xAccountId,
-                                     @RequestHeader("x-external-id") String xExternalId,
-                                     @PathVariable("contaId") String contaId);
+                                     @RequestHeader("x-account-id") String contaId,
+    @RequestBody RequestDeleteDto request);
 }

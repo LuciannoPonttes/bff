@@ -5,16 +5,12 @@ import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.conta
 public interface ContaIassPortoAdapter {
 
     DadosResponseDto<ContaResponseDto> getConta(String xItauAuth,
-                                                String xAccountId,
-                                                String contaId,
-                                                String campos);
+                                                String contaId);
 
 
 
 
-    DadosResponseDto<ContaSaldoResponseDto> getContaSaldo(
-                                                         String xItauAuth,
-                                                         String xAccountId,
+    DadosResponseDto<ContaSaldoResponseDto> getContaSaldo(String xItauAuth,
                                                          String contaId);
 
 
@@ -22,15 +18,12 @@ public interface ContaIassPortoAdapter {
                                                            String contaId);
 
 
-    void apagarConta(String xAccountId,
-                     String xItauAuth,
-                     String xExternalId,
-                     String contaId);
+    void apagarConta(String xItauAuth,
+                     String contaId,
+    RequestDeleteDto request);
 
     void editarStatusConta(
             String xItauAuth,
-            String xAccountId,
-            String xExternalId,
             String contaId,
             ContaRequestDto requestDto);
 }

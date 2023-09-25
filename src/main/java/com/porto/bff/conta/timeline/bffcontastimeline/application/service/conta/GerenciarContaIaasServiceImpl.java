@@ -16,15 +16,11 @@ public class GerenciarContaIaasServiceImpl implements GerenciarContaIaasService{
     @Override
     public DadosResponseDto<ContaResponseDto> getConta(
             String xItauAuth,
-            String xAccountId,
-            String contaId,
-            String campos
+            String contaId
     ) {
         var respostaAdapter = adapter.getConta(
                 xItauAuth,
-                xAccountId,
-                contaId,
-                campos
+                contaId
         );
         return respostaAdapter;
     }
@@ -34,12 +30,10 @@ public class GerenciarContaIaasServiceImpl implements GerenciarContaIaasService{
     @Override
     public DadosResponseDto<ContaSaldoResponseDto> getContaSaldo(
             String xItauAuth,
-            String xAccountId,
             String contaId) {
 
         var respostaAdapter = adapter.getContaSaldo(
                  xItauAuth,
-                 xAccountId,
                  contaId);
         return respostaAdapter;
     }
@@ -55,27 +49,23 @@ public class GerenciarContaIaasServiceImpl implements GerenciarContaIaasService{
     }
 
     @Override
-    public void apagarConta(String xAccountId,
+    public void apagarConta(
                             String xItauAuth,
-                            String xExternalId,
-                            String contaId) {
+                            String contaId,
+                            RequestDeleteDto request) {
 
-        adapter.apagarConta(xAccountId, xItauAuth, xExternalId, contaId);
+        adapter.apagarConta(xItauAuth, contaId, request);
 
     }
 
     @Override
     public void editarStatusConta(
             String xItauAuth,
-            String xAccountId,
-            String xExternalId,
             String contaId,
             ContaRequestDto requestDto) {
 
         adapter.editarStatusConta(
                  xItauAuth,
-                 xAccountId,
-                 xExternalId,
                  contaId,
                  requestDto
         );
