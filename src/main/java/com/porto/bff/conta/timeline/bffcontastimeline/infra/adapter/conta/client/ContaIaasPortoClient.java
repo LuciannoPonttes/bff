@@ -6,6 +6,7 @@ import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.respon
 import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.ContaSaldoResponseIaasPorto;
 import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.DataResponseIassPorto;
 import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.ContaRequestDto;
+import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.RequestDeleteDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,7 +38,8 @@ public interface ContaIaasPortoClient {
     @DeleteMapping("${feign.client.config.porto.gerenciar.contas.endpoint}")
     void deleteByIdContaIaas(@RequestHeader(AUTHORIZATION) String xItauAuth,
                              @RequestHeader("x-accountProvider") String xAccountProvider,
-                             @PathVariable("accountId") String accountId);
+                             @PathVariable("accountId") String accountId,
+                             @RequestBody RequestDeleteDto request);
 
     @RequestMapping(value = "${feign.client.config.porto.gerenciar.contas.endpoint}", method = RequestMethod.PATCH)
     void editarStatusContaIaas(@RequestHeader(AUTHORIZATION) String xItauAuth,

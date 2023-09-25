@@ -21,7 +21,8 @@ public interface ContaIassPortoAdapter {
 
 
     void apagarConta(String xItauAuth,
-                     String contaId);
+                     String contaId,
+    RequestDeleteDto request);
 
     void editarStatusConta(
             String xItauAuth,

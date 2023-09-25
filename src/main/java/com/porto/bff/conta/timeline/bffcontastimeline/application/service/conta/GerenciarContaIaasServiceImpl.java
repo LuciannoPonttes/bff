@@ -53,9 +53,10 @@ public class GerenciarContaIaasServiceImpl implements GerenciarContaIaasService{
     @Override
     public void apagarConta(
                             String xItauAuth,
-                            String contaId) {
+                            String contaId,
+                            RequestDeleteDto request) {
 
-        adapter.apagarConta(xItauAuth, contaId);
+        adapter.apagarConta(xItauAuth, contaId, request);
 
     }
 

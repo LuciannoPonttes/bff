@@ -123,5 +123,6 @@ public interface GerenciamentoContasControllerOperations {
     @DeleteMapping("/conta/{contaId}")
     ResponseEntity<Void> apagarConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
                                      @RequestHeader("x-itau-auth") String xItauAuth,
-                                     @PathVariable("contaId") String contaId);
+                                     @PathVariable("contaId") String contaId,
+    @RequestBody RequestDeleteDto request);
 }

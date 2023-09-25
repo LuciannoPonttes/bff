@@ -57,12 +57,14 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
 
     @Override
     public void apagarConta(String xItauAuth,
-                            String contaId) {
+                            String contaId,
+                            RequestDeleteDto request) {
         try {
           client.deleteByIdContaIaas(
                     xItauAuth,
                   "IAAS",
-                    contaId
+                    contaId,
+                  request
             );
         } catch (Exception e) {
             throw new TimelineIaasPortoException("Problema gerando apagar conta Porto",

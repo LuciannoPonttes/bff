@@ -59,10 +59,11 @@ public class GerenciamentoContasController implements GerenciamentoContasControl
     }
 
     @Override
-    public ResponseEntity<Void> apagarConta(String tokenCognito, String xItauAuth, String contaId) {
+    public ResponseEntity<Void> apagarConta(String tokenCognito, String xItauAuth, String contaId, RequestDeleteDto request) {
         gerenciarContaIaasService.apagarConta(
                 xItauAuth,
-                contaId);
+                contaId,
+                request);
 
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
