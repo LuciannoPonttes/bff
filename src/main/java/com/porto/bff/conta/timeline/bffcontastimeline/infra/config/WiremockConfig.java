@@ -27,16 +27,6 @@ public class WiremockConfig {
     private WireMockServer wireMockServer;
     private ObjectWriter ow;
 
-    @Value("${feign.client.config.porto.pareamento.endpoint}")
-    private String pareamentoPortoUrl;
-
-    @Value("${feign.client.config.porto.token.endpoint}")
-    private String tokenIaaSPortoUrl;
-
-    @Value("${feign.client.config.porto.elegivel.endpoint}")
-    private String elegivelPortoUrl;
-
-
     @Value("${feign.client.config.porto.timeline.endpoint}")
     private String timelinePortoUrl;
 

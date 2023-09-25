@@ -7,7 +7,28 @@ spec:
   rules:
     - http:
         paths:
-          - path: /cliente/v3/conta-digital/gerenciar/contas/{accountId}
+          - path: /portobank/v3/conta-digital/gerenciamento/conta/{accountId}
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: bff-conta-digital-gerenciar
+                port:
+                  number: 8080
+          - path: /portobank/v3/conta-digital/gerenciamento/conta/{accountId}/sumario
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: bff-conta-digital-gerenciar
+                port:
+                  number: 8080
+          - path: /portobank/v3/conta-digital/gerenciamento/conta/{accountId}/saldo
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: bff-conta-digital-gerenciar
+                port:
+                  number: 8080
+          - path: /portobank/v3/conta-digital/timeline/contas/{accountId}
             pathType: ImplementationSpecific
             backend:
               service:
@@ -21,12 +42,12 @@ metadata:
   name: bff-conta-digital-gerenciar-ingress-swagger
   namespace: ns-conta-digital-gerenciar
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /cliente/v3/api-docs
+    nginx.ingress.kubernetes.io/rewrite-target: /portobank/v3/api-docs
 spec:
   rules:
     - http:
         paths:
-          - path: /cliente/swagger-ui/index.html#/
+          - path: /portobank/swagger-ui/index.html#/
             pathType: ImplementationSpecific
             backend:
               service:
