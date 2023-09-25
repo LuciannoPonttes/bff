@@ -49,41 +49,7 @@ public interface GerenciamentoContasControllerOperations {
     @GetMapping("/conta/{contaId}")
     ResponseEntity<DadosResponseDto<ContaResponseDto>> buscarConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
                                                                    @RequestHeader("x-itau-auth") String xItauAuth,
-                                                                   @RequestHeader("x-account-id") String xAccountId,
-                                                                   @PathVariable("contaId") String contaId,
-                                                                   @RequestParam(required = false) String campos);
-
-    @Operation(
-            summary = "Consulta de saldo",
-            description = "para acessar tem que ter o escopo tipo iaas-accounts.read",
-            tags = { "Gerenciar" }
-    )
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Sucesso"),
-            @ApiResponse(responseCode = "400", description = "Parâmetros obrigatórios não enviados", content =
-                    {
-                            @Content(mediaType = "application/json", schema =
-                            @Schema(implementation = ResponseErrorApi.class))
-                    }),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor", content =
-                    {
-                            @Content(mediaType = "application/json", schema =
-                            @Schema(implementation = ResponseErrorApi.class))
-                    })
-    })
-    @GetMapping("/conta/{contaId}/saldo")
-    ResponseEntity<DadosResponseDto<ContaSaldoResponseDto>> consultarSaldoConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
-                                                                                @RequestHeader("x-itau-auth") String xItauAuth,
-                                                                                @RequestHeader("x-account-id") String xAccountId,
-                                                                                @PathVariable("contaId") String contaId);
-
-
-
-
-
-
-
-
+                                                                   @PathVariable("contaId") String contaId);
 
     @Operation(
             summary = "Consulta do sumario",
@@ -133,8 +99,6 @@ public interface GerenciamentoContasControllerOperations {
     @PatchMapping("/conta/{contaId}")
     ResponseEntity<Void> ediatarStatusConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
                                                                @RequestHeader("x-itau-auth") String xItauAuth,
-                                                               @RequestHeader("x-account-id") String xAccountId,
-                                                               @RequestHeader("x-external-id") String xExternalId,
                                                                @PathVariable("contaId") String contaId,
                                                                @RequestBody ContaRequestDto requestDto);
 
@@ -159,7 +123,5 @@ public interface GerenciamentoContasControllerOperations {
     @DeleteMapping("/conta/{contaId}")
     ResponseEntity<Void> apagarConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
                                      @RequestHeader("x-itau-auth") String xItauAuth,
-                                     @RequestHeader("x-account-id") String xAccountId,
-                                     @RequestHeader("x-external-id") String xExternalId,
                                      @PathVariable("contaId") String contaId);
 }

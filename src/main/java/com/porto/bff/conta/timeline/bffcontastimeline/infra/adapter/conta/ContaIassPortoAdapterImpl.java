@@ -36,17 +36,12 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
     @Override
     public DadosResponseDto<ContaResponseDto> getConta(
             String xItauAuth,
-            String xAccountId,
-            String contaId,
-            String campos) {
+            String contaId) {
 
         try {
             var responseIaas = client.findByIdContaIaas(
-                    xItauAuth,
-                    "IAAS",
-                    xAccountId,
-                    contaId,
-                    campos
+                    xItauAuth, "IAAS",
+                    contaId
             );
             var reponse = converteRespostaContaIaas(responseIaas);
             return reponse;
@@ -61,16 +56,12 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
     }
 
     @Override
-    public void apagarConta(String xAccountId,
-                            String xItauAuth,
-                            String xExternalId,
+    public void apagarConta(String xItauAuth,
                             String contaId) {
         try {
           client.deleteByIdContaIaas(
                     xItauAuth,
                   "IAAS",
-                    xAccountId,
-                    xExternalId,
                     contaId
             );
         } catch (Exception e) {
@@ -86,8 +77,6 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
     @Override
     public void editarStatusConta(
             String xItauAuth,
-            String xAccountId,
-            String xExternalId,
             String contaId,
             ContaRequestDto requestDto) {
 
@@ -95,8 +84,6 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
             client.editarStatusContaIaas(
                     xItauAuth,
                     "IAAS",
-                    xAccountId,
-                    xExternalId,
                     contaId,
                     requestDto
             );
@@ -144,7 +131,7 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
 
 
         try {
-            var conta = getConta(xItauAuth, contaId, contaId, null);
+            var conta = getConta(xItauAuth, contaId);
             var contaSaldo = getContaSaldo(xItauAuth,contaId, contaId);
 
             DadosResponseDto<ContaSumarioResponseDto> reponse = getSumarioContaConverte(conta, contaSaldo);
