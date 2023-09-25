@@ -18,7 +18,7 @@ public class GerenciamentoContasController implements GerenciamentoContasControl
 
 
     @Override
-    public ResponseEntity<DadosResponseDto<ContaResponseDto>> buscarConta(
+    public ResponseEntity<DadosResponseDto<ContaResponseDto>> dadosConta(
             String tokenCognito,
             String xItauAuth,
             String contaId) {
@@ -54,7 +54,7 @@ public class GerenciamentoContasController implements GerenciamentoContasControl
 
         return ResponseEntity.status(HttpStatus.OK).body(responseService);
     }
-
+/*
     @Override
     public ResponseEntity<Void> ediatarStatusConta(String tokenCognito, String xItauAuth, String contaId, ContaRequestDto requestDto) {
         gerenciarContaIaasService.editarStatusConta(
@@ -78,7 +78,7 @@ public class GerenciamentoContasController implements GerenciamentoContasControl
     }
 
 
-
+*/
 
 
 }
