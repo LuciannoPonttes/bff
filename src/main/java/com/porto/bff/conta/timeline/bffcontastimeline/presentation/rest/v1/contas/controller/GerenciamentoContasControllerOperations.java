@@ -18,7 +18,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 
 
-@RequestMapping("v3/conta-digital/gerenciamento")
+@RequestMapping("v3/conta-digital/gerenciar")
 @OpenAPIDefinition(
         info = @Info(
                 title = API_DOC_TITLE,
@@ -46,8 +46,8 @@ public interface GerenciamentoContasControllerOperations {
                             @Schema(implementation = ResponseErrorApi.class))
                     })
     })
-    @GetMapping("/conta")
-    ResponseEntity<DadosResponseDto<ContaResponseDto>> buscarConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
+    @GetMapping("/dados-conta")
+    ResponseEntity<DadosResponseDto<ContaResponseDto>> dadosConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
                                                                    @RequestHeader("x-itau-auth") String xItauAuth,
                                                                    @RequestHeader("x-account-id") String contaId);
 
@@ -72,7 +72,7 @@ public interface GerenciamentoContasControllerOperations {
                             @Schema(implementation = ResponseErrorApi.class))
                     })
     })
-    @GetMapping("/conta/saldo")
+    @GetMapping("/saldo")
     ResponseEntity<DadosResponseDto<ContaSaldoResponseDto>> saldoConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
                                                                        @RequestHeader("x-itau-auth") String xItauAuth,
                                                                        @RequestHeader("x-account-id") String contaId);
@@ -97,13 +97,13 @@ public interface GerenciamentoContasControllerOperations {
                             @Schema(implementation = ResponseErrorApi.class))
                     })
     })
-    @GetMapping("/conta/sumario")
+    @GetMapping("/sumario")
     ResponseEntity<DadosResponseDto<ContaSumarioResponseDto>> sumarioConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
                                                                                 @RequestHeader("x-itau-auth") String xItauAuth,
                                                                                 @RequestHeader("x-account-id") String contaId);
 
 
-
+/*
 
 
     @Operation(
@@ -153,4 +153,7 @@ public interface GerenciamentoContasControllerOperations {
                                      @RequestHeader("x-itau-auth") String xItauAuth,
                                      @RequestHeader("x-account-id") String contaId,
     @RequestBody RequestDeleteDto request);
+
+
+ */
 }
