@@ -29,6 +29,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
 
     private final ContaIaasPortoClient client;
+    private static String BEARER = "Bearer ";
 
     @Value("${feign.client.config.porto.gerenciar.contas.saldo.endpoint}")
     private String contaSaldoFindIdPortoUrl;
@@ -36,17 +37,12 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
     @Override
     public DadosResponseDto<ContaResponseDto> getConta(
             String xItauAuth,
-            String xAccountId,
-            String contaId,
-            String campos) {
+            String contaId) {
 
         try {
             var responseIaas = client.findByIdContaIaas(
-                    xItauAuth,
-                    "IAAS",
-                    xAccountId,
-                    contaId,
-                    campos
+                    getBearerInput(xItauAuth), "IAAS",
+                    contaId
             );
             var reponse = converteRespostaContaIaas(responseIaas);
             return reponse;
@@ -61,17 +57,15 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
     }
 
     @Override
-    public void apagarConta(String xAccountId,
-                            String xItauAuth,
-                            String xExternalId,
-                            String contaId) {
+    public void apagarConta(String xItauAuth,
+                            String contaId,
+                            RequestDeleteDto request) {
         try {
           client.deleteByIdContaIaas(
                     xItauAuth,
                   "IAAS",
-                    xAccountId,
-                    xExternalId,
-                    contaId
+                    contaId,
+                  request
             );
         } catch (Exception e) {
             throw new TimelineIaasPortoException("Problema gerando apagar conta Porto",
@@ -86,17 +80,13 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
     @Override
     public void editarStatusConta(
             String xItauAuth,
-            String xAccountId,
-            String xExternalId,
             String contaId,
             ContaRequestDto requestDto) {
 
         try {
             client.editarStatusContaIaas(
-                    xItauAuth,
+                    getBearerInput(xItauAuth),
                     "IAAS",
-                    xAccountId,
-                    xExternalId,
                     contaId,
                     requestDto
             );
@@ -116,15 +106,13 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
     @Override
     public DadosResponseDto<ContaSaldoResponseDto> getContaSaldo(
             String xItauAuth,
-            String xAccountId,
             String contaId) {
 
 
         try {
             var responseIaas = client.findBySaldoContaIaas(
-                    xItauAuth,
+                    getBearerInput(xItauAuth),
                     "IAAS",
-                    xAccountId,
                     contaId
             );
             var reponse = converteRespostaContaSaldoIaas(responseIaas);
@@ -144,8 +132,8 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
 
 
         try {
-            var conta = getConta(xItauAuth, contaId, contaId, null);
-            var contaSaldo = getContaSaldo(xItauAuth,contaId, contaId);
+            var conta = getConta( getBearerInput(xItauAuth), contaId);
+            var contaSaldo = getContaSaldo( getBearerInput(xItauAuth),contaId);
 
             DadosResponseDto<ContaSumarioResponseDto> reponse = getSumarioContaConverte(conta, contaSaldo);
             return reponse;
@@ -204,5 +192,10 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
                 );
 
         return new DadosResponseDto(contaResponseDto);
+    }
+
+    private String getBearerInput(String xItauAuth) {
+        var resposta = BEARER+xItauAuth;
+        return resposta;
     }
 }

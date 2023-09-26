@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.github.tomakehurst.wiremock.WireMockServer;
-import com.porto.bff.conta.timeline.bffcontastimeline.application.service.timeline.model.TimelineIaasResponse;
 import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.AccountResponseIaasPorto;
 import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.BankAccountResponseIassPorto;
 import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.ContaSaldoResponseIaasPorto;
@@ -45,7 +44,6 @@ public class WiremockConfig {
             wireMockServer.start();
 
             // Stubs
-            timelineIaaSStub();
             findIdContaIaaSStub();
             deleteContaIaaSStub();
             saldoContaIaaSStub();
@@ -56,18 +54,7 @@ public class WiremockConfig {
     }
 
 
-    private void timelineIaaSStub() throws JsonProcessingException {
-        var timelineResponse = TimelineIaasResponse.builder()
-                .onboardingId("a81ff07a-a0c1-428e-9908-0e8199b228e1")
-                .provider("account-pf")
-                .status("InProgress")
-                .build();
-        wireMockServer
-                .stubFor(get(urlEqualTo("/porto-backend/v1/accounts/1/search"))
-                        .willReturn(aResponse()
-                                .withHeader("Content-Type", "application/json")
-                                .withBody(ow.writeValueAsString(timelineResponse))));
-    }
+
 
     private void findIdContaIaaSStub() throws JsonProcessingException {
         var contaBancariaDto = new BankAccountResponseIassPorto("Portoseg S.A.", "Porto", "123456", "8");

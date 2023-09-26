@@ -9,15 +9,12 @@ public interface GerenciarContaIaasService {
 
     DadosResponseDto<ContaResponseDto> getConta(
             String xItauAuth,
-            String xAccountId,
-            String contaId,
-            String campos
+            String contaId
     );
 
 
     DadosResponseDto<ContaSaldoResponseDto> getContaSaldo(
             String xItauAuth,
-            String xAccountId,
             String contaId
     );
 
@@ -29,14 +26,11 @@ public interface GerenciarContaIaasService {
     );
 
     void apagarConta(String xItauAuth,
-                     String xAccountId,
-                     String xExternalId,
-                     String contaId);
+                     String contaId,
+                     RequestDeleteDto request);
 
     void editarStatusConta(
             String xItauAuth,
-            String xAccountId,
-            String xExternalId,
             String contaId,
             ContaRequestDto requestDto
     );
