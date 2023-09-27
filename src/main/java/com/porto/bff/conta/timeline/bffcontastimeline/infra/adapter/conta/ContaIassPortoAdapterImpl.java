@@ -6,6 +6,7 @@ import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.client
 import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.AccountResponseIaasPorto;
 import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.ContaSaldoResponseIaasPorto;
 import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.DataResponseIassPorto;
+import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.saldo.AccountData;
 import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.*;
 import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.exception.TimelineIaasPortoException;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ import java.net.URI;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
@@ -112,10 +114,10 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
         try {
             var responseIaas = client.findBySaldoContaIaas(
                     getBearerInput(xItauAuth),
-                    "IAAS",
                     contaId
             );
-            var reponse = converteRespostaContaSaldoIaas(responseIaas);
+            System.out.println(responseIaas);
+             var reponse = converteRespostaContaSaldoIaas(responseIaas);
             return reponse;
         } catch (Exception e) {
             throw new TimelineIaasPortoException("Problema gerando no gerenciamento da consulta do buscar saldo da Porto",
@@ -163,13 +165,18 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
         return new DadosResponseDto(contaSumarioResponseDto);
     }
 
-    private DadosResponseDto<ContaSaldoResponseDto> converteRespostaContaSaldoIaas(DataResponseIassPorto<ContaSaldoResponseIaasPorto> porto) {
+    private DadosResponseDto<ContaSaldoResponseDto> converteRespostaContaSaldoIaas(AccountData porto) {
+       var limit =  porto.getData().getAccount().getLimits().stream()
+               .findFirst().stream().collect(Collectors.toList());
+
         var contaSaldoDto = new ContaSaldoResponseDto(
-                porto.data().accountId(),
-                porto.data().available(),
-                porto.data().reserved(),
-                porto.data().blocked()
-                );
+                limit.get(0).getId(),
+                limit.get(0).getAvailableAmount(),
+                limit.get(0).getCustomerChosenAmount(),
+                limit.get(0).getMinDefaultValue(),
+                limit.get(0).getMaxDefaultValue()
+        );
+
         var contaSaldo = new DadosResponseDto<>(contaSaldoDto);
 
         return contaSaldo;
