@@ -113,10 +113,9 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
 
         try {
             var responseIaas = client.findBySaldoContaIaas(
-                    getBearerInput(xItauAuth),
+                    xItauAuth,
                     contaId
             );
-            System.out.println(responseIaas);
              var reponse = converteRespostaContaSaldoIaas(responseIaas);
             return reponse;
         } catch (Exception e) {
