@@ -47,7 +47,7 @@ public interface GerenciamentoContasControllerOperations {
                     })
     })
     @GetMapping("/dados-conta")
-    ResponseEntity<DadosResponseDto<ContaResponseDto>> dadosConta(@RequestHeader(value = AUTHORIZATION, required = false) String tokenCognito,
+    ResponseEntity<DadosResponseDto<ContaResponseDto>> dadosConta(@RequestHeader(value = AUTHORIZATION) String tokenCognito,
                                                                    @RequestHeader(value = "x-itau-auth", required = false) String xItauAuth,
                                                                    @RequestHeader(value = "x-account-id", required = false) String contaId);
 
@@ -73,7 +73,7 @@ public interface GerenciamentoContasControllerOperations {
                     })
     })
     @GetMapping("/saldo")
-    ResponseEntity<DadosResponseDto<ContaSaldoResponseDto>> saldoConta(@RequestHeader(value = AUTHORIZATION, required = false) String tokenCognito,
+    ResponseEntity<DadosResponseDto<ContaSaldoResponseDto>> saldoConta(@RequestHeader(value = AUTHORIZATION) String tokenCognito,
                                                                        @RequestHeader(value = "x-itau-auth", required = false) String xItauAuth,
                                                                        @RequestHeader(value = "x-account-id", required = false) String contaId);
 
@@ -98,7 +98,7 @@ public interface GerenciamentoContasControllerOperations {
                     })
     })
     @GetMapping("/sumario")
-    ResponseEntity<DadosResponseDto<ContaSumarioResponseDto>> sumarioConta(@RequestHeader(value = AUTHORIZATION, required = false) String tokenCognito,
+    ResponseEntity<DadosResponseDto<ContaSumarioResponseDto>> sumarioConta(@RequestHeader(value = AUTHORIZATION) String tokenCognito,
                                                                            @RequestHeader(value = "x-itau-auth", required = false) String xItauAuth,
                                                                            @RequestHeader(value = "x-account-id", required = false) String contaId);
 
