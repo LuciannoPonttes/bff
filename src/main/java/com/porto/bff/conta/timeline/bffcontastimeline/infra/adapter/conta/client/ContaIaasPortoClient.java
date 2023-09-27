@@ -1,10 +1,10 @@
 package com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.client;
 
 
-import com.porto.bff.conta.timeline.bffcontastimeline.domain.model.conta.DadosContaDomain;
 import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.AccountResponseIaasPorto;
-import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.ContaSaldoResponseIaasPorto;
 import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.DataResponseIassPorto;
+import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.saldo.AccountData;
+import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.saldo.Data;
 import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.ContaRequestDto;
 import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.RequestDeleteDto;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -29,9 +29,8 @@ public interface ContaIaasPortoClient {
 
 
     @GetMapping("${feign.client.config.porto.gerenciar.contas.saldo.endpoint}")
-    DataResponseIassPorto<ContaSaldoResponseIaasPorto> findBySaldoContaIaas(@RequestHeader(AUTHORIZATION) String xItauAuth,
-                                                                       @RequestHeader("x-accountProvider") String xAccountProvider,
-                                                                       @PathVariable("accountId") String accountId);
+    AccountData  findBySaldoContaIaas(@RequestHeader(AUTHORIZATION) String xItauAuth,
+                              @RequestHeader("x-account-id") String accountId);
 
 
     @DeleteMapping("${feign.client.config.porto.gerenciar.contas.endpoint}")
