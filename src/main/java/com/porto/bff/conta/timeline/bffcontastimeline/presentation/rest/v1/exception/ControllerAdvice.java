@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @org.springframework.web.bind.annotation.ControllerAdvice
@@ -16,7 +17,7 @@ public class ControllerAdvice {
                 .body(ResponseErrorApi.builder()
                         .code(ex.getCode())
                         .message(ex.getMessage())
-                        .errors(convertPareamentoPortoErrors(ex.getErrors()))
+                        .erros(convertPareamentoPortoErrors(ex.getErrors()))
                         .build());
     }
 
@@ -27,24 +28,29 @@ public class ControllerAdvice {
                 .body(ResponseErrorApi.builder()
                         .code(ex.getCode())
                         .message(ex.getMessage())
-                        .errors(convertTokenIaasPortoErrors(ex.getErros()))
+                        .erros(convertTokenIaasPortoErrors(ex.getErros()))
                         .build());
     }
 
     private List<ResponseErrorApi.ResponseErrorItem> convertPareamentoPortoErrors(List<PareamentoPortoException.PareamentoPortoErroItem> itemsError) {
         return itemsError.stream().map(itemError -> ResponseErrorApi.ResponseErrorItem.builder()
-                .field(itemError.getField())
-                .message(itemError.getMessage())
+                .campo(itemError.getField())
+                .mensagens(getMensagenError(itemError.getMessage()))
                 .build()
         ).toList();
     }
 
     private List<ResponseErrorApi.ResponseErrorItem> convertTokenIaasPortoErrors(List<TimelineIaasPortoException.TimelineIaasPortoErroItem> itemsError) {
         return itemsError.stream().map(itemError -> ResponseErrorApi.ResponseErrorItem.builder()
-                .field(itemError.getCampo())
-                .message(itemError.getMensagens().get(0))
+                .campo(itemError.getCampo())
+                .mensagens(getMensagenError(itemError.getMensagens().get(0)))
                 .build()
         ).toList();
     }
 
+    private List<String> getMensagenError(String msg) {
+        List<String> mensagen = new ArrayList<>();
+        mensagen.add(msg);
+        return mensagen;
+    }
 }
