@@ -15,9 +15,7 @@ public class ControllerAdvice {
         return ResponseEntity
                 .status(HttpStatusCode.valueOf(407))
                 .body(ResponseErrorApi.builder()
-                        .code(ex.getCode())
-                        .message(ex.getMessage())
-                        .erros(convertPareamentoPortoErrors(ex.getErrors()))
+                        .erros(convertPareamentoPortoErrors(ex.getErros()))
                         .build());
     }
 
@@ -26,8 +24,6 @@ public class ControllerAdvice {
         return ResponseEntity
                 .status(HttpStatusCode.valueOf(407))
                 .body(ResponseErrorApi.builder()
-                        .code(ex.getCode())
-                        .message(ex.getMessage())
                         .erros(convertTokenIaasPortoErrors(ex.getErros()))
                         .build());
     }
