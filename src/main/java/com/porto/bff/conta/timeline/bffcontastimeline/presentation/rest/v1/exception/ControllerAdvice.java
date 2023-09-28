@@ -27,7 +27,7 @@ public class ControllerAdvice {
                 .body(ResponseErrorApi.builder()
                         .code(ex.getCode())
                         .message(ex.getMessage())
-                        .errors(convertTokenIaasPortoErrors(ex.getErrors()))
+                        .errors(convertTokenIaasPortoErrors(ex.getErros()))
                         .build());
     }
 
@@ -41,8 +41,8 @@ public class ControllerAdvice {
 
     private List<ResponseErrorApi.ResponseErrorItem> convertTokenIaasPortoErrors(List<TimelineIaasPortoException.TimelineIaasPortoErroItem> itemsError) {
         return itemsError.stream().map(itemError -> ResponseErrorApi.ResponseErrorItem.builder()
-                .field(itemError.getField())
-                .message(itemError.getMessage())
+                .field(itemError.getCampo())
+                .message(itemError.getMensagens().get(0))
                 .build()
         ).toList();
     }
