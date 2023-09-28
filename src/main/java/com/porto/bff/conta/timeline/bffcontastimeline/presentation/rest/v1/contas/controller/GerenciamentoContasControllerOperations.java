@@ -47,9 +47,9 @@ public interface GerenciamentoContasControllerOperations {
                     })
     })
     @GetMapping("/dados-conta")
-    ResponseEntity<DadosResponseDto<ContaResponseDto>> dadosConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
-                                                                   @RequestHeader("x-itau-auth") String xItauAuth,
-                                                                   @RequestHeader("x-account-id") String contaId);
+    ResponseEntity<DadosResponseDto<ContaResponseDto>> dadosConta(@RequestHeader(value = AUTHORIZATION) String tokenCognito,
+                                                                   @RequestHeader(value = "x-itau-auth", required = false) String xItauAuth,
+                                                                   @RequestHeader(value = "x-account-id", required = false) String contaId);
 
 
 
@@ -73,9 +73,9 @@ public interface GerenciamentoContasControllerOperations {
                     })
     })
     @GetMapping("/saldo")
-    ResponseEntity<DadosResponseDto<ContaSaldoResponseDto>> saldoConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
-                                                                       @RequestHeader("x-itau-auth") String xItauAuth,
-                                                                       @RequestHeader("x-account-id") String contaId);
+    ResponseEntity<DadosResponseDto<ContaSaldoResponseDto>> saldoConta(@RequestHeader(value = AUTHORIZATION) String tokenCognito,
+                                                                       @RequestHeader(value = "x-itau-auth", required = false) String xItauAuth,
+                                                                       @RequestHeader(value = "x-account-id", required = false) String contaId);
 
 
 
@@ -98,9 +98,9 @@ public interface GerenciamentoContasControllerOperations {
                     })
     })
     @GetMapping("/sumario")
-    ResponseEntity<DadosResponseDto<ContaSumarioResponseDto>> sumarioConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
-                                                                                @RequestHeader("x-itau-auth") String xItauAuth,
-                                                                                @RequestHeader("x-account-id") String contaId);
+    ResponseEntity<DadosResponseDto<ContaSumarioResponseDto>> sumarioConta(@RequestHeader(value = AUTHORIZATION) String tokenCognito,
+                                                                           @RequestHeader(value = "x-itau-auth", required = false) String xItauAuth,
+                                                                           @RequestHeader(value = "x-account-id", required = false) String contaId);
 
 
 /*
