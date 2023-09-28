@@ -83,12 +83,12 @@ public class GerenciarContaIaasServiceImpl implements GerenciarContaIaasService{
         List<TimelineIaasPortoException.TimelineIaasPortoErroItem> errors = new ArrayList<>();
         try {
             if(xItauAuth.isEmpty() || contaId.isEmpty()) {
-                throw new TimelineIaasPortoException("Campos obrigatorios", "407", errors);
+                throw new TimelineIaasPortoException(errors);
             } else {
                 return true;
             }
         }catch (Exception e) {
-            throw new TimelineIaasPortoException("Campos obrigatorios", "407", errors);
+            throw new TimelineIaasPortoException(errors);
         }
     }
 }

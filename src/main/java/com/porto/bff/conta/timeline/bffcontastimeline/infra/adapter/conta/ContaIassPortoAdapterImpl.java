@@ -48,8 +48,7 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
             return reponse;
         } catch (Exception e) {
 
-            throw new TimelineIaasPortoException("Problema gerando ao consultar dados da conta Porto.",
-                    "407",
+            throw new TimelineIaasPortoException(
                     Collections.singletonList(TimelineIaasPortoException.TimelineIaasPortoErroItem.builder()
                             .campo("accessToken")
                             .mensagens(getMensagenError())
@@ -70,8 +69,7 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
             );
         } catch (Exception e) {
 
-            throw new TimelineIaasPortoException("Problema gerando apagar conta Porto",
-                    "407",
+            throw new TimelineIaasPortoException(
                     Collections.singletonList(TimelineIaasPortoException.TimelineIaasPortoErroItem.builder()
                             .campo("accessToken")
                             .mensagens(getMensagenError())
@@ -94,8 +92,7 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
             );
 
         } catch (Exception e) {
-            throw new TimelineIaasPortoException("Problema gerando no editar status da conta Porto",
-                    "407",
+            throw new TimelineIaasPortoException(
                     Collections.singletonList(TimelineIaasPortoException.TimelineIaasPortoErroItem.builder()
                             .campo("accessToken")
                             .mensagens(getMensagenError())
@@ -119,8 +116,7 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
              var reponse = converteRespostaContaSaldoIaas(responseIaas);
             return reponse;
         } catch (Exception e) {
-            throw new TimelineIaasPortoException("Problema gerando no gerenciamento da consulta do buscar saldo da Porto",
-                    "407",
+            throw new TimelineIaasPortoException(
                     Collections.singletonList(TimelineIaasPortoException.TimelineIaasPortoErroItem.builder()
                             .campo("accessToken")
                             .mensagens(getMensagenError())
@@ -139,8 +135,7 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
             DadosResponseDto<ContaSumarioResponseDto> reponse = getSumarioContaConverte(conta, contaSaldo);
             return reponse;
         } catch (Exception e) {
-            throw new TimelineIaasPortoException("Problema gerando no gerenciamento da consulta do buscar saldo da Porto",
-                    "407",
+            throw new TimelineIaasPortoException(
                     Collections.singletonList(TimelineIaasPortoException.TimelineIaasPortoErroItem.builder()
                             .campo("accessToken")
                             .mensagens(getMensagenError())

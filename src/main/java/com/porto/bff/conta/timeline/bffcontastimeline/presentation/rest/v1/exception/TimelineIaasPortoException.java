@@ -9,13 +9,10 @@ import java.util.List;
 public class TimelineIaasPortoException extends RuntimeException{
 
 
-    private String code;
-    private List<TimelineIaasPortoErroItem> erros;
-    private String message;
 
-    public TimelineIaasPortoException(String message, String code, List<TimelineIaasPortoErroItem> erros) {
-        this.code = code;
-        this.message = message;
+    private List<TimelineIaasPortoErroItem> erros;
+
+    public TimelineIaasPortoException( List<TimelineIaasPortoErroItem> erros) {
         this.erros = erros;
     }
 
