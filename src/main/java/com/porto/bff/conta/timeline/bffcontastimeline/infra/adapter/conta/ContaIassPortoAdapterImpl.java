@@ -201,6 +201,9 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
     }
 
     private String getBearerInput(String xItauAuth) {
+        if (xItauAuth.contains("Bearer")) {
+            return xItauAuth;
+        }
         var resposta = BEARER+xItauAuth;
         return resposta;
     }
