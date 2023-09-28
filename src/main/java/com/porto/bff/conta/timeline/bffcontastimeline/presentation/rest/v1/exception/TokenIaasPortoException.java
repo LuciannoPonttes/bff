@@ -8,20 +8,16 @@ import java.util.List;
 @Data
 public class TokenIaasPortoException extends RuntimeException {
 
-    private String code;
-    private List<TokenIaasPortoErroItem> errors;
-    private String message;
+    private List<TokenIaasPortoErroItem> erros;
 
-    public TokenIaasPortoException(String message, String code, List<TokenIaasPortoErroItem> errors) {
-        this.code = code;
-        this.message = message;
-        this.errors = errors;
+    public TokenIaasPortoException( List<TokenIaasPortoErroItem> errors) {
+        this.erros = erros;
     }
 
     @Data
     @Builder
     public static class TokenIaasPortoErroItem {
-        private String field;
-        private String message;
+        private String campo;
+        private List<String> mensagens;
     }
 }
