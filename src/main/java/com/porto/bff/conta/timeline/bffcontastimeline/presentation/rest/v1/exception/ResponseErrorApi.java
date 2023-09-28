@@ -12,7 +12,7 @@ public class ResponseErrorApi {
 
     private String code;
     private String message;
-    private List<ResponseErrorItem> errors = new ArrayList<>();
+    private List<ResponseErrorItem> erros = new ArrayList<>();
 
     public ResponseErrorApi(String message, String code) {
         this.code = code;
@@ -22,15 +22,15 @@ public class ResponseErrorApi {
     public ResponseErrorApi(String message, String code, List<ResponseErrorItem> errors) {
         this.code = code;
         this.message = message;
-        this.errors = errors;
+        this.erros = errors;
     }
 
     @Data
     @Builder
     public static class ResponseErrorItem {
 
-        private String field;
-        private String message;
+        private String campo;
+        private List<String> mensagens;
 
     }
 }

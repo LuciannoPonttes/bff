@@ -13,10 +13,10 @@ public class TimelineIaasPortoException extends RuntimeException{
     private List<TimelineIaasPortoErroItem> erros;
     private String message;
 
-    public TimelineIaasPortoException(String message, String code, List<TimelineIaasPortoErroItem> errors) {
+    public TimelineIaasPortoException(String message, String code, List<TimelineIaasPortoErroItem> erros) {
         this.code = code;
         this.message = message;
-        this.erros = errors;
+        this.erros = erros;
     }
 
     @Data
