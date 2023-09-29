@@ -22,7 +22,7 @@ public class ControllerAdvice {
     @ExceptionHandler(TimelineIaasPortoException.class)
     public ResponseEntity<ResponseErrorApi> handleTokenIaaSException(TimelineIaasPortoException ex) {
         return ResponseEntity
-                .status(HttpStatusCode.valueOf(407))
+                .status(HttpStatusCode.valueOf(500)) // TODO: 29/09/2023 ALTERAR PARA 407
                 .body(ResponseErrorApi.builder()
                         .erros(convertTokenIaasPortoErrors(ex.getErros()))
                         .build());
