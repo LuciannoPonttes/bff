@@ -6,7 +6,8 @@ public record ContaSumarioResponseDto(
         String agencia,
         String conta,
         String saldo,
-        String statusConta
+        String statusConta,
+        String documento
 
 ) {
 }

@@ -1,7 +1,7 @@
 package com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.decodertoken;
 
 import com.porto.experiencia.cliente.cartoes.commons.domain.BusinessException;
-import com.porto.experiencia.cliente.cartoes.commons.web.tokendecoder.AccessTokenDecoder;
+import com.porto.experiencia.cliente.conta.digital.commons.web.tokendecoder.AccessTokenDecoder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

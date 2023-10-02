@@ -1,8 +1,5 @@
 package com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.saldo;
 
-import java.util.List;
-
-
 public class AccountData {
     private Data data;
 

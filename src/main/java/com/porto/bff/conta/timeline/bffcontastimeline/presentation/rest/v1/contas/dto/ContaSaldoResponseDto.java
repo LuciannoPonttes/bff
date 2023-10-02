@@ -4,7 +4,6 @@ public record ContaSaldoResponseDto(
         String contaId,
         double disponivel,
         double reservada,
-        double bloqueado,
-        double valorPadraoMaximo) {
+        double bloqueado) {
 }
 
