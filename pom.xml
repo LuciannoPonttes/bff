@@ -62,6 +62,16 @@
             <groupId>com.porto.experiencia.cliente.superapp.cartoes</groupId>
             <artifactId>cartoes-commons-domain</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.porto.experiencia.cliente.superapp.conta.digital</groupId>
+            <artifactId>conta-digital-commons-web</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.porto.experiencia.cliente.superapp.conta.digital</groupId>
+            <artifactId>conta-digital-commons-domain</artifactId>
+            <version>1.0.0</version>
+        </dependency>
         <!-- Spring Boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
