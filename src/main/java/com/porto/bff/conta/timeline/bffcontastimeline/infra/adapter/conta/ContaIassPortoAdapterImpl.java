@@ -90,7 +90,7 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
 
     private DadosResponseDto<ContaSaldoResponseDto> converteRespostaContaSaldoIaas(DataResponseIassPorto<Balance> balance) {
         var contaSaldoDto = new ContaSaldoResponseDto(
-                balance.data().accounId(),
+                balance.data().accountId(),
                 balance.data().available(),
                 balance.data().reserved(),
                 balance.data().blocked());
