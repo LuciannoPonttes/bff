@@ -1,16 +1,18 @@
 package com.porto.bff.conta.timeline.bffcontastimeline;
 
 import com.porto.experiencia.cliente.cartoes.commons.openapi.EnableCartoesOpenApi;
+import com.porto.experiencia.cliente.conta.digital.commons.feign.client.EnableContaDigitalFeignClient;
+import com.porto.experiencia.cliente.conta.digital.commons.openapi.EnableContaDigitalOpenApi;
 import com.porto.experiencia.cliente.conta.digital.commons.web.EnableBffContaDigitalWebHandler;
 import com.porto.experiencia.cliente.conta.digital.commons.web.exceptionhandler.EnableBffContaDigitalErrorHandler;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
-@EnableCartoesOpenApi
+@EnableContaDigitalOpenApi
 @EnableBffContaDigitalWebHandler
 @EnableBffContaDigitalErrorHandler
-@EnableFeignClients
+@EnableContaDigitalFeignClient
 @SpringBootApplication
 public class BffContaDigitalGerenciarApplication {
 
