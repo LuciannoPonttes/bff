@@ -72,6 +72,28 @@
             <artifactId>conta-digital-commons-domain</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.porto.experiencia.cliente.superapp.conta.digital</groupId>
+            <artifactId>conta-digital-commons-feign-client</artifactId>
+            <version>1.0.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-fileupload</groupId>
+                    <artifactId>commons-fileupload</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.porto.experiencia.cliente.superapp.conta.digital</groupId>
+            <artifactId>conta-digital-commons-openapi</artifactId>
+            <version>1.0.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.yaml</groupId>
+                    <artifactId>snakeyaml</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <!-- Spring Boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
