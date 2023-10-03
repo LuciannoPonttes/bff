@@ -5,6 +5,7 @@ public record ContaSumarioResponseDto(
         String codigoBanco,
         String agencia,
         String conta,
+        String digitoConta,
         String saldo,
         String statusConta,
         String documento
