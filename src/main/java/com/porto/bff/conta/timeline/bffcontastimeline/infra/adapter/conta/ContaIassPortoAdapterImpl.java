@@ -24,7 +24,6 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
 
     private final ContaIaasPortoClient client;
     private final DecodificarAccessToken decodificador;
-    private static String BEARER = "Bearer ";
 
     @Value("${feign.client.config.porto.gerenciar.contas.saldo.endpoint}")
     private String contaSaldoFindIdPortoUrl;
@@ -90,7 +89,7 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
 
     private DadosResponseDto<ContaSaldoResponseDto> converteRespostaContaSaldoIaas(DataResponseIassPorto<Balance> balance) {
         var contaSaldoDto = new ContaSaldoResponseDto(
-                balance.data().accounId(),
+                balance.data().accountId(),
                 balance.data().available(),
                 balance.data().reserved(),
                 balance.data().blocked());
@@ -117,10 +116,11 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
     }
 
     private String getBearerInput(String xItauAuth) {
-        if (xItauAuth.contains("Bearer ")) {
+        String prefixBearer = "Bearer ";
+        if (xItauAuth.contains(prefixBearer)) {
             return xItauAuth;
         }
-        return BEARER + xItauAuth;
+        return prefixBearer + xItauAuth;
     }
 
     private List<String> getMensagenError() {
