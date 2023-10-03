@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 @Component
 @RequiredArgsConstructor
@@ -57,12 +56,11 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
     @Override
     public DadosResponseDto<ContaSumarioResponseDto> sumarioConta(String tokenCognito, String xItauAuth, String contaId) {
         try {
-            CompletableFuture<DataResponseIassPorto<AccountResponseIaasPorto>> contaFuture =
-                    CompletableFuture.supplyAsync(() -> this.client.findByIdContaIaas(this.getBearerInput(xItauAuth), "IAAS", contaId, contaId));
-            CompletableFuture<DataResponseIassPorto<Balance>> saldoFuture =
-                    CompletableFuture.supplyAsync(() -> this.client.findBySaldoContaIaas(getBearerInput(xItauAuth), "IAAS", contaId, contaId));
-            CompletableFuture.allOf(contaFuture, saldoFuture).join();
-            return this.getSumarioContaConverte(tokenCognito, contaFuture.join(), saldoFuture.join());
+            DataResponseIassPorto<AccountResponseIaasPorto> dadosConta =
+                    this.client.findByIdContaIaas(this.getBearerInput(xItauAuth), "IAAS", contaId, contaId);
+            DataResponseIassPorto<Balance> saldoConta =
+                    this.client.findBySaldoContaIaas(getBearerInput(xItauAuth), "IAAS", contaId, contaId);
+            return this.getSumarioContaConverte(tokenCognito, dadosConta, saldoConta);
         } catch (FeignException.FeignServerException | FeignException.FeignClientException exception) {
             if (exception.status() == HttpStatus.UNAUTHORIZED.value()) {
                 throw new BusinessException(500, "IAAS_EXPIRATION_TOKEN", "AccessToken Inválido, gerar outro");
