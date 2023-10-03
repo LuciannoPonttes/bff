@@ -23,7 +23,7 @@ import java.util.concurrent.CompletableFuture;
 public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
 
     private final ContaIaasPortoClient client;
-    private final DecodificarAccessToken decodificadoir;
+    private final DecodificarAccessToken decodificador;
     private static String BEARER = "Bearer ";
 
     @Value("${feign.client.config.porto.gerenciar.contas.saldo.endpoint}")
@@ -82,7 +82,7 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
                 conta.dados().contaBancaria().numero(),
                 String.valueOf(contaSaldo.dados().disponivel()),
                 conta.dados().status(),
-                this.decodificadoir.getCpfPorToken(tokenCognito)
+                this.decodificador.getCpfPorToken(tokenCognito)
         );
         return new DadosResponseDto<>(contaSumarioResponseDto);
     }
