@@ -1,9 +1,10 @@
 package com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.decodertoken;
 
-import com.porto.experiencia.cliente.cartoes.commons.domain.BusinessException;
+import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.BusinessException;
 import com.porto.experiencia.cliente.conta.digital.commons.web.tokendecoder.AccessTokenDecoder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
 
 //import static com.porto.experiencia.cliente.cartoes.contestacao.common.enums.ErrosEnum.CPF;
 
@@ -17,6 +18,6 @@ public class DecodificarAccessTokenImpl implements DecodificarAccessToken {
     public String getCpfPorToken(String accessToken) {
 //        return "11122233344";
         return decoder.getCpf(accessToken).orElseThrow(() ->
-                new BusinessException("CPF.getStatus()", "CPF.getCampo()", "CPF.getMensagem()"));
+                new BusinessException(400, "ERRO_DECODIFICAR_DOCUMENTO", "Não foi possível decodificar o documento"));
     }
 }
