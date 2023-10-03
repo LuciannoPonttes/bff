@@ -42,27 +42,6 @@
     <dependencies>
         <!-- Porto Seguro -->
         <dependency>
-            <groupId>com.porto.experiencia.cliente.superapp.cartoes</groupId>
-            <artifactId>cartoes-commons-openapi</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.porto.experiencia.cliente.superapp.cartoes</groupId>
-            <artifactId>cartoes-commons-feign-client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.porto.experiencia.cliente.superapp.cartoes</groupId>
-            <artifactId>cartoes-commons-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.porto.experiencia.cliente.superapp.cartoes</groupId>
-            <artifactId>cartoes-commons-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.porto.experiencia.cliente.superapp.cartoes</groupId>
-            <artifactId>cartoes-commons-domain</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.porto.experiencia.cliente.superapp.conta.digital</groupId>
             <artifactId>conta-digital-commons-web</artifactId>
             <version>1.0.0</version>
