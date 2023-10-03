@@ -24,7 +24,6 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
 
     private final ContaIaasPortoClient client;
     private final DecodificarAccessToken decodificador;
-    private static String BEARER = "Bearer ";
 
     @Value("${feign.client.config.porto.gerenciar.contas.saldo.endpoint}")
     private String contaSaldoFindIdPortoUrl;
@@ -117,10 +116,11 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
     }
 
     private String getBearerInput(String xItauAuth) {
-        if (xItauAuth.contains("Bearer ")) {
+        String prefixBearer = "Bearer ";
+        if (xItauAuth.contains(prefixBearer)) {
             return xItauAuth;
         }
-        return BEARER + xItauAuth;
+        return prefixBearer + xItauAuth;
     }
 
     private List<String> getMensagenError() {
