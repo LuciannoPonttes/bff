@@ -1,21 +1,17 @@
 package com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta;
 
 
+import com.porto.bff.conta.timeline.bffcontastimeline.domain.model.DataResponseIassPorto;
+import com.porto.bff.conta.timeline.bffcontastimeline.domain.model.conta.AccountResponseIaasPorto;
+import com.porto.bff.conta.timeline.bffcontastimeline.domain.model.saldo.BalanceResponseIaasPorto;
+import com.porto.bff.conta.timeline.bffcontastimeline.domain.model.sumario.SumarioResponseIaasPorto;
 import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.client.ContaIaasPortoClient;
-import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.AccountResponseIaasPorto;
-import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.DataResponseIassPorto;
-import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.saldo.Balance;
 import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.decodertoken.DecodificarAccessToken;
-import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.*;
 import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.BusinessException;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -24,14 +20,10 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
     private final ContaIaasPortoClient client;
     private final DecodificarAccessToken decodificador;
 
-    @Value("${feign.client.config.porto.gerenciar.contas.saldo.endpoint}")
-    private String contaSaldoFindIdPortoUrl;
-
     @Override
-    public DadosResponseDto<ContaResponseDto> getConta(String xItauAuth, String contaId) {
+    public DataResponseIassPorto<AccountResponseIaasPorto> getConta(String xItauAuth, String contaId) {
         try {
-            var responseIaas = this.client.findByIdContaIaas(this.getBearerInput(xItauAuth), "IAAS", contaId, contaId);
-            return this.converteRespostaContaIaas(responseIaas);
+            return this.client.findByIdContaIaas(this.getBearerInput(xItauAuth), "IAAS", contaId, contaId);
         } catch (FeignException.FeignServerException | FeignException.FeignClientException exception) {
             if (exception.status() == HttpStatus.UNAUTHORIZED.value()) {
                 throw new BusinessException(500, "IAAS_EXPIRATION_TOKEN", "AccessToken Inválido, gerar outro");
@@ -41,10 +33,9 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
     }
 
     @Override
-    public DadosResponseDto<ContaSaldoResponseDto> getContaSaldo(String xItauAuth, String contaId) {
+    public DataResponseIassPorto<BalanceResponseIaasPorto> getContaSaldo(String xItauAuth, String contaId) {
         try {
-            var responseIaas = this.client.findBySaldoContaIaas(getBearerInput(xItauAuth), "IAAS", contaId, contaId);
-            return converteRespostaContaSaldoIaas(responseIaas);
+            return this.client.findBySaldoContaIaas(getBearerInput(xItauAuth), "IAAS", contaId, contaId);
         } catch (FeignException.FeignServerException | FeignException.FeignClientException exception) {
             if (exception.status() == HttpStatus.UNAUTHORIZED.value()) {
                 throw new BusinessException(500, "IAAS_EXPIRATION_TOKEN", "AccessToken Inválido, gerar outro");
@@ -54,13 +45,13 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
     }
 
     @Override
-    public DadosResponseDto<ContaSumarioResponseDto> sumarioConta(String tokenCognito, String xItauAuth, String contaId) {
+    public DataResponseIassPorto<SumarioResponseIaasPorto> sumarioConta(String tokenCognito, String xItauAuth, String contaId) {
         try {
             DataResponseIassPorto<AccountResponseIaasPorto> dadosConta =
                     this.client.findByIdContaIaas(this.getBearerInput(xItauAuth), "IAAS", contaId, contaId);
-            DataResponseIassPorto<Balance> saldoConta =
+            DataResponseIassPorto<BalanceResponseIaasPorto> saldoConta =
                     this.client.findBySaldoContaIaas(getBearerInput(xItauAuth), "IAAS", contaId, contaId);
-            return this.getSumarioContaConverte(tokenCognito, dadosConta, saldoConta);
+            return new DataResponseIassPorto<>(new SumarioResponseIaasPorto(this.decodificador.getCpfPorToken(tokenCognito), dadosConta, saldoConta));
         } catch (FeignException.FeignServerException | FeignException.FeignClientException exception) {
             if (exception.status() == HttpStatus.UNAUTHORIZED.value()) {
                 throw new BusinessException(500, "IAAS_EXPIRATION_TOKEN", "AccessToken Inválido, gerar outro");
@@ -69,62 +60,12 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
         }
     }
 
-    private DadosResponseDto<ContaSumarioResponseDto> getSumarioContaConverte(String tokenCognito,
-                                                                              DataResponseIassPorto<AccountResponseIaasPorto> conta,
-                                                                              DataResponseIassPorto<Balance> saldo) {
-        ContaSumarioResponseDto contaSumarioResponseDto = new ContaSumarioResponseDto(
-                null, // TODO: 03/10/2023 Informação não encontrada
-                conta.data().bankAccount().bank(),
-                conta.data().bankAccount().branch(),
-                conta.data().bankAccount().number(),
-                conta.data().bankAccount().checkDigit(),
-                String.valueOf(saldo.data().available()),
-                conta.data().status(),
-                this.decodificador.getCpfPorToken(tokenCognito)
-        );
-        return new DadosResponseDto<>(contaSumarioResponseDto);
-    }
-
-    private DadosResponseDto<ContaSaldoResponseDto> converteRespostaContaSaldoIaas(DataResponseIassPorto<Balance> balance) {
-        var contaSaldoDto = new ContaSaldoResponseDto(
-                balance.data().accountId(),
-                balance.data().available(),
-                balance.data().reserved(),
-                balance.data().blocked());
-        return new DadosResponseDto<>(contaSaldoDto);
-    }
-
-    private DadosResponseDto<ContaResponseDto> converteRespostaContaIaas(DataResponseIassPorto<AccountResponseIaasPorto> porto) {
-        var contaBancariaDto = new ContaBancariaDto(
-                porto.data().bankAccount().bank(),
-                porto.data().bankAccount().branch(),
-                porto.data().bankAccount().number(),
-                porto.data().bankAccount().checkDigit()
-        );
-        var contaResponseDto = new ContaResponseDto(
-                porto.data().id(),
-                contaBancariaDto,
-                porto.data().status(),
-                porto.data().type(),
-                porto.data().createdAt(),
-                porto.data().updatedAt()
-        );
-
-        return new DadosResponseDto<>(contaResponseDto);
-    }
-
     private String getBearerInput(String xItauAuth) {
         String prefixBearer = "Bearer ";
         if (xItauAuth.contains(prefixBearer)) {
             return xItauAuth;
         }
         return prefixBearer + xItauAuth;
-    }
-
-    private List<String> getMensagenError() {
-        List<String> mensagen = new ArrayList<>();
-        mensagen.add("Falha ao gerar accessToken");
-        return mensagen;
     }
 
 }
