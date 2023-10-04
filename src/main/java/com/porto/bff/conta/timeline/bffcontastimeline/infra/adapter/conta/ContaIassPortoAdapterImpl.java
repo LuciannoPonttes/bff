@@ -2,9 +2,9 @@ package com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta;
 
 
 import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.client.ContaIaasPortoClient;
-import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.AccountResponseIaasPorto;
-import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.DataResponseIassPorto;
-import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response.saldo.Balance;
+import com.porto.bff.conta.timeline.bffcontastimeline.domain.model.conta.AccountResponseIaasPorto;
+import com.porto.bff.conta.timeline.bffcontastimeline.domain.model.DataResponseIassPorto;
+import com.porto.bff.conta.timeline.bffcontastimeline.domain.model.saldo.BalanceResponseIaasPorto;
 import com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.decodertoken.DecodificarAccessToken;
 import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.*;
 import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.BusinessException;
@@ -58,7 +58,7 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
         try {
             DataResponseIassPorto<AccountResponseIaasPorto> dadosConta =
                     this.client.findByIdContaIaas(this.getBearerInput(xItauAuth), "IAAS", contaId, contaId);
-            DataResponseIassPorto<Balance> saldoConta =
+            DataResponseIassPorto<BalanceResponseIaasPorto> saldoConta =
                     this.client.findBySaldoContaIaas(getBearerInput(xItauAuth), "IAAS", contaId, contaId);
             return this.getSumarioContaConverte(tokenCognito, dadosConta, saldoConta);
         } catch (FeignException.FeignServerException | FeignException.FeignClientException exception) {
@@ -71,7 +71,7 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
 
     private DadosResponseDto<ContaSumarioResponseDto> getSumarioContaConverte(String tokenCognito,
                                                                               DataResponseIassPorto<AccountResponseIaasPorto> conta,
-                                                                              DataResponseIassPorto<Balance> saldo) {
+                                                                              DataResponseIassPorto<BalanceResponseIaasPorto> saldo) {
         ContaSumarioResponseDto contaSumarioResponseDto = new ContaSumarioResponseDto(
                 null, // TODO: 03/10/2023 Informação não encontrada
                 conta.data().bankAccount().bank(),
@@ -85,7 +85,7 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
         return new DadosResponseDto<>(contaSumarioResponseDto);
     }
 
-    private DadosResponseDto<ContaSaldoResponseDto> converteRespostaContaSaldoIaas(DataResponseIassPorto<Balance> balance) {
+    private DadosResponseDto<ContaSaldoResponseDto> converteRespostaContaSaldoIaas(DataResponseIassPorto<BalanceResponseIaasPorto> balance) {
         var contaSaldoDto = new ContaSaldoResponseDto(
                 balance.data().accountId(),
                 balance.data().available(),
