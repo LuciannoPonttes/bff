@@ -28,9 +28,9 @@ public interface GerenciarMapper {
             @Mapping(source = "account.id", target = "id"),
             @Mapping(source = "account.bankAccount.bank", target = "contaBancaria.ispb"),
             @Mapping(source = "account.bankAccount.branch", target = "contaBancaria.agencia"),
-            @Mapping(source = "account.bankAccount.number", target = "contaBancaria.numero"),
+            @Mapping(source = "account.bankAccount.number", target = "contaBancaria.numeroConta"),
             @Mapping(source = "account.bankAccount.checkDigit", target = "contaBancaria.digitoConta"),
-            @Mapping(source = "status", target = "status"),
+            @Mapping(source = "status", target = "statusConta"),
             @Mapping(source = "type", target = "tipo"),
             @Mapping(source = "createdAt", target = "criadoEm"),
             @Mapping(source = "updatedAt", target = "atualizadoEm")
@@ -56,7 +56,7 @@ public interface GerenciarMapper {
     @Mappings({
             @Mapping(source = "sumario.account.data.bankAccount.bank", target = "ispb"),
             @Mapping(source = "sumario.account.data.bankAccount.branch", target = "agencia"),
-            @Mapping(source = "sumario.account.data.bankAccount.number", target = "conta"),
+            @Mapping(source = "sumario.account.data.bankAccount.number", target = "numeroConta"),
             @Mapping(source = "sumario.account.data.bankAccount.checkDigit", target = "digitoConta"),
             @Mapping(source = "sumario.account.data.status", target = "statusConta"),
             @Mapping(source = "sumario.balance.data.available", target = "saldo", qualifiedByName = "mapSaldo"),
