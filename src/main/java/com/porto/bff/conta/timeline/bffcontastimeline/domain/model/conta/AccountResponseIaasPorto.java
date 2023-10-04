@@ -1,4 +1,4 @@
-package com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.response;
+package com.porto.bff.conta.timeline.bffcontastimeline.domain.model.conta;
 
 public record AccountResponseIaasPorto(
         String id,

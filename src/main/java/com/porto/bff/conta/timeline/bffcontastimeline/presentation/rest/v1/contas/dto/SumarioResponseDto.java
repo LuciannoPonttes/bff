@@ -1,10 +1,10 @@
 package com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto;
 
-public record ContaSumarioResponseDto(
+public record SumarioResponseDto(
         String nomeBanco,
-        String codigoBanco,
+        String ispb,
         String agencia,
-        String conta,
+        String numeroConta,
         String digitoConta,
         String saldo,
         String statusConta,
