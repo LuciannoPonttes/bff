@@ -3,10 +3,10 @@ package com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.cont
 public record ContaResponseDto(
         String id,
         ContaBancariaDto contaBancaria,
-        String status,
+        String statusConta,
         String tipo,
-        String criado,
-        String atualizado
+        String criadoEm,
+        String atualizadoEm
 ) {
 }
 

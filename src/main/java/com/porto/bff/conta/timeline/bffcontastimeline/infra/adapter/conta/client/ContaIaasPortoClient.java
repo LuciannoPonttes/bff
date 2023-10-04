@@ -1,8 +1,8 @@
 package com.porto.bff.conta.timeline.bffcontastimeline.infra.adapter.conta.client;
 
 
-import com.porto.bff.conta.timeline.bffcontastimeline.domain.model.conta.AccountResponseIaasPorto;
 import com.porto.bff.conta.timeline.bffcontastimeline.domain.model.DataResponseIassPorto;
+import com.porto.bff.conta.timeline.bffcontastimeline.domain.model.conta.AccountResponseIaasPorto;
 import com.porto.bff.conta.timeline.bffcontastimeline.domain.model.saldo.BalanceResponseIaasPorto;
 import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.ContaRequestDto;
 import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.contas.dto.RequestDeleteDto;
@@ -14,7 +14,6 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 @FeignClient(
         value = "contaIaasFindByIdPortoClient",
         url = "${feign.client.config.porto.host}"
-//        configuration = { TokenSensediaInterceptor.class }
 )
 public interface ContaIaasPortoClient {
 
