@@ -31,12 +31,13 @@ public class GerenciarContaIaasServiceImpl implements GerenciarContaIaasService 
 
     @Override
     public DataResponseIassPorto<SumarioResponseIaasPorto> contaSumario(String tokenCognito, String xItauAuth, String contaId) {
+        isValidHeader(xItauAuth, contaId);
         return adapter.sumarioConta(tokenCognito, xItauAuth, contaId);
     }
 
     private void isValidHeader(String xItauAuth, String contaId) {
         if (StringUtils.isEmpty(xItauAuth) || StringUtils.isEmpty(contaId)) {
-            throw new BusinessException(500, "IAAS_EXPIRATION_TOKEN", "AccessToken Inválido, gerar outro.");
+            throw new BusinessException(500, "IAAS_EXPIRATION_TOKEN", "AccessToken Inválido, gerar outro");
         }
     }
 }
