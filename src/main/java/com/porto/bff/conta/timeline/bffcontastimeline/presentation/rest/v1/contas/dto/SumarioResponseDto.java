@@ -2,7 +2,7 @@ package com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.cont
 
 public record SumarioResponseDto(
         String nomeBanco,
-        String ispb,
+        String codigoBanco,
         String agencia,
         String numeroConta,
         String digitoConta,

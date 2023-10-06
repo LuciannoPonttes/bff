@@ -11,8 +11,8 @@ import com.porto.bff.conta.timeline.bffcontastimeline.presentation.rest.v1.conta
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static com.porto.bff.conta.timeline.bffcontastimeline.application.mapper.GerenciarMapper.NOME_BANCO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 class GerenciarMapperTest {
 
@@ -74,7 +74,7 @@ class GerenciarMapperTest {
         assertEquals(contaDto.dados().contaBancaria().numeroConta(), conta.data().bankAccount().number());
         assertEquals(contaDto.dados().contaBancaria().agencia(), conta.data().bankAccount().branch());
         assertEquals(contaDto.dados().contaBancaria().digitoConta(), conta.data().bankAccount().checkDigit());
-        assertEquals(contaDto.dados().contaBancaria().ispb(), conta.data().bankAccount().bank());
+        assertEquals(contaDto.dados().contaBancaria().codigoBanco(), conta.data().bankAccount().bank());
         assertEquals(contaDto.dados().statusConta(), conta.data().status());
         assertEquals(contaDto.dados().tipo(), conta.data().type());
         assertEquals(contaDto.dados().criadoEm(), conta.data().createdAt());
@@ -94,11 +94,11 @@ class GerenciarMapperTest {
         var dto = this.mapper.paraDadosSumarioResponseDto(sumario);
         assertEquals(contaDto.dados().contaBancaria().agencia(), dto.dados().agencia());
         assertEquals(contaDto.dados().contaBancaria().numeroConta(), dto.dados().numeroConta());
-        assertEquals(contaDto.dados().contaBancaria().ispb(), dto.dados().ispb());
+        assertEquals(contaDto.dados().contaBancaria().codigoBanco(), dto.dados().codigoBanco());
         assertEquals(contaDto.dados().contaBancaria().digitoConta(), dto.dados().digitoConta());
         assertEquals(contaDto.dados().statusConta(), dto.dados().statusConta());
         assertEquals(saldoDto.dados().disponivel(), dto.dados().saldo());
-        assertNull(dto.dados().nomeBanco());
+        assertEquals(NOME_BANCO, dto.dados().nomeBanco());
         assertEquals(sumario.data().document(), dto.dados().documento());
     }
 }
