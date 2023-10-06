@@ -26,7 +26,7 @@ public interface GerenciarMapper {
 
     @Mappings({
             @Mapping(source = "account.id", target = "id"),
-            @Mapping(source = "account.bankAccount.bank", target = "contaBancaria.ispb"),
+            @Mapping(source = "account.bankAccount.bank", target = "contaBancaria.codigoBanco"),
             @Mapping(source = "account.bankAccount.branch", target = "contaBancaria.agencia"),
             @Mapping(source = "account.bankAccount.number", target = "contaBancaria.numeroConta"),
             @Mapping(source = "account.bankAccount.checkDigit", target = "contaBancaria.digitoConta"),
@@ -53,8 +53,10 @@ public interface GerenciarMapper {
     @Mapping(source = "data", target = "dados")
     DadosResponseDto<SumarioResponseDto> paraDadosSumarioResponseDto(DataResponseIassPorto<SumarioResponseIaasPorto> sumario);
 
+    String NOME_BANCO = "Porto Bank";
     @Mappings({
-            @Mapping(source = "sumario.account.data.bankAccount.bank", target = "ispb"),
+            @Mapping(target = "nomeBanco", constant = NOME_BANCO),
+            @Mapping(source = "sumario.account.data.bankAccount.bank", target = "codigoBanco"),
             @Mapping(source = "sumario.account.data.bankAccount.branch", target = "agencia"),
             @Mapping(source = "sumario.account.data.bankAccount.number", target = "numeroConta"),
             @Mapping(source = "sumario.account.data.bankAccount.checkDigit", target = "digitoConta"),
