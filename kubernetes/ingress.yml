@@ -40,7 +40,7 @@ spec:
   rules:
     - http:
         paths:
-          - path: /portobank/swagger-ui/index.html#/
+          - path: /portobank/v3/conta-digital/gerenciar/swagger
             pathType: ImplementationSpecific
             backend:
               service:
