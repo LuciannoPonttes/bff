@@ -7,6 +7,27 @@ spec:
   rules:
     - http:
         paths:
+          - path: /portobank/v1/conta-digital/gerenciar/dados-conta
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: bff-conta-digital-gerenciar
+                port:
+                  number: 8080
+          - path: /portobank/v1/conta-digital/gerenciar/saldo
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: bff-conta-digital-gerenciar
+                port:
+                  number: 8080
+          - path: /portobank/v1/conta-digital/gerenciar/sumario
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: bff-conta-digital-gerenciar
+                port:
+                  number: 8080
           - path: /portobank/v3/conta-digital/gerenciar/dados-conta
             pathType: ImplementationSpecific
             backend:
@@ -40,7 +61,7 @@ spec:
   rules:
     - http:
         paths:
-          - path: /portobank/v3/conta-digital/gerenciar/swagger
+          - path: /portobank/v1/conta-digital/gerenciar/swagger
             pathType: ImplementationSpecific
             backend:
               service:
