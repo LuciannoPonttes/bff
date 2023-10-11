@@ -71,14 +71,14 @@ spec:
               memory: $DEPLOY_LIM_MEM
           readinessProbe:
             httpGet:
-              path: /portobank/v3/conta-digital/gerenciar/services/health/readiness
+              path: /portobank/v1/conta-digital/gerenciar/services/health/readiness
               port: 8080
             initialDelaySeconds: $DEPLOY_READINESS_PROBE_DELAY
             periodSeconds: 20
             timeoutSeconds: $DEPLOY_READINESS_PROBE_TIMEOUT
           livenessProbe:
             httpGet:
-              path: /portobank/v3/conta-digital/gerenciar/services/health/liveness
+              path: /portobank/v1/conta-digital/gerenciar/services/health/liveness
               port: 8080
             initialDelaySeconds: $DEPLOY_LIVENESS_PROBE_DELAY
             periodSeconds: 20

@@ -23,7 +23,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 
 
-@RequestMapping("v3/conta-digital/gerenciar")
+@RequestMapping({"v1/conta-digital/gerenciar","v3/conta-digital/gerenciar"})
 @OpenAPIDefinition(
         info = @Info(
                 title = API_DOC_TITLE,
@@ -106,59 +106,4 @@ public interface GerenciamentoContasControllerOperations {
     ResponseEntity<DadosResponseDto<SumarioResponseDto>> sumarioConta(@RequestHeader(value = AUTHORIZATION) String tokenCognito,
                                                                       @RequestHeader(value = "x-itau-auth", required = false) String xItauAuth,
                                                                       @RequestHeader(value = "x-account-id", required = false) String contaId);
-
-
-/*
-
-
-    @Operation(
-            summary = "Atualização de status da conta",
-            description = "para acessar tem que ter o escopo tipo iaas-accounts.write",
-            tags = { "Gerenciar" }
-    )
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Sucesso"),
-            @ApiResponse(responseCode = "400", description = "Parâmetros obrigatórios não enviados", content =
-                    {
-                            @Content(mediaType = "application/json", schema =
-                            @Schema(implementation = ResponseErrorApi.class))
-                    }),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor", content =
-                    {
-                            @Content(mediaType = "application/json", schema =
-                            @Schema(implementation = ResponseErrorApi.class))
-                    })
-    })
-    @PatchMapping("/conta")
-    ResponseEntity<Void> ediatarStatusConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
-                                                               @RequestHeader("x-itau-auth") String xItauAuth,
-                                                               @RequestHeader("x-account-id") String contaId,
-                                                               @RequestBody ContaRequestDto requestDto);
-
-    @Operation(
-            summary = "Encerramento da conta",
-            description = "para acessar tem que ter o escopo tipo iaas-accounts.write",
-            tags = { "Gerenciar" }
-    )
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Sucesso"),
-            @ApiResponse(responseCode = "400", description = "Parâmetros obrigatórios não enviados", content =
-                    {
-                            @Content(mediaType = "application/json", schema =
-                            @Schema(implementation = ResponseErrorApi.class))
-                    }),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor", content =
-                    {
-                            @Content(mediaType = "application/json", schema =
-                            @Schema(implementation = ResponseErrorApi.class))
-                    })
-    })
-    @DeleteMapping("/conta")
-    ResponseEntity<Void> apagarConta(@RequestHeader(AUTHORIZATION) String tokenCognito,
-                                     @RequestHeader("x-itau-auth") String xItauAuth,
-                                     @RequestHeader("x-account-id") String contaId,
-    @RequestBody RequestDeleteDto request);
-
-
- */
 }
