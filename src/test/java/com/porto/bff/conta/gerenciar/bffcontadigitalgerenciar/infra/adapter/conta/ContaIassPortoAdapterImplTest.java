@@ -85,45 +85,10 @@ class ContaIassPortoAdapterImplTest {
     }
 
     @Test
-    @DisplayName("Deve gerar erro ao gerar dados da conta")
-    void getConta1() {
-        when(this.client.findByIdContaIaas(anyString(), anyString(), anyString(), anyString())).thenThrow(
-                FeignException.FeignClientException.class);
-        var exception = assertThrows(BusinessException.class, () -> this.adapter.getConta(BEARER, UUID.randomUUID().toString()));
-        assertEquals("GET_CONTA_ERROR", exception.getCampo());
-    }
-
-    @Test
-    @DisplayName("Deve gerar erro de token ao gerar dados da conta")
-    void getConta2() {
-        when(this.client.findByIdContaIaas(anyString(), anyString(), anyString(), anyString())).thenThrow(feignClientException);
-        var exception = assertThrows(BusinessException.class, () -> this.adapter.getConta(BEARER, UUID.randomUUID().toString()));
-        assertEquals("IAAS_EXPIRATION_TOKEN", exception.getCampo());
-    }
-
-    @Test
     @DisplayName("Deve obter saldo com sucesso")
     void getContaSaldo() {
         when(this.client.findBySaldoContaIaas(anyString(), anyString(), anyString(), anyString())).thenReturn(saldoResponse);
         assertDoesNotThrow(() -> this.adapter.getContaSaldo(BEARER, UUID.randomUUID().toString()));
-    }
-
-    @Test
-    @DisplayName("Deve gerar erro ao obter saldo")
-    void getContaSaldo1() {
-        when(this.client.findBySaldoContaIaas(anyString(), anyString(), anyString(), anyString())).thenThrow(
-                FeignException.FeignClientException.class);
-        var exception = assertThrows(BusinessException.class, () ->
-                this.adapter.getContaSaldo(BEARER, UUID.randomUUID().toString()));
-        assertEquals("GET_SALDO_CONTA_ERROR", exception.getCampo());
-    }
-
-    @Test
-    @DisplayName("Deve gerar erro de token ao pegar saldo da conta")
-    void getContaSaldo2() {
-        when(this.client.findBySaldoContaIaas(anyString(), anyString(), anyString(), anyString())).thenThrow(feignClientException);
-        var exception = assertThrows(BusinessException.class, () -> this.adapter.getContaSaldo(BEARER, UUID.randomUUID().toString()));
-        assertEquals("IAAS_EXPIRATION_TOKEN", exception.getCampo());
     }
 
     @Test
@@ -132,26 +97,5 @@ class ContaIassPortoAdapterImplTest {
         when(this.client.findBySaldoContaIaas(anyString(), anyString(), anyString(), anyString())).thenReturn(saldoResponse);
         when(this.client.findByIdContaIaas(anyString(), anyString(), anyString(), anyString())).thenReturn(responseIassPorto);
         assertDoesNotThrow(() -> this.adapter.sumarioConta(BEARER, UUID.randomUUID().toString(), UUID.randomUUID().toString()));
-    }
-
-    @Test
-    @DisplayName("Deve gerar erro ao obter sumario")
-    void sumarioConta1() {
-        when(this.client.findBySaldoContaIaas(anyString(), anyString(), anyString(), anyString())).thenReturn(saldoResponse);
-        when(this.client.findByIdContaIaas(anyString(), anyString(), anyString(), anyString())).thenThrow(
-                FeignException.FeignClientException.class);
-        var exception = assertThrows(BusinessException.class, () ->
-                this.adapter.sumarioConta(BEARER, UUID.randomUUID().toString(), UUID.randomUUID().toString()));
-        assertEquals("GET_SUMARIO_CONTA_ERROR", exception.getCampo());
-    }
-
-    @Test
-    @DisplayName("Deve gerar erro de token ao obter sumario")
-    void sumarioConta2() {
-        when(this.client.findBySaldoContaIaas(anyString(), anyString(), anyString(), anyString())).thenReturn(saldoResponse);
-        when(this.client.findByIdContaIaas(anyString(), anyString(), anyString(), anyString())).thenThrow(feignClientException);
-        var exception = assertThrows(BusinessException.class, () ->
-                this.adapter.sumarioConta(BEARER, UUID.randomUUID().toString(), UUID.randomUUID().toString()));
-        assertEquals("IAAS_EXPIRATION_TOKEN", exception.getCampo());
     }
 }

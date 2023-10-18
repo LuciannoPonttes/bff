@@ -23,38 +23,33 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <bfx-cartoes-commons.version>1.0.5</bfx-cartoes-commons.version>
+        <bfx-conta-digital-commons.version>1.0.1</bfx-conta-digital-commons.version>
         <native.maven.plugin.version>0.9.21</native.maven.plugin.version>
     </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>com.porto.experiencia.cliente.superapp.cartoes</groupId>
-                <artifactId>bfx-cartoes-commons-dependencies</artifactId>
-                <version>${bfx-cartoes-commons.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <dependencies>
         <!-- Porto Seguro -->
         <dependency>
             <groupId>com.porto.experiencia.cliente.superapp.conta.digital</groupId>
+            <artifactId>bfx-conta-digital-commons</artifactId>
+            <version>${bfx-conta-digital-commons.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.porto.experiencia.cliente.superapp.conta.digital</groupId>
             <artifactId>conta-digital-commons-web</artifactId>
-            <version>1.0.0</version>
+            <version>${bfx-conta-digital-commons.version}</version>
         </dependency>
         <dependency>
             <groupId>com.porto.experiencia.cliente.superapp.conta.digital</groupId>
             <artifactId>conta-digital-commons-domain</artifactId>
-            <version>1.0.0</version>
+            <version>${bfx-conta-digital-commons.version}</version>
         </dependency>
         <dependency>
             <groupId>com.porto.experiencia.cliente.superapp.conta.digital</groupId>
             <artifactId>conta-digital-commons-feign-client</artifactId>
-            <version>1.0.0</version>
+            <version>${bfx-conta-digital-commons.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>commons-fileupload</groupId>
@@ -65,7 +60,7 @@
         <dependency>
             <groupId>com.porto.experiencia.cliente.superapp.conta.digital</groupId>
             <artifactId>conta-digital-commons-openapi</artifactId>
-            <version>1.0.0</version>
+            <version>${bfx-conta-digital-commons.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.yaml</groupId>
@@ -125,14 +120,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.github.openfeign</groupId>
-            <artifactId>feign-okhttp</artifactId>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -283,29 +270,29 @@
         </profile>
     </profiles>
 
-    <repositories>
-        <repository>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <id>Novo_Nexus_CICD_release_PRD</id>
-            <url>https://nexusportoprd.portoseguro.brasil/repository/Releases_Porto/</url>
-        </repository>
-        <repository>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <id>central-porto-repository</id>
-            <name>Porto Maven Repository central</name>
-            <url>https://nexusportoprd.portoseguro.brasil/repository/maven-group/</url>
-        </repository>
-    </repositories>
+	<repositories>
+		 <repository>
+			 <releases>
+				 <enabled>true</enabled>
+			 </releases>
+			 <snapshots>
+				 <enabled>false</enabled>
+			 </snapshots>
+			 <id>Novo_Nexus_CICD_release_PRD</id>
+			 <url>https://nexusportoprd.portoseguro.brasil/repository/Releases_Porto/</url>
+		</repository>
+		<repository>
+			 <releases>
+				<enabled>true</enabled>
+			 </releases>
+			 <snapshots>
+				 <enabled>false</enabled>
+			 </snapshots>
+			 <id>central-porto-repository</id>
+			 <name>Porto Maven Repository central</name>
+			 <url>https://nexusportoprd.portoseguro.brasil/repository/maven-group/</url>
+		 </repository>
+	</repositories>
 
 </project>
 
