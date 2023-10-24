@@ -41,12 +41,8 @@ public class GerenciamentoContasController implements GerenciamentoContasControl
     public ResponseEntity<DadosResponseDto<SumarioResponseDto>> sumarioConta(String tokenCognito, String xItauAuth,
                                                                              String contaId) {
         var responseService = service.contaSumario(tokenCognito, xItauAuth, contaId);
-
-        DadosResponseDto<SumarioResponseDto> sumarioResponseDtoDadosResponseDto =
-                this.mapper.paraDadosSumarioResponseDto(responseService);
-
         return ResponseEntity.status(HttpStatus.OK)
-                .body(sumarioResponseDtoDadosResponseDto);
+                .body(this.mapper.paraDadosSumarioResponseDto(responseService));
     }
 
 }
