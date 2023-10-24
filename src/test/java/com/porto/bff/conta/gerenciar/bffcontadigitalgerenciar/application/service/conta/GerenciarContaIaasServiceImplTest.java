@@ -73,7 +73,8 @@ class GerenciarContaIaasServiceImplTest {
                 new DataResponseIassPorto<>(new SumarioResponseIaasPorto(
                         "12345678900",
                         this.responseIassPorto,
-                        this.saldoIAASResponse
+                        this.saldoIAASResponse,
+                        false
                 ))
         );
         assertDoesNotThrow(() -> this.service.contaSumario("Token", "xitauAuth","contaId"));

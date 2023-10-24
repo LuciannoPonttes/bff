@@ -7,6 +7,7 @@ import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.saldo
 public record SumarioResponseIaasPorto(
         String document,
         DataResponseIassPorto<AccountResponseIaasPorto> account,
-        DataResponseIassPorto<BalanceResponseIaasPorto> balance
+        DataResponseIassPorto<BalanceResponseIaasPorto> balance,
+        boolean hasPortoCard
 ) {
 }

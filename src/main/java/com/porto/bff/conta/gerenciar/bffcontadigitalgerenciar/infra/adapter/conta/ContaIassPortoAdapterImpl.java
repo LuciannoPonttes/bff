@@ -2,15 +2,14 @@ package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.con
 
 
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.DataResponseIassPorto;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.cartoes.ListaCartoesResponse;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta.AccountResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.saldo.BalanceResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.sumario.SumarioResponseIaasPorto;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.client.CartoesPortoClient;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.client.ContaIaasPortoClient;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.decodertoken.DecodificarAccessToken;
-import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.BusinessException;
-import feign.FeignException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,6 +17,7 @@ import org.springframework.stereotype.Component;
 public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
 
     private final ContaIaasPortoClient client;
+    private final CartoesPortoClient cartoesPortoClient;
     private final DecodificarAccessToken decodificador;
 
     @Override
@@ -36,7 +36,23 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
                     this.client.findByIdContaIaas(this.getBearerInput(xItauAuth), "IAAS", contaId, contaId);
             DataResponseIassPorto<BalanceResponseIaasPorto> saldoConta =
                     this.client.findBySaldoContaIaas(getBearerInput(xItauAuth), "IAAS", contaId, contaId);
-            return new DataResponseIassPorto<>(new SumarioResponseIaasPorto(this.decodificador.getCpfPorToken(tokenCognito), dadosConta, saldoConta));
+            boolean hasPortoCard = verificaExistenciaCartao(tokenCognito);
+
+            return new DataResponseIassPorto<>(new SumarioResponseIaasPorto(
+                    this.decodificador.getCpfPorToken(tokenCognito),
+                    dadosConta,
+                    saldoConta,
+                    hasPortoCard));
+    }
+
+    private boolean verificaExistenciaCartao(String tokenCognito) {
+        ListaCartoesResponse cardsByUser = null;
+
+        try {
+            cardsByUser = this.cartoesPortoClient.getCardsByuser(tokenCognito);
+        } catch (Exception ignored) {}
+
+        return cardsByUser != null && !cardsByUser.getDados().getLista().isEmpty();
     }
 
     private String getBearerInput(String xItauAuth) {

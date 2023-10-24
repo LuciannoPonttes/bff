@@ -23,7 +23,7 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <bfx-conta-digital-commons.version>1.0.1</bfx-conta-digital-commons.version>
+        <bfx-conta-digital-commons.version>1.0.2</bfx-conta-digital-commons.version>
         <native.maven.plugin.version>0.9.21</native.maven.plugin.version>
     </properties>
 
