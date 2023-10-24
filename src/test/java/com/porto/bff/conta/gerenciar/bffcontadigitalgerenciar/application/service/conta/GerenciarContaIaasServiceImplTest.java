@@ -5,6 +5,7 @@ import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta.BankAccountResponseIassPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.saldo.BalanceResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.sumario.SumarioResponseIaasPorto;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.CartoesPortoAdapter;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.ContaIassPortoAdapter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,9 @@ class GerenciarContaIaasServiceImplTest {
     private GerenciarContaIaasService service;
     @MockBean
     private ContaIassPortoAdapter adapter;
+
+    @MockBean
+    private CartoesPortoAdapter cartoesPortoAdapter;
     private DataResponseIassPorto<AccountResponseIaasPorto> responseIassPorto;
     private DataResponseIassPorto<BalanceResponseIaasPorto> saldoIAASResponse;
 
@@ -73,7 +77,8 @@ class GerenciarContaIaasServiceImplTest {
                 new DataResponseIassPorto<>(new SumarioResponseIaasPorto(
                         "12345678900",
                         this.responseIassPorto,
-                        this.saldoIAASResponse
+                        this.saldoIAASResponse,
+                        false
                 ))
         );
         assertDoesNotThrow(() -> this.service.contaSumario("Token", "xitauAuth","contaId"));
