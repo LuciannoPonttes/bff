@@ -7,11 +7,10 @@ import org.springframework.web.bind.annotation.*;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @FeignClient(
-        value = "portoCartoesGetCardsByuser",
+        value = "portoCartoesGetCardsByUser",
         url = "${feign.client.config.porto.cartao.host}"
 )
 public interface CartoesPortoClient {
-
 
     @GetMapping("${feign.client.config.porto.cartoes.listar.endpoint}")
     ListaCartoesResponse getCardsByuser(@RequestHeader(AUTHORIZATION) String tokenCognito);
