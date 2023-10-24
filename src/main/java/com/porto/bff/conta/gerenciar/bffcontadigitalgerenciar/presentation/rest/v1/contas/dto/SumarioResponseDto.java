@@ -1,5 +1,7 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.contas.dto;
 
+import lombok.Setter;
+
 public record SumarioResponseDto(
         String nomeBanco,
         String codigoBanco,
@@ -8,7 +10,8 @@ public record SumarioResponseDto(
         String digitoConta,
         String saldo,
         String statusConta,
-        String documento
+        String documento,
+        Boolean possuiCartao
 
 ) {
 }

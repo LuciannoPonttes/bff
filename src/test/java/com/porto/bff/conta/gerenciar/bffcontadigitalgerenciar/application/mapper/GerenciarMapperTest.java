@@ -52,7 +52,8 @@ class GerenciarMapperTest {
                 new SumarioResponseIaasPorto(
                         "0000000000",
                         this.conta,
-                        this.balance
+                        this.balance,
+                        false
                 )
         );
         contaDto = this.mapper.paraDadosContaResponseDto(conta);
