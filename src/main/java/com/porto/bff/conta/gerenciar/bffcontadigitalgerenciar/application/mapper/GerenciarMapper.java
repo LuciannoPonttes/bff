@@ -53,7 +53,7 @@ public interface GerenciarMapper {
     @Mapping(source = "data", target = "dados")
     DadosResponseDto<SumarioResponseDto> paraDadosSumarioResponseDto(DataResponseIassPorto<SumarioResponseIaasPorto> sumario);
 
-    String NOME_BANCO = "Porto Bank";
+    String NOME_BANCO = "Porto Bank - Itaucard S.A";
     @Mappings({
             @Mapping(target = "nomeBanco", constant = NOME_BANCO),
             @Mapping(source = "sumario.account.data.bankAccount.bank", target = "codigoBanco"),
