@@ -24,6 +24,8 @@ class GerenciarMapperTest {
     private DadosResponseDto<ContaResponseDto> contaDto;
     private DadosResponseDto<SaldoResponseDto> saldoDto;
 
+    String NUMERO_BANCO = "341";
+
     @BeforeEach
     void setUp() {
         mapper = new GerenciarMapperImpl();
@@ -75,7 +77,7 @@ class GerenciarMapperTest {
         assertEquals(contaDto.dados().contaBancaria().numeroConta(), conta.data().bankAccount().number());
         assertEquals(contaDto.dados().contaBancaria().agencia(), conta.data().bankAccount().branch());
         assertEquals(contaDto.dados().contaBancaria().digitoConta(), conta.data().bankAccount().checkDigit());
-        assertEquals(contaDto.dados().contaBancaria().codigoBanco(), conta.data().bankAccount().bank());
+        assertEquals(contaDto.dados().contaBancaria().codigoBanco(), NUMERO_BANCO);
         assertEquals(contaDto.dados().statusConta(), conta.data().status());
         assertEquals(contaDto.dados().tipo(), conta.data().type());
         assertEquals(contaDto.dados().criadoEm(), conta.data().createdAt());
