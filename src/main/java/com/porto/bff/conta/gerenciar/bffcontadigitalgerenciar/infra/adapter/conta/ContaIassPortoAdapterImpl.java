@@ -22,19 +22,7 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
 
     @Override
     public DataResponseIassPorto<AccountResponseIaasPorto> getConta(String xItauAuth, String contaId) {
-<<<<<<< Updated upstream
     	return this.client.findByIdContaIaas(this.getBearerInput(xItauAuth), "IAAS", contaId, contaId);
-=======
-        try {
-            var teste = client.teste(this.getBearerInput(xItauAuth), "IAAS", contaId, contaId);
-            return this.client.findByIdContaIaas(this.getBearerInput(xItauAuth), "IAAS", contaId, contaId);
-        } catch (FeignException.FeignServerException | FeignException.FeignClientException exception) {
-            if (exception.status() == HttpStatus.UNAUTHORIZED.value()) {
-                throw new BusinessException(500, "IAAS_EXPIRATION_TOKEN", "AccessToken Inválido, gerar outro");
-            }
-            throw new BusinessException(exception.status(), "GET_CONTA_ERROR", exception.getLocalizedMessage());
-        }
->>>>>>> Stashed changes
     }
 
     @Override
