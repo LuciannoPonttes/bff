@@ -24,6 +24,11 @@ public interface ContaIaasPortoClient {
                                                                       @RequestHeader("x-account-id") String xAccountId,
                                                                       @PathVariable("accountId") String accountId);
 
+    @GetMapping("${feign.client.config.porto.gerenciar.contas.endpoint}")
+    Object teste(@RequestHeader(AUTHORIZATION) String xItauAuth,
+                                                                      @RequestHeader("x-accountProvider") String xAccountProvider,
+                                                                      @RequestHeader("x-account-id") String xAccountId,
+                                                                      @PathVariable("accountId") String accountId);
 
     @GetMapping("${feign.client.config.porto.gerenciar.contas.saldo.endpoint}")
     DataResponseIassPorto<BalanceResponseIaasPorto> findBySaldoContaIaas(@RequestHeader(AUTHORIZATION) String xItauAuth,
