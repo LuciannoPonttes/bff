@@ -4,6 +4,7 @@ package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.con
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.DataResponseIassPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.cartoes.ListaCartoesResponse;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta.AccountResponseIaasPorto;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.pix.KeyPixSearchWithClaimDto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.pix.ListChavePixResponse;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.saldo.BalanceResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.sumario.SumarioResponseIaasPorto;
@@ -45,7 +46,7 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
             DataResponseIassPorto<BalanceResponseIaasPorto> saldoConta =
                     this.client.findBySaldoContaIaas(getBearerInput(xItauAuth), "IAAS", contaId, contaId);
             boolean hasPortoCard = verificaExistenciaCartao(tokenCognito);
-            DataResponseIassPorto<List<ListChavePixResponse>> listChavePix = this.pixManagementClient
+            DataResponseIassPorto<List<KeyPixSearchWithClaimDto>> listChavePix = this.pixManagementClient
                 .getPixKeyFromAnAccount(
                         contaId,
                         "IAAS",
