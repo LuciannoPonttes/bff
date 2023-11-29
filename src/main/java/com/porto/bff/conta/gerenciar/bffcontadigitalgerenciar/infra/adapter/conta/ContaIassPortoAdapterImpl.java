@@ -4,13 +4,18 @@ package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.con
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.DataResponseIassPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.cartoes.ListaCartoesResponse;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta.AccountResponseIaasPorto;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.pix.ListChavePixResponse;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.saldo.BalanceResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.sumario.SumarioResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.client.CartoesPortoClient;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.client.ContaIaasPortoClient;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.decodertoken.DecodificarAccessToken;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.pix.client.PixManagementClient;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.contas.enums.MensagemChavePixEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -19,6 +24,9 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
     private final ContaIaasPortoClient client;
     private final CartoesPortoClient cartoesPortoClient;
     private final DecodificarAccessToken decodificador;
+
+    private final PixManagementClient pixManagementClient;
+
 
     @Override
     public DataResponseIassPorto<AccountResponseIaasPorto> getConta(String xItauAuth, String contaId) {
@@ -37,13 +45,23 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
             DataResponseIassPorto<BalanceResponseIaasPorto> saldoConta =
                     this.client.findBySaldoContaIaas(getBearerInput(xItauAuth), "IAAS", contaId, contaId);
             boolean hasPortoCard = verificaExistenciaCartao(tokenCognito);
-
+            DataResponseIassPorto<List<ListChavePixResponse>> listChavePix = this.pixManagementClient
+                .getPixKeyFromAnAccount(
+                        contaId,
+                        "IAAS",
+                        this.getBearerInput(xItauAuth)
+                );
+            var msgTextEnum = MensagemChavePixEnum.getMensagemPorQuantidade(listChavePix.data().size());
+            var msgFormatada = listChavePix.data().size()+" "+ msgTextEnum;
             return new DataResponseIassPorto<>(new SumarioResponseIaasPorto(
                     this.decodificador.getCpfPorToken(tokenCognito),
                     dadosConta,
                     saldoConta,
-                    hasPortoCard));
+                    hasPortoCard,
+                    msgFormatada));
     }
+
+
 
     private boolean verificaExistenciaCartao(String tokenCognito) {
         ListaCartoesResponse cardsByUser = null;

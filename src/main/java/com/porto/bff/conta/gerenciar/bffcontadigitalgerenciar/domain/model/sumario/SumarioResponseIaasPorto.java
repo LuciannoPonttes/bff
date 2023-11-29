@@ -8,6 +8,7 @@ public record SumarioResponseIaasPorto(
         String document,
         DataResponseIassPorto<AccountResponseIaasPorto> account,
         DataResponseIassPorto<BalanceResponseIaasPorto> balance,
-        boolean hasPortoCard
+        boolean hasPortoCard,
+        String mensagemChavePix
 ) {
 }

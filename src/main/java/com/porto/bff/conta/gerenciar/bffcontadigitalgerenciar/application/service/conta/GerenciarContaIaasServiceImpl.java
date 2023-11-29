@@ -17,6 +17,7 @@ public class GerenciarContaIaasServiceImpl implements GerenciarContaIaasService 
 
     private final ContaIassPortoAdapter adapter;
 
+
     @Override
     public DataResponseIassPorto<AccountResponseIaasPorto> getConta(String xItauAuth, String contaId) {
         isValidHeader(xItauAuth, contaId);
@@ -34,6 +35,8 @@ public class GerenciarContaIaasServiceImpl implements GerenciarContaIaasService 
         isValidHeader(xItauAuth, contaId);
         return adapter.sumarioConta(tokenCognito, xItauAuth, contaId);
     }
+
+
 
     private void isValidHeader(String xItauAuth, String contaId) {
         if (StringUtils.isEmpty(xItauAuth) || StringUtils.isEmpty(contaId)) {
