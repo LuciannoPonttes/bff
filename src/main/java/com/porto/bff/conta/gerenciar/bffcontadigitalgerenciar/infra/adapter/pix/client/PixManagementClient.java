@@ -2,9 +2,7 @@ package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.pix
 
 
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.DataResponseBFF;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.DataResponseIassPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.pix.KeyPixSearchWithClaimDto;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.pix.ListChavePixResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
