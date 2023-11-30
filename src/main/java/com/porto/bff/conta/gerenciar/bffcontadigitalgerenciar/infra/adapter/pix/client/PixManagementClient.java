@@ -1,8 +1,7 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.pix.client;
 
 
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.DataResponseBFF;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.pix.KeyPixSearchWithClaimDto;
+import com.porto.experiencia.cliente.conta.digital.commons.web.model.ApiResponseData;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -18,9 +17,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 public interface PixManagementClient {
 
     @GetMapping("${feign.client.config.porto.pix.management.endpoint}")
-    DataResponseBFF<List<KeyPixSearchWithClaimDto>> getPixKeyFromAnAccount(
-            @RequestHeader(value = "x-account-id") String xAccountId,
-            @RequestHeader(AUTHORIZATION) String authorization,
-            @RequestHeader("x-itau-auth") String xItauAuth
-    );
+    ApiResponseData<List<Object>> getPixKeyFromAnAccount(@RequestHeader(value = "x-account-id") String xAccountId,
+                                                         @RequestHeader(AUTHORIZATION) String authorization,
+                                                         @RequestHeader("x-itau-auth") String xItauAuth);
 }
