@@ -17,9 +17,6 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 public interface PixManagementClient {
 
     @GetMapping("${feign.client.config.porto.pix.management.endpoint}")
-    DataResponseBFF<List<Object>> getPixKeyFromAnAccount(
-            @RequestHeader(value = "x-account-id") String xAccountId,
-            @RequestHeader(AUTHORIZATION) String authorization,
-            @RequestHeader("x-itau-auth") String xItauAuth
+    DataResponseBFF<List<Object>> getPixKeyFromAnAccount(@RequestHeader(value = "x-account-id") String xAccountId, @RequestHeader(AUTHORIZATION) String authorization, @RequestHeader("x-itau-auth") String xItauAuth
     );
 }
