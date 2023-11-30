@@ -45,20 +45,16 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
         DataResponseIassPorto<BalanceResponseIaasPorto> saldoConta =
                 this.client.findBySaldoContaIaas(getBearerInput(xItauAuth), "IAAS", contaId, contaId);
         boolean hasPortoCard = verificaExistenciaCartao(tokenCognito);
-        DataResponseBFF<List<KeyPixSearchWithClaimDto>> listChavePix = this.pixManagementClient
-                .getPixKeyFromAnAccount(
-                        contaId,
-                        tokenCognito,
-                        this.getBearerInput(xItauAuth)
-                );
 
-        var quantidadeChavePix = getMensagemFormatado(listChavePix.dados().size());
+
+
+        var mensagemDaChavePix = obterQuantidadeChavesPixDaConta(tokenCognito, xItauAuth, contaId);
         return new DataResponseIassPorto<>(new SumarioResponseIaasPorto(
                 this.decodificador.getCpfPorToken(tokenCognito),
                 dadosConta,
                 saldoConta,
                 hasPortoCard,
-                quantidadeChavePix));
+                mensagemDaChavePix));
     }
 
 
@@ -88,6 +84,22 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
             return "1 Chave";
         } else {
             return quantidade+" Chaves";
+        }
+    }
+
+    private String obterQuantidadeChavesPixDaConta(String tokenCognito, String xItauAuth, String contaId) {
+        String mensagemChave = "";
+        try {
+            DataResponseBFF<List<KeyPixSearchWithClaimDto>> listChavePix = this.pixManagementClient
+                    .getPixKeyFromAnAccount(
+                            contaId,
+                            tokenCognito,
+                            this.getBearerInput(xItauAuth)
+                    );
+            mensagemChave =  getMensagemFormatado(listChavePix.dados().size());
+            return mensagemChave;
+        } catch (Exception e) {
+            return mensagemChave;
         }
     }
 
