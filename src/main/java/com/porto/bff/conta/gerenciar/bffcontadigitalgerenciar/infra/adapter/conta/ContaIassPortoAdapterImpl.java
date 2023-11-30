@@ -5,7 +5,6 @@ import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.DataR
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.DataResponseIassPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.cartoes.ListaCartoesResponse;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta.AccountResponseIaasPorto;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.pix.KeyPixSearchWithClaimDto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.saldo.BalanceResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.sumario.SumarioResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.client.CartoesPortoClient;
@@ -90,7 +89,7 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
     private String obterQuantidadeChavesPixDaConta(String tokenCognito, String xItauAuth, String contaId) {
         String mensagemChave = "";
         try {
-            DataResponseBFF<List<KeyPixSearchWithClaimDto>> listChavePix = this.pixManagementClient
+            DataResponseBFF<List<Object>> listChavePix = this.pixManagementClient
                     .getPixKeyFromAnAccount(
                             contaId,
                             tokenCognito,
