@@ -74,7 +74,8 @@ class GerenciarContaIaasServiceImplTest {
                         "12345678900",
                         this.responseIassPorto,
                         this.saldoIAASResponse,
-                        false
+                        false,
+                        "Cadastre suas Chaves Pix"
                 ))
         );
         assertDoesNotThrow(() -> this.service.contaSumario("Token", "xitauAuth","contaId"));

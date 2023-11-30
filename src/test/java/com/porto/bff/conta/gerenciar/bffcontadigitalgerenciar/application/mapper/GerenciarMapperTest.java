@@ -55,7 +55,8 @@ class GerenciarMapperTest {
                         "0000000000",
                         this.conta,
                         this.balance,
-                        false
+                        false,
+                        "Cadastre suas Chaves Pix"
                 )
         );
         contaDto = this.mapper.paraDadosContaResponseDto(conta);

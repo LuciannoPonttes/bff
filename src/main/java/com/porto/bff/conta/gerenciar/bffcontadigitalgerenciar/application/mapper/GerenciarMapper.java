@@ -4,10 +4,7 @@ import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.DataR
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta.AccountResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.saldo.BalanceResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.sumario.SumarioResponseIaasPorto;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.contas.dto.ContaResponseDto;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.contas.dto.DadosResponseDto;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.contas.dto.SaldoResponseDto;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.contas.dto.SumarioResponseDto;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.contas.dto.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -65,9 +62,12 @@ public interface GerenciarMapper {
             @Mapping(source = "sumario.account.data.status", target = "statusConta"),
             @Mapping(source = "sumario.balance.data.available", target = "saldo", qualifiedByName = "mapSaldo"),
             @Mapping(source = "sumario.document", target = "documento"),
-            @Mapping(source = "sumario.hasPortoCard", target = "possuiCartao")
+            @Mapping(source = "sumario.hasPortoCard", target = "possuiCartao"),
+            @Mapping(source = "sumario.quantidadeChavePix", target = "quantidadeChavePix")
     })
     SumarioResponseDto paraContaSumarioResponseDto(SumarioResponseIaasPorto sumario);
+
+
 
     @Named("mapSaldo")
     default String mapSaldo(Double saldo) {
