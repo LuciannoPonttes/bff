@@ -1,7 +1,6 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.pix.client;
 
 
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.DataResponseBFF;
 import com.porto.experiencia.cliente.conta.digital.commons.web.model.ApiResponseData;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
