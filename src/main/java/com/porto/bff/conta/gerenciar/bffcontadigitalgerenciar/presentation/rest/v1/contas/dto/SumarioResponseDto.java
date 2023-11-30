@@ -12,7 +12,7 @@ public record SumarioResponseDto(
         String statusConta,
         String documento,
         Boolean possuiCartao,
-        String mensagemChavePix
+        String quantidadeChavePix
 
 ) {
 }

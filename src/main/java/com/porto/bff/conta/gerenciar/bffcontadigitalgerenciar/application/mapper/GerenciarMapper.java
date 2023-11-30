@@ -63,7 +63,7 @@ public interface GerenciarMapper {
             @Mapping(source = "sumario.balance.data.available", target = "saldo", qualifiedByName = "mapSaldo"),
             @Mapping(source = "sumario.document", target = "documento"),
             @Mapping(source = "sumario.hasPortoCard", target = "possuiCartao"),
-            @Mapping(source = "sumario.mensagemChavePix", target = "mensagemChavePix")
+            @Mapping(source = "sumario.quantidadeChavePix", target = "quantidadeChavePix")
     })
     SumarioResponseDto paraContaSumarioResponseDto(SumarioResponseIaasPorto sumario);
 

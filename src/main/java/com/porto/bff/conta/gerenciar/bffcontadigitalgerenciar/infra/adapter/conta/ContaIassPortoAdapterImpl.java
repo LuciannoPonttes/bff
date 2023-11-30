@@ -52,13 +52,13 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
                         this.getBearerInput(xItauAuth)
                 );
 
-        var msgFormatada = getMensagemFormatado(listChavePix.dados().size());
+        var quantidadeChavePix = getMensagemFormatado(listChavePix.dados().size());
         return new DataResponseIassPorto<>(new SumarioResponseIaasPorto(
                 this.decodificador.getCpfPorToken(tokenCognito),
                 dadosConta,
                 saldoConta,
                 hasPortoCard,
-                msgFormatada));
+                quantidadeChavePix));
     }
 
 
