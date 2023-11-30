@@ -11,6 +11,7 @@ import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.cont
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.client.ContaIaasPortoClient;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.decodertoken.DecodificarAccessToken;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.pix.client.PixManagementClient;
+import com.porto.experiencia.cliente.conta.digital.commons.web.model.ApiResponseData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -47,13 +48,13 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
 
 
 
-        var mensagemDaChavePix = obterQuantidadeChavesPixDaConta(tokenCognito, xItauAuth, contaId);
+        var quantidadeChavePix = obterQuantidadeChavesPixDaConta(tokenCognito, xItauAuth, contaId);
         return new DataResponseIassPorto<>(new SumarioResponseIaasPorto(
                 this.decodificador.getCpfPorToken(tokenCognito),
                 dadosConta,
                 saldoConta,
                 hasPortoCard,
-                mensagemDaChavePix));
+                quantidadeChavePix));
     }
 
 
@@ -89,7 +90,7 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
     private String obterQuantidadeChavesPixDaConta(String tokenCognito, String xItauAuth, String contaId) {
         String mensagemChave = "";
         try {
-            DataResponseBFF<List<Object>> listChavePix = this.pixManagementClient
+            ApiResponseData<List<Object>> listChavePix = this.pixManagementClient
                     .getPixKeyFromAnAccount(contaId, tokenCognito, this.getBearerInput(xItauAuth));
             mensagemChave =  formatarMensagemParaExbirNoFront(listChavePix.dados().size());
             return mensagemChave;
