@@ -9,8 +9,12 @@ import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.sumar
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.client.CartoesPortoClient;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.client.ContaIaasPortoClient;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.decodertoken.DecodificarAccessToken;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.pix.client.PixManagementClient;
+import com.porto.experiencia.cliente.conta.digital.commons.web.model.ApiResponseData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -19,6 +23,9 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
     private final ContaIaasPortoClient client;
     private final CartoesPortoClient cartoesPortoClient;
     private final DecodificarAccessToken decodificador;
+
+    private final PixManagementClient pixManagementClient;
+
 
     @Override
     public DataResponseIassPorto<AccountResponseIaasPorto> getConta(String xItauAuth, String contaId) {
@@ -32,18 +39,24 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
 
     @Override
     public DataResponseIassPorto<SumarioResponseIaasPorto> sumarioConta(String tokenCognito, String xItauAuth, String contaId) {
-            DataResponseIassPorto<AccountResponseIaasPorto> dadosConta =
-                    this.client.findByIdContaIaas(this.getBearerInput(xItauAuth), "IAAS", contaId, contaId);
-            DataResponseIassPorto<BalanceResponseIaasPorto> saldoConta =
-                    this.client.findBySaldoContaIaas(getBearerInput(xItauAuth), "IAAS", contaId, contaId);
-            boolean hasPortoCard = verificaExistenciaCartao(tokenCognito);
+        DataResponseIassPorto<AccountResponseIaasPorto> dadosConta =
+                this.client.findByIdContaIaas(this.getBearerInput(xItauAuth), "IAAS", contaId, contaId);
+        DataResponseIassPorto<BalanceResponseIaasPorto> saldoConta =
+                this.client.findBySaldoContaIaas(getBearerInput(xItauAuth), "IAAS", contaId, contaId);
+        boolean hasPortoCard = verificaExistenciaCartao(tokenCognito);
 
-            return new DataResponseIassPorto<>(new SumarioResponseIaasPorto(
-                    this.decodificador.getCpfPorToken(tokenCognito),
-                    dadosConta,
-                    saldoConta,
-                    hasPortoCard));
+
+
+        var quantidadeChavePix = obterQuantidadeChavesPixDaConta(tokenCognito, xItauAuth, contaId);
+        return new DataResponseIassPorto<>(new SumarioResponseIaasPorto(
+                this.decodificador.getCpfPorToken(tokenCognito),
+                dadosConta,
+                saldoConta,
+                hasPortoCard,
+                quantidadeChavePix));
     }
+
+
 
     private boolean verificaExistenciaCartao(String tokenCognito) {
         ListaCartoesResponse cardsByUser = null;
@@ -61,6 +74,28 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
             return xItauAuth;
         }
         return prefixBearer + xItauAuth;
+    }
+
+    private String formatarMensagemParaExbirNoFront(int quantidade) {
+        if(quantidade == 0) {
+            return "Cadastre suas Chaves Pix";
+        } else if (quantidade == 1) {
+            return "1 Chave";
+        } else {
+            return quantidade+" Chaves";
+        }
+    }
+
+    private String obterQuantidadeChavesPixDaConta(String tokenCognito, String xItauAuth, String contaId) {
+        String mensagemChave = "";
+        try {
+            ApiResponseData<List<Object>> listChavePix = this.pixManagementClient
+                    .getPixKeyFromAnAccount(contaId, tokenCognito, this.getBearerInput(xItauAuth));
+            mensagemChave =  formatarMensagemParaExbirNoFront(listChavePix.dados().size());
+            return mensagemChave;
+        } catch (Exception e) {
+            return mensagemChave;
+        }
     }
 
 }
