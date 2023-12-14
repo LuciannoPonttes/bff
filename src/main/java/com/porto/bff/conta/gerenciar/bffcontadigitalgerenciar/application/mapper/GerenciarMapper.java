@@ -26,6 +26,7 @@ public interface GerenciarMapper {
     
     @Mappings({
             @Mapping(source = "account.id", target = "id"),
+            @Mapping(target = "contaBancaria.nomeBanco", constant = NOME_BANCO),
             @Mapping(target = "contaBancaria.codigoBanco", constant = NUMERO_BANCO),
             @Mapping(source = "account.bankAccount.branch", target = "contaBancaria.agencia"),
             @Mapping(source = "account.bankAccount.number", target = "contaBancaria.numeroConta"),
