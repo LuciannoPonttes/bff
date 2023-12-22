@@ -22,7 +22,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 
 
-@RequestMapping({"v1/conta-digital/gerenciar","v3/conta-digital/gerenciar"})
+@RequestMapping({"v1/conta-digital/gerenciar"})
 @OpenAPIDefinition(
         info = @Info(
                 title = ApiDocsConstants.API_DOC_TITLE,

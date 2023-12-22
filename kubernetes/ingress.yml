@@ -28,27 +28,6 @@ spec:
                 name: bff-conta-digital-gerenciar
                 port:
                   number: 8080
-          - path: /portobank/v3/conta-digital/gerenciar/dados-conta
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: bff-conta-digital-gerenciar
-                port:
-                  number: 8080
-          - path: /portobank/v3/conta-digital/gerenciar/saldo
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: bff-conta-digital-gerenciar
-                port:
-                  number: 8080
-          - path: /portobank/v3/conta-digital/gerenciar/sumario
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: bff-conta-digital-gerenciar
-                port:
-                  number: 8080
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
