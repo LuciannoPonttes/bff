@@ -42,6 +42,7 @@ class GerenciarContaIaasServiceImplTest {
                         ),
                         "status",
                         "tipo",
+                        null,
                         LocalDate.now().toString(),
                         LocalDate.now().toString())
         );

@@ -39,6 +39,7 @@ class GerenciarMapperTest {
                 ),
                 "status",
                 "type",
+                null,
                 "criado",
                 "atualizado"
         ));

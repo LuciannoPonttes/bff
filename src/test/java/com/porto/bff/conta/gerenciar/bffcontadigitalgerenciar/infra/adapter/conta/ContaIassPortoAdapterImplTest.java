@@ -54,6 +54,7 @@ class ContaIassPortoAdapterImplTest {
                         ),
                         "status",
                         "tipo",
+                        null,
                         LocalDate.now().toString(),
                         LocalDate.now().toString())
         );
