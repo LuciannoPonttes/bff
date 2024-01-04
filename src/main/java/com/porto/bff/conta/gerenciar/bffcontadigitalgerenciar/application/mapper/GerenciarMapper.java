@@ -20,10 +20,7 @@ import static org.apache.commons.lang3.StringUtils.SPACE;
 @Mapper(componentModel = "spring")
 public interface GerenciarMapper {
 
-//    @Mappings({
-            @Mapping(source = "data", target = "dados")
-//            @Mapping(source = "data.flags", target = "dados.bloqueios", qualifiedByName = "getBloqueiosConta")
-//    })
+    @Mapping(source = "data", target = "dados")
     DadosResponseDto<ContaResponseDto> paraDadosContaResponseDto(DataResponseIassPorto<AccountResponseIaasPorto> conta);
 
     String NOME_BANCO = "Porto Bank - Banco Itaucard S/A";
@@ -85,7 +82,7 @@ public interface GerenciarMapper {
     @Named("getBloqueiosConta")
     default BloqueiosContaDto getBloqueiosConta(List<AccountFlagsResponseIaasPorto> flags) {
         if (flags == null || flags.isEmpty())
-            return new BloqueiosContaDto();
+            return null;
 
         List<String> policies = flags.stream().map(AccountFlagsResponseIaasPorto::policyId).toList();
         return new BloqueiosContaDto(
