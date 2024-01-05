@@ -1,18 +1,24 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.mapper;
 
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.sumario.SumarioResponseIaasPorto;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.contas.dto.DadosResponseDto;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.contas.dto.SaldoResponseDto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.DataResponseIassPorto;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta.AccountFlagsResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta.AccountResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta.BankAccountResponseIassPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.saldo.BalanceResponseIaasPorto;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.sumario.SumarioResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.contas.dto.ContaResponseDto;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.contas.dto.DadosResponseDto;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.contas.dto.SaldoResponseDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EmptySource;
+import org.junit.jupiter.params.provider.NullSource;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class GerenciarMapperTest {
 
@@ -23,12 +29,18 @@ class GerenciarMapperTest {
     private DataResponseIassPorto<SumarioResponseIaasPorto> sumario;
     private DadosResponseDto<ContaResponseDto> contaDto;
     private DadosResponseDto<SaldoResponseDto> saldoDto;
-
+    private List<AccountFlagsResponseIaasPorto> accountFlagsResponseIaasPorto;
     String NUMERO_BANCO = "341";
 
     @BeforeEach
     void setUp() {
         mapper = new GerenciarMapperImpl();
+        accountFlagsResponseIaasPorto = List.of(
+                new AccountFlagsResponseIaasPorto(
+                        "123",
+                        "c76e0255-17af45be-a5b6-6c57d58abf49",
+                        "dataHora")
+        );
         conta = new DataResponseIassPorto<>(new AccountResponseIaasPorto(
                 "123",
                 new BankAccountResponseIassPorto(
@@ -39,6 +51,7 @@ class GerenciarMapperTest {
                 ),
                 "status",
                 "type",
+                accountFlagsResponseIaasPorto,
                 "criado",
                 "atualizado"
         ));
@@ -83,6 +96,10 @@ class GerenciarMapperTest {
         assertEquals(contaDto.dados().tipo(), conta.data().type());
         assertEquals(contaDto.dados().criadoEm(), conta.data().createdAt());
         assertEquals(contaDto.dados().atualizadoEm(), conta.data().updatedAt());
+        assertNotNull(contaDto.dados().bloqueios());
+        assertNotNull(contaDto.dados().bloqueios().politica());
+        assertFalse(contaDto.dados().bloqueios().permiteCashOut());
+        assertTrue(contaDto.dados().bloqueios().permiteCashIn());
     }
 
     @Test
@@ -104,5 +121,25 @@ class GerenciarMapperTest {
         Assertions.assertEquals(saldoDto.dados().disponivel(), dto.dados().saldo());
         Assertions.assertEquals(GerenciarMapper.NOME_BANCO, dto.dados().nomeBanco());
         assertEquals(sumario.data().document(), dto.dados().documento());
+        assertNotNull(contaDto.dados().bloqueios());
+        assertNotNull(contaDto.dados().bloqueios().politica());
+        assertFalse(contaDto.dados().bloqueios().permiteCashOut());
+        assertTrue(contaDto.dados().bloqueios().permiteCashIn());
+    }
+
+    @Test
+    void getBloqueiosConta() {
+        var dto = mapper.getBloqueiosConta(accountFlagsResponseIaasPorto.stream().toList());
+        assertNotNull(dto.politica());
+        assertEquals(dto.politica().size(), accountFlagsResponseIaasPorto.size());
+        assertFalse(dto.permiteCashOut());
+        assertTrue(dto.permiteCashIn());
+    }
+
+    @ParameterizedTest()
+    @NullSource
+    @EmptySource
+    void getBloqueiosContaSemFlagBloqueio(List<AccountFlagsResponseIaasPorto> politicas) {
+        assertNull(mapper.getBloqueiosConta(politicas));
     }
 }

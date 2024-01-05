@@ -5,6 +5,7 @@ public record ContaResponseDto(
         ContaBancariaDto contaBancaria,
         String statusConta,
         String tipo,
+        BloqueiosContaDto bloqueios,
         String criadoEm,
         String atualizadoEm
 ) {

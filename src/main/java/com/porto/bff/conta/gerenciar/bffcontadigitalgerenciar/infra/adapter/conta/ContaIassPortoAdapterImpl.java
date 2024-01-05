@@ -29,12 +29,12 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
 
     @Override
     public DataResponseIassPorto<AccountResponseIaasPorto> getConta(String xItauAuth, String contaId) {
-    	return this.client.findByIdContaIaas(this.getBearerInput(xItauAuth), "IAAS", contaId, contaId);
+        return this.client.findByIdContaIaas(this.getBearerInput(xItauAuth), "IAAS", contaId, contaId);
     }
 
     @Override
     public DataResponseIassPorto<BalanceResponseIaasPorto> getContaSaldo(String xItauAuth, String contaId) {
-    	return this.client.findBySaldoContaIaas(getBearerInput(xItauAuth), "IAAS", contaId, contaId);
+        return this.client.findBySaldoContaIaas(getBearerInput(xItauAuth), "IAAS", contaId, contaId);
     }
 
     @Override
@@ -46,7 +46,6 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
         boolean hasPortoCard = verificaExistenciaCartao(tokenCognito);
 
 
-
         var quantidadeChavePix = obterQuantidadeChavesPixDaConta(tokenCognito, xItauAuth, contaId);
         return new DataResponseIassPorto<>(new SumarioResponseIaasPorto(
                 this.decodificador.getCpfPorToken(tokenCognito),
@@ -55,7 +54,6 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
                 hasPortoCard,
                 quantidadeChavePix));
     }
-
 
 
     private boolean verificaExistenciaCartao(String tokenCognito) {
@@ -77,12 +75,12 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
     }
 
     private String formatarMensagemParaExbirNoFront(int quantidade) {
-        if(quantidade == 0) {
+        if (quantidade == 0) {
             return "Cadastre suas Chaves Pix";
         } else if (quantidade == 1) {
             return "1 Chave";
         } else {
-            return quantidade+" Chaves";
+            return quantidade + " Chaves";
         }
     }
 
@@ -91,7 +89,7 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
         try {
             ApiResponseData<List<Object>> listChavePix = this.pixManagementClient
                     .getPixKeyFromAnAccount(contaId, tokenCognito, this.getBearerInput(xItauAuth));
-            mensagemChave =  formatarMensagemParaExbirNoFront(listChavePix.dados().size());
+            mensagemChave = formatarMensagemParaExbirNoFront(listChavePix.dados().size());
             return mensagemChave;
         } catch (Exception e) {
             return mensagemChave;

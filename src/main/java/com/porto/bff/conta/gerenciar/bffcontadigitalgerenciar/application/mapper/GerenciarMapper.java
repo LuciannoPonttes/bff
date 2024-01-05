@@ -1,6 +1,7 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.mapper;
 
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.DataResponseIassPorto;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta.AccountFlagsResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta.AccountResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.saldo.BalanceResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.sumario.SumarioResponseIaasPorto;
@@ -11,6 +12,7 @@ import org.mapstruct.Mappings;
 import org.mapstruct.Named;
 
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.Locale;
 
 import static org.apache.commons.lang3.StringUtils.SPACE;
@@ -23,7 +25,7 @@ public interface GerenciarMapper {
 
     String NOME_BANCO = "Porto Bank - Banco Itaucard S/A";
     String NUMERO_BANCO = "341";
-    
+
     @Mappings({
             @Mapping(source = "account.id", target = "id"),
             @Mapping(target = "contaBancaria.nomeBanco", constant = NOME_BANCO),
@@ -33,6 +35,7 @@ public interface GerenciarMapper {
             @Mapping(source = "account.bankAccount.checkDigit", target = "contaBancaria.digitoConta"),
             @Mapping(source = "status", target = "statusConta"),
             @Mapping(source = "type", target = "tipo"),
+            @Mapping(source = "flags", target = "bloqueios", qualifiedByName = "getBloqueiosConta"),
             @Mapping(source = "createdAt", target = "criadoEm"),
             @Mapping(source = "updatedAt", target = "atualizadoEm")
 
@@ -69,11 +72,22 @@ public interface GerenciarMapper {
     SumarioResponseDto paraContaSumarioResponseDto(SumarioResponseIaasPorto sumario);
 
 
-
     @Named("mapSaldo")
     default String mapSaldo(Double saldo) {
         var br = new Locale("pt", "BR");
         var formatoMoeda = NumberFormat.getCurrencyInstance(br);
-        return formatoMoeda.format(saldo).replaceAll("\\p{Z}",SPACE);
+        return formatoMoeda.format(saldo).replaceAll("\\p{Z}", SPACE);
+    }
+
+    @Named("getBloqueiosConta")
+    default BloqueiosContaDto getBloqueiosConta(List<AccountFlagsResponseIaasPorto> flags) {
+        if (flags == null || flags.isEmpty())
+            return null;
+
+        List<String> policies = flags.stream().map(AccountFlagsResponseIaasPorto::policyId).toList();
+        return new BloqueiosContaDto(
+                policies,
+                PoliticasBloqueioContaEnum.permiteCashIn(policies),
+                PoliticasBloqueioContaEnum.permiteCashOut(policies));
     }
 }
