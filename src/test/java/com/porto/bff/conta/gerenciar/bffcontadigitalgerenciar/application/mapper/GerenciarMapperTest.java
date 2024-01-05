@@ -12,6 +12,9 @@ import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EmptySource;
+import org.junit.jupiter.params.provider.NullSource;
 
 import java.util.List;
 
@@ -131,5 +134,12 @@ class GerenciarMapperTest {
         assertEquals(dto.politica().size(), accountFlagsResponseIaasPorto.size());
         assertFalse(dto.permiteCashOut());
         assertTrue(dto.permiteCashIn());
+    }
+
+    @ParameterizedTest()
+    @NullSource
+    @EmptySource
+    void getBloqueiosContaSemFlagBloqueio(List<AccountFlagsResponseIaasPorto> politicas) {
+        assertNull(mapper.getBloqueiosConta(politicas));
     }
 }
