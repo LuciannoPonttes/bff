@@ -6,7 +6,6 @@ import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta.BankAccountResponseIassPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.saldo.BalanceResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.sumario.SumarioResponseIaasPorto;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.contas.dto.BloqueiosContaDto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.contas.dto.ContaResponseDto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.contas.dto.DadosResponseDto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.contas.dto.SaldoResponseDto;
@@ -28,8 +27,6 @@ class GerenciarMapperTest {
     private DadosResponseDto<ContaResponseDto> contaDto;
     private DadosResponseDto<SaldoResponseDto> saldoDto;
     private List<AccountFlagsResponseIaasPorto> accountFlagsResponseIaasPorto;
-    private BloqueiosContaDto bloqueiosContaDto;
-
     String NUMERO_BANCO = "341";
 
     @BeforeEach
@@ -130,6 +127,9 @@ class GerenciarMapperTest {
     @Test
     void getBloqueiosConta() {
         var dto = mapper.getBloqueiosConta(accountFlagsResponseIaasPorto.stream().toList());
-
+        assertNotNull(dto.politica());
+        assertEquals(dto.politica().size(), accountFlagsResponseIaasPorto.size());
+        assertFalse(dto.permiteCashOut());
+        assertTrue(dto.permiteCashIn());
     }
 }
