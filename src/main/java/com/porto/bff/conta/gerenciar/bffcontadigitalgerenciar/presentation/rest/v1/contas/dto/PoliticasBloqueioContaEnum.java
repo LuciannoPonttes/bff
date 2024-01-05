@@ -20,31 +20,31 @@ public enum PoliticasBloqueioContaEnum {
     CONTESTACAO_CONTA_RECONHECIDA("51db4af4-d70e45d4-9958-fec755c35f1e", false, true),
     PRE_ENCERRAMENTO_CONTA("0efb9706-9424-4b44-a7c0-802df2dd7806", false, true);
 
-    public final String descricao;
+    public final String politica;
     public final boolean cashIn;
     public final boolean cashOut;
 
-    PoliticasBloqueioContaEnum(String descricao, boolean cashIn, boolean cashOut) {
-        this.descricao = descricao;
+    PoliticasBloqueioContaEnum(String politica, boolean cashIn, boolean cashOut) {
+        this.politica = politica;
         this.cashIn = cashIn;
         this.cashOut = cashOut;
     }
 
-    public static boolean permiteCashIn(List<String> flagsPolicies) {
+    public static boolean permiteCashIn(List<String> politicasBloqueio) {
 
-        List<PoliticasBloqueioContaEnum> policies = Arrays.stream(PoliticasBloqueioContaEnum.values()).filter(pu -> flagsPolicies.contains(pu.descricao)).toList();
+        List<PoliticasBloqueioContaEnum> politicas = Arrays.stream(PoliticasBloqueioContaEnum.values()).filter(pu -> politicasBloqueio.contains(pu.politica)).toList();
 
-        if (policies.isEmpty()) return true;
+        if (politicas.isEmpty()) return true;
 
-        return policies.stream().allMatch(policy -> policy.cashIn);
+        return politicas.stream().allMatch(policy -> policy.cashIn);
     }
 
-    public static boolean permiteCashOut(List<String> flagsPolicies) {
+    public static boolean permiteCashOut(List<String> politicasBloqueio) {
 
-        List<PoliticasBloqueioContaEnum> policies = Arrays.stream(PoliticasBloqueioContaEnum.values()).filter(pu -> flagsPolicies.contains(pu.descricao)).toList();
+        List<PoliticasBloqueioContaEnum> politicas = Arrays.stream(PoliticasBloqueioContaEnum.values()).filter(pu -> politicasBloqueio.contains(pu.politica)).toList();
 
-        if (policies.isEmpty()) return true;
+        if (politicas.isEmpty()) return true;
 
-        return policies.stream().allMatch(policy -> policy.cashOut);
+        return politicas.stream().allMatch(policy -> policy.cashOut);
     }
 }
