@@ -1,6 +1,7 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.service.conta;
 
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.DataResponseIassPorto;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta.AccountFlagsResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta.AccountResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta.BankAccountResponseIassPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.saldo.BalanceResponseIaasPorto;
@@ -13,9 +14,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.cloud.openfeign.security.OAuth2AccessTokenInterceptor.BEARER;
@@ -42,6 +44,12 @@ class GerenciarContaIaasServiceImplTest {
                         ),
                         "status",
                         "tipo",
+                        List.of(
+                                new AccountFlagsResponseIaasPorto(
+                                        "123",
+                                        "policy123",
+                                        "dataHora")
+                        ),
                         LocalDate.now().toString(),
                         LocalDate.now().toString())
         );
@@ -78,6 +86,6 @@ class GerenciarContaIaasServiceImplTest {
                         "Cadastre suas Chaves Pix"
                 ))
         );
-        assertDoesNotThrow(() -> this.service.contaSumario("Token", "xitauAuth","contaId"));
+        assertDoesNotThrow(() -> this.service.contaSumario("Token", "xitauAuth", "contaId"));
     }
 }
