@@ -64,6 +64,7 @@ public interface GerenciarMapper {
             @Mapping(source = "sumario.account.data.bankAccount.number", target = "numeroConta"),
             @Mapping(source = "sumario.account.data.bankAccount.checkDigit", target = "digitoConta"),
             @Mapping(source = "sumario.account.data.status", target = "statusConta"),
+            @Mapping(source = "sumario.account.data.flags", target = "bloqueios", qualifiedByName = "getBloqueiosConta"),
             @Mapping(source = "sumario.balance.data.available", target = "saldo", qualifiedByName = "mapSaldo"),
             @Mapping(source = "sumario.document", target = "documento"),
             @Mapping(source = "sumario.hasPortoCard", target = "possuiCartao"),

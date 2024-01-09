@@ -10,6 +10,7 @@ public record SumarioResponseDto(
         String digitoConta,
         String saldo,
         String statusConta,
+        BloqueiosContaDto bloqueios,
         String documento,
         Boolean possuiCartao,
         String quantidadeChavePix
