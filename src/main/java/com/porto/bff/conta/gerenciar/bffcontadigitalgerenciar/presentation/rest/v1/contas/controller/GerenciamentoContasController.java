@@ -40,17 +40,8 @@ public class GerenciamentoContasController implements GerenciamentoContasControl
     @Override
     public ResponseEntity<DadosResponseDto<ContaResponseDto>> dadosConta(String tokenCognito, String xItauAuth,
                                                                          String contaId) throws IOException {
-        DataResponseIassPorto<AccountResponseIaasPorto> conta = this.service.getConta(xItauAuth, contaId);
-        AccountResponseIaasPorto accountResponseIaasPorto = conta.data();
-
-        if(mockBloqueioDeContaEstaAtivo) {
-            Flags flags = mapeiaMockBloqueioConta(mockBloqueioContas);
-            List<String> politicasPorContaId = flags.buscaPoliticasPorContaId(contaId);
-
-            accountResponseIaasPorto = accountResponseIaasPorto.withFlags(convertePoliticasEmFlagsResponseIaasPorto(politicasPorContaId));
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(this.mapper.paraDadosContaResponseDto(new DataResponseIassPorto<>(accountResponseIaasPorto)));
+        var respostaService = this.service.getConta(xItauAuth, contaId);
+        return ResponseEntity.status(HttpStatus.OK).body(this.mapper.paraDadosContaResponseDto(respostaService));
     }
 
     @Override
