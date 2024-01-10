@@ -35,7 +35,6 @@ public interface GerenciarMapper {
             @Mapping(source = "account.bankAccount.checkDigit", target = "contaBancaria.digitoConta"),
             @Mapping(source = "status", target = "statusConta"),
             @Mapping(source = "type", target = "tipo"),
-            @Mapping(source = "flags", target = "bloqueios", qualifiedByName = "getBloqueiosConta"),
             @Mapping(source = "createdAt", target = "criadoEm"),
             @Mapping(source = "updatedAt", target = "atualizadoEm")
 
