@@ -5,10 +5,13 @@ import java.util.List;
 public record BloqueiosContaDto(
         List<String> politica,
         boolean permiteCashIn,
-        boolean permiteCashOut
+        boolean permiteCashOut,
+        String tituloBloqueioBoleto,
+        String tituloBloqueioPix,
+        String subTituloBloqueio
 ) {
     public BloqueiosContaDto() {
-        this(List.of(), true, true);
+        this(List.of(), true, true, "", "", "");
     }
 }
 

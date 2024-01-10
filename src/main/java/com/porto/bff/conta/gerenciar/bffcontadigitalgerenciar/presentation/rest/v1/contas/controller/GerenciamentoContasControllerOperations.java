@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.io.IOException;
+
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 
@@ -53,7 +55,7 @@ public interface GerenciamentoContasControllerOperations {
     @GetMapping("/dados-conta")
     ResponseEntity<DadosResponseDto<ContaResponseDto>> dadosConta(@RequestHeader(value = AUTHORIZATION) String tokenCognito,
                                                                   @RequestHeader(value = "x-itau-auth", required = false) String xItauAuth,
-                                                                  @RequestHeader(value = "x-account-id", required = false) String contaId);
+                                                                  @RequestHeader(value = "x-account-id", required = false) String contaId) throws IOException;
 
 
 
@@ -104,5 +106,5 @@ public interface GerenciamentoContasControllerOperations {
     @GetMapping("/sumario")
     ResponseEntity<DadosResponseDto<SumarioResponseDto>> sumarioConta(@RequestHeader(value = AUTHORIZATION) String tokenCognito,
                                                                       @RequestHeader(value = "x-itau-auth", required = false) String xItauAuth,
-                                                                      @RequestHeader(value = "x-account-id", required = false) String contaId);
+                                                                      @RequestHeader(value = "x-account-id", required = false) String contaId) throws IOException;
 }

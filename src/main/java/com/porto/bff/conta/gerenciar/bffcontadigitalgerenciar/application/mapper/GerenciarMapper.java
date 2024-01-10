@@ -25,6 +25,11 @@ public interface GerenciarMapper {
 
     String NOME_BANCO = "Porto Bank - Banco Itaucard S/A";
     String NUMERO_BANCO = "341";
+    String TITULO_BLOQUEIO_BOLETO = "A sua conta está com bloqueio para pagar.";
+    String TITULO_BLOQUEIO_PIX_CASHOUT = "A sua conta está bloqueada para enviar dinheiro.";
+    String TITULO_BLOQUEIO_PIX_CASHIN = "A sua conta está bloqueada para receber dinheiro.";
+    String TITULO_BLOQUEIO_PIX_CASHIN_AND_CASHOUT = "A sua conta está bloqueada para enviar e receber dinheiro.";
+    String SUB_TITULO_BLOQUEIO = "Se tiver dúvidas, fale com a gente pelo chat.";
 
     @Mappings({
             @Mapping(source = "account.id", target = "id"),
@@ -35,7 +40,6 @@ public interface GerenciarMapper {
             @Mapping(source = "account.bankAccount.checkDigit", target = "contaBancaria.digitoConta"),
             @Mapping(source = "status", target = "statusConta"),
             @Mapping(source = "type", target = "tipo"),
-            @Mapping(source = "flags", target = "bloqueios", qualifiedByName = "getBloqueiosConta"),
             @Mapping(source = "createdAt", target = "criadoEm"),
             @Mapping(source = "updatedAt", target = "atualizadoEm")
 
@@ -64,6 +68,7 @@ public interface GerenciarMapper {
             @Mapping(source = "sumario.account.data.bankAccount.number", target = "numeroConta"),
             @Mapping(source = "sumario.account.data.bankAccount.checkDigit", target = "digitoConta"),
             @Mapping(source = "sumario.account.data.status", target = "statusConta"),
+            @Mapping(source = "sumario.account.data.flags", target = "bloqueios", qualifiedByName = "getBloqueiosConta"),
             @Mapping(source = "sumario.balance.data.available", target = "saldo", qualifiedByName = "mapSaldo"),
             @Mapping(source = "sumario.document", target = "documento"),
             @Mapping(source = "sumario.hasPortoCard", target = "possuiCartao"),
@@ -85,9 +90,17 @@ public interface GerenciarMapper {
             return null;
 
         List<String> policies = flags.stream().map(AccountFlagsResponseIaasPorto::policyId).toList();
+        boolean permiteCashIn = PoliticasBloqueioContaEnum.permiteCashIn(policies);
+        boolean permiteCashOut = PoliticasBloqueioContaEnum.permiteCashOut(policies);
+
         return new BloqueiosContaDto(
                 policies,
-                PoliticasBloqueioContaEnum.permiteCashIn(policies),
-                PoliticasBloqueioContaEnum.permiteCashOut(policies));
+                permiteCashIn,
+                permiteCashOut,
+                !permiteCashOut ? TITULO_BLOQUEIO_BOLETO : "",
+                !permiteCashOut && !permiteCashIn
+                    ? TITULO_BLOQUEIO_PIX_CASHIN_AND_CASHOUT
+                    : (!permiteCashIn ? TITULO_BLOQUEIO_PIX_CASHIN : TITULO_BLOQUEIO_PIX_CASHOUT),
+                SUB_TITULO_BLOQUEIO);
     }
 }
