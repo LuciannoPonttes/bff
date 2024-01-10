@@ -117,6 +117,10 @@ class GerenciarMapperTest {
         Assertions.assertEquals(saldoDto.dados().disponivel(), dto.dados().saldo());
         Assertions.assertEquals(GerenciarMapper.NOME_BANCO, dto.dados().nomeBanco());
         assertEquals(sumario.data().document(), dto.dados().documento());
+        assertNotNull(dto.dados().bloqueios());
+        assertNotNull(dto.dados().bloqueios().politica());
+        assertFalse(dto.dados().bloqueios().permiteCashOut());
+        assertTrue(dto.dados().bloqueios().permiteCashIn());
     }
 
     @Test
