@@ -18,6 +18,6 @@ public class Flags {
         return dados.stream()
                 .filter(dados1 -> dados1.getContaId().equals(contaId)).findFirst()
                 .map(Dados::getPoliticas)
-                .orElse(null);
+                .orElse(List.of());
     }
 }
