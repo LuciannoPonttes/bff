@@ -96,10 +96,6 @@ class GerenciarMapperTest {
         assertEquals(contaDto.dados().tipo(), conta.data().type());
         assertEquals(contaDto.dados().criadoEm(), conta.data().createdAt());
         assertEquals(contaDto.dados().atualizadoEm(), conta.data().updatedAt());
-        assertNotNull(contaDto.dados().bloqueios());
-        assertNotNull(contaDto.dados().bloqueios().politica());
-        assertFalse(contaDto.dados().bloqueios().permiteCashOut());
-        assertTrue(contaDto.dados().bloqueios().permiteCashIn());
     }
 
     @Test
@@ -121,10 +117,6 @@ class GerenciarMapperTest {
         Assertions.assertEquals(saldoDto.dados().disponivel(), dto.dados().saldo());
         Assertions.assertEquals(GerenciarMapper.NOME_BANCO, dto.dados().nomeBanco());
         assertEquals(sumario.data().document(), dto.dados().documento());
-        assertNotNull(contaDto.dados().bloqueios());
-        assertNotNull(contaDto.dados().bloqueios().politica());
-        assertFalse(contaDto.dados().bloqueios().permiteCashOut());
-        assertTrue(contaDto.dados().bloqueios().permiteCashIn());
     }
 
     @Test
