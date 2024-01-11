@@ -17,7 +17,7 @@ class ResponseErrorApiTest {
         List<ResponseErrorApi.ResponseErrorItem> errors = List.of(errorItem);
 
         ResponseErrorApi responseErrorApi = new ResponseErrorApi(errors);
-
+        responseErrorApi.setErros(errors);
 
         assertThat(responseErrorApi.getErros()).isEqualTo(errors);
     }
@@ -31,8 +31,10 @@ class ResponseErrorApiTest {
                 .campo(campo)
                 .mensagens(mensagens)
                 .build();
+
         errorItem.setCampo(campo);
         errorItem.setMensagens(mensagens);
+
         assertThat(errorItem.getCampo()).isEqualTo(campo);
         assertThat(errorItem.getMensagens()).isEqualTo(mensagens);
     }

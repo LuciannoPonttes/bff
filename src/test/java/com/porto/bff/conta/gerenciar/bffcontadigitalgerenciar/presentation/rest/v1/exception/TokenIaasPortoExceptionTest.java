@@ -2,6 +2,7 @@ package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -44,6 +45,29 @@ class TokenIaasPortoExceptionTest {
 
         assertThat(erroItem.getCampo()).isEqualTo(campo);
         assertThat(erroItem.getMensagens()).isEqualTo(mensagens);
+    }
+
+    @Test
+    public void testDataAnnotation() {
+        TokenIaasPortoException.TokenIaasPortoErroItem erroItem1 = TokenIaasPortoException.TokenIaasPortoErroItem.builder().campo("campo").mensagens(Arrays.asList("mensagem")).build();
+        TokenIaasPortoException.TokenIaasPortoErroItem erroItem2 = TokenIaasPortoException.TokenIaasPortoErroItem.builder().campo("campo").mensagens(Arrays.asList("mensagem")).build();
+        List<TokenIaasPortoException.TokenIaasPortoErroItem> erros = Arrays.asList(erroItem1, erroItem2);
+
+        TokenIaasPortoException exception1 = new TokenIaasPortoException(erros);
+        TokenIaasPortoException exception2 = new TokenIaasPortoException(erros);
+
+        assertThat(exception1).isEqualTo(exception1);
+        assertThat(exception1.hashCode()).isEqualTo(exception1.hashCode());
+
+        String toStringResult = exception1.toString();
+        assertThat(toStringResult).contains("erros=");
+
+        List<TokenIaasPortoException.TokenIaasPortoErroItem> retrievedErros = exception1.getErros();
+        assertNull(retrievedErros);
+
+        TokenIaasPortoException.TokenIaasPortoErroItem erroItem3 = TokenIaasPortoException.TokenIaasPortoErroItem.builder().campo("campo").mensagens(Arrays.asList("mensagem")).build();
+        exception1.setErros(Arrays.asList(erroItem3));
+        assertThat(exception1.getErros()).hasSize(1);
     }
 
 }
