@@ -78,6 +78,14 @@ class GerenciarContaIaasServiceImplTest {
     }
 
     @Test
+    void getContaSaldoSemBearer() {
+        when(this.adapter.getContaSaldo(anyString(), anyString())).thenReturn(
+                saldoIAASResponse
+        );
+        assertDoesNotThrow(() -> this.service.getContaSaldo("t", UUID.randomUUID().toString()));
+    }
+
+    @Test
     void contaSumario() {
         when(this.adapter.sumarioConta(anyString(), anyString(), anyString())).thenReturn(
                 new DataResponseIassPorto<>(new SumarioResponseIaasPorto(

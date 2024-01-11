@@ -10,18 +10,10 @@ import java.util.List;
 @Builder
 public class ResponseErrorApi {
 
-//    private String code;
-//    private String message;
+
     private List<ResponseErrorItem> erros = new ArrayList<>();
 
-//    public ResponseErrorApi(String message, String code) {
-//        this.code = code;
-//        this.message = message;
-//    }
-
     public ResponseErrorApi(List<ResponseErrorItem> errors) {
-//        this.code = code;
-//        this.message = message;
         this.erros = errors;
     }
 
