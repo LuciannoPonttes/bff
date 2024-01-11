@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.context.TestPropertySource;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -28,6 +29,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.cloud.openfeign.security.OAuth2AccessTokenInterceptor.BEARER;
 
 @SpringBootTest
+@TestPropertySource(properties = {"blocking-mock.activated=false", "blocking-mock.account=mock"})
 class ContaIassPortoAdapterImplTest {
 
     @Autowired
