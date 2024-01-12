@@ -9,6 +9,7 @@ import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.sumar
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.contas.dto.ContaResponseDto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.contas.dto.DadosResponseDto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.contas.dto.SaldoResponseDto;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.contas.dto.SumarioResponseDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -137,5 +138,46 @@ class GerenciarMapperTest {
     @EmptySource
     void getBloqueiosContaSemFlagBloqueio(List<AccountFlagsResponseIaasPorto> politicas) {
         assertNull(mapper.getBloqueiosConta(politicas));
+    }
+
+    @Test
+    public void testParaDadosContaResponseDtoWithNullInput() {
+        DataResponseIassPorto<AccountResponseIaasPorto> conta = null;
+        DadosResponseDto<ContaResponseDto> result = mapper.paraDadosContaResponseDto(conta);
+        assertNull(result, "Result should be null when input is null");
+    }
+
+    @Test
+    public void testParaContaResponseDtoWithNullInput() {
+        AccountResponseIaasPorto account = null;
+        ContaResponseDto result = mapper.paraContaResponseDto(account);
+        assertNull(result, "Result should be null when input is null");
+    }
+    @Test
+    public void testParaDadosSaldoResponseDtoWithNullInput() {
+        DataResponseIassPorto<BalanceResponseIaasPorto> balance = null;
+        DadosResponseDto<SaldoResponseDto> result = mapper.paraDadosSaldoResponseDto(balance);
+        assertNull(result, "Result should be null when input is null");
+    }
+    @Test
+    public void testParaContaSaldoResponseDtoWithNullInput() {
+        BalanceResponseIaasPorto balance = null;
+        SaldoResponseDto result = mapper.paraContaSaldoResponseDto(balance);
+        assertNull(result, "Result should be null when input is null");
+    }
+    @Test
+    public void testParaDadosSumarioResponseDtoWithNullInput() {
+        DataResponseIassPorto<SumarioResponseIaasPorto> sumario = null;
+        DadosResponseDto<SumarioResponseDto> result = mapper.paraDadosSumarioResponseDto(sumario);
+        assertNull(result, "Result should be null when input is null");
+    }
+
+    @Test
+    public void testParaContaSumarioResponseDtoWithNullInput() {
+        SumarioResponseIaasPorto sumario = null;
+
+        SumarioResponseDto result = mapper.paraContaSumarioResponseDto(sumario);
+
+        assertNull(result, "Result should be null when input is null");
     }
 }

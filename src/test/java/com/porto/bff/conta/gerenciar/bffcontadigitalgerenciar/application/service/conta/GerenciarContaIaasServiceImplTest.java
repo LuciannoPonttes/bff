@@ -7,6 +7,7 @@ import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.saldo.BalanceResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.sumario.SumarioResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.ContaIassPortoAdapter;
+import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.BusinessException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.cloud.openfeign.security.OAuth2AccessTokenInterceptor.BEARER;
@@ -75,6 +77,21 @@ class GerenciarContaIaasServiceImplTest {
                 saldoIAASResponse
         );
         assertDoesNotThrow(() -> this.service.getContaSaldo(BEARER, UUID.randomUUID().toString()));
+    }
+
+    @Test
+    void getContaSaldoSemBearer() {
+        when(this.adapter.getContaSaldo(anyString(), anyString())).thenReturn(
+                saldoIAASResponse
+        );
+        assertDoesNotThrow(() -> this.service.getContaSaldo("t", UUID.randomUUID().toString()));
+    }
+
+    @Test
+    void getContaSaldoSemBearerTeste() {
+        when(this.adapter.getContaSaldo(anyString(), anyString())).thenReturn(
+                saldoIAASResponse);
+        assertThrows(BusinessException.class, () -> this.service.getContaSaldo(null, UUID.randomUUID().toString()));
     }
 
     @Test
