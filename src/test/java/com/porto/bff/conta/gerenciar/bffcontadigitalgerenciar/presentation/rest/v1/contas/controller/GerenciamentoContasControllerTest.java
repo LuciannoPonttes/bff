@@ -17,6 +17,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -87,6 +88,35 @@ class GerenciamentoContasControllerTest {
         when(gerenciarContaIaasService.contaSumario(eq(tokenCognito), eq(xItauAuth), eq(contaId))).thenReturn(mockSumarioResponse);
         ResponseEntity<DadosResponseDto<SumarioResponseDto>> responseEntity = gerenciamentoContasController.sumarioConta(tokenCognito, xItauAuth, contaId);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+
+    }
+
+    @Test
+    void testSumarioContaValidMockBloqueioDeContaEstaAtivo() throws IOException {
+        ReflectionTestUtils.setField(gerenciamentoContasController, "mockBloqueioDeContaEstaAtivo", true);
+        ReflectionTestUtils.setField(gerenciamentoContasController, "mockBloqueioContas", "{\"dados\": [{\"contaId\": \"someId\", \"politicas\": [\"policy1\", \"policy2\"]}]}");
+
+
+        String tokenCognito = "tokenCognito";
+        String xItauAuth = "xItauAuth";
+        String contaId = "contaId";
+        SumarioResponseIaasPorto sumarioResponseIaasPorto = getSumarioResponseIaasPorto();
+        when(gerenciarContaIaasService.contaSumario(tokenCognito, xItauAuth, contaId))
+                .thenReturn(new DataResponseIassPorto<>(sumarioResponseIaasPorto));
+
+
+        DadosResponseDto<SumarioResponseDto> expectedResponseDto = new DadosResponseDto<>(getSumarioResponseDto());
+        when(gerenciarMapper.paraDadosSumarioResponseDto(any()))
+                .thenReturn(expectedResponseDto);
+
+
+        ResponseEntity<DadosResponseDto<SumarioResponseDto>> result = gerenciamentoContasController.sumarioConta(tokenCognito, xItauAuth, contaId);
+
+
+        verify(gerenciarContaIaasService, times(1)).contaSumario(tokenCognito, xItauAuth, contaId);
+        verify(gerenciarMapper, times(1)).paraDadosSumarioResponseDto(any());
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+        assertEquals(expectedResponseDto, result.getBody());
 
     }
 

@@ -147,6 +147,41 @@ class ContaIassPortoAdapterImplTest {
     }
 
 
+    @Test
+    void testSumarioContaBearer() {
+        ContaIaasPortoClient contaIaasPortoClientMock = mock(ContaIaasPortoClient.class);
+        PixManagementClient pixManagementClientMock = mock(PixManagementClient.class);
+        DecodificarAccessToken decodificarAccessTokenMock = mock(DecodificarAccessToken.class);
+
+        ContaIassPortoAdapterImpl contaIassPortoAdapter = new ContaIassPortoAdapterImpl(
+                contaIaasPortoClientMock,
+                mock(CartoesPortoClient.class),
+                decodificarAccessTokenMock,
+                pixManagementClientMock
+        );
+
+        String tokenCognito = "token";
+        String xItauAuth = "Bearer xItauAuth";
+        String contaId = "contaId";
+
+        DataResponseIassPorto<AccountResponseIaasPorto> dadosConta = new DataResponseIassPorto<>(mock());
+        DataResponseIassPorto<BalanceResponseIaasPorto> saldoConta = new DataResponseIassPorto<>(mock());
+        when(contaIaasPortoClientMock.findByIdContaIaas(any(), any(), any(), any())).thenReturn(dadosConta);
+        when(contaIaasPortoClientMock.findBySaldoContaIaas(any(), any(), any(), any())).thenReturn(saldoConta);
+        when(decodificarAccessTokenMock.getCpfPorToken(anyString())).thenReturn("cpf");
+
+        ApiResponseData<List<Object>> listChavePix = new ApiResponseData<>(List.of("chave1", "chave2"));
+        when(pixManagementClientMock.getPixKeyFromAnAccount(any(), any(), any())).thenReturn(listChavePix);
+
+        DataResponseIassPorto<SumarioResponseIaasPorto> result = contaIassPortoAdapter.sumarioConta(tokenCognito, xItauAuth, contaId);
+
+        assertEquals("cpf", result.data().document());
+        assertEquals(dadosConta, result.data().account());
+        assertEquals(saldoConta, result.data().balance());
+        assertEquals("2 Chaves", result.data().quantidadeChavePix());
+    }
+
+
 
     @Test
     void testFormatarMensagemParaExbirNoFront0() {
