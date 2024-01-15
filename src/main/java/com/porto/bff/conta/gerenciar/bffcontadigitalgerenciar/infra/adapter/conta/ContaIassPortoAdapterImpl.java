@@ -74,7 +74,7 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
         return prefixBearer + xItauAuth;
     }
 
-    private String formatarMensagemParaExbirNoFront(int quantidade) {
+     String formatarMensagemParaExbirNoFront(int quantidade) {
         if (quantidade == 0) {
             return "Cadastre suas Chaves Pix";
         } else if (quantidade == 1) {
@@ -84,7 +84,7 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
         }
     }
 
-    private String obterQuantidadeChavesPixDaConta(String tokenCognito, String xItauAuth, String contaId) {
+    String obterQuantidadeChavesPixDaConta(String tokenCognito, String xItauAuth, String contaId) {
         String mensagemChave = "";
         try {
             ApiResponseData<List<Object>> listChavePix = this.pixManagementClient
