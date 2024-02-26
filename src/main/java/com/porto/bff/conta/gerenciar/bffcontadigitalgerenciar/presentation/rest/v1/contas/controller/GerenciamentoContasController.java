@@ -31,10 +31,10 @@ public class GerenciamentoContasController implements GerenciamentoContasControl
     private final GerenciarContaIaasService service;
     private final GerenciarMapper mapper;
 
-    @Value("${blocking-mock.activated}")
+  //  @Value("${blocking-mock.activated}")
     private boolean mockBloqueioDeContaEstaAtivo;
 
-    @Value("${blocking-mock.account}")
+   // @Value("${blocking-mock.account}")
     private String mockBloqueioContas;
 
     @Override
