@@ -92,7 +92,7 @@ class GerenciarContaIaasServiceImplTest {
     void getContaSaldoSemBearerTeste() {
         when(this.adapter.getContaSaldo(anyString(), anyString())).thenReturn(
                 saldoIAASResponse);
-        assertThrows(FeignClientException.class, () -> this.service.getContaSaldo(null, UUID.randomUUID().toString()));
+        assertThrows(FeignClientException.class, () -> this.service.getContaSaldo("", UUID.randomUUID().toString()));
     }
 
     @Test
