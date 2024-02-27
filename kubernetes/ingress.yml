@@ -28,6 +28,7 @@ spec:
                 name: bff-conta-digital-gerenciar
                 port:
                   number: 8080
+  ingressClassName: nginx
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -47,4 +48,5 @@ spec:
                 name: bff-conta-digital-gerenciar #.ns-config.svc.cluster.local
                 port:
                   number: 8080
+  ingressClassName: nginx
 
