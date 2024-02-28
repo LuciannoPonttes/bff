@@ -8,6 +8,7 @@ import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.saldo
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.sumario.SumarioResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.ContaIassPortoAdapter;
 import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.BusinessException;
+import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.FeignClientException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,7 +92,7 @@ class GerenciarContaIaasServiceImplTest {
     void getContaSaldoSemBearerTeste() {
         when(this.adapter.getContaSaldo(anyString(), anyString())).thenReturn(
                 saldoIAASResponse);
-        assertThrows(BusinessException.class, () -> this.service.getContaSaldo(null, UUID.randomUUID().toString()));
+        assertThrows(FeignClientException.class, () -> this.service.getContaSaldo("", UUID.randomUUID().toString()));
     }
 
     @Test
