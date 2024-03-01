@@ -36,6 +36,11 @@ public interface AccountManagementControllerOperations {
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Sucesso"),
+            @ApiResponse(responseCode = "404", description = "Conta não encontrada", content =
+                    {
+                            @Content(mediaType = "application/json", schema =
+                            @Schema(implementation = ResponseErrorApi.class))
+                    }),
             @ApiResponse(responseCode = "498", description = "Token inválido", content =
                     {
                             @Content(mediaType = "application/json", schema =
