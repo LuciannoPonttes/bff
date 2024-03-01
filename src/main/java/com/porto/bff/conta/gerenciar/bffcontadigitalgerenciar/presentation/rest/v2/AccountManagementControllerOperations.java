@@ -1,6 +1,7 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v2;
 
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.common.utils.ApiDocsConstants;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.common.utils.v2.HttpUtils;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.exception.ResponseErrorApi;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v2.dto.AccountBalanceDtoResponse;
 import com.porto.experiencia.cliente.conta.digital.commons.web.model.ApiResponseData;
@@ -35,7 +36,7 @@ public interface AccountManagementControllerOperations {
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Sucesso"),
-            @ApiResponse(responseCode = "498", description = "Parâmetros obrigatórios não enviados", content =
+            @ApiResponse(responseCode = "498", description = "Token inválido", content =
                     {
                             @Content(mediaType = "application/json", schema =
                             @Schema(implementation = ResponseErrorApi.class))
@@ -48,6 +49,6 @@ public interface AccountManagementControllerOperations {
     })
     @GetMapping("/saldo")
     ResponseEntity<ApiResponseData<AccountBalanceDtoResponse>> getBalanceAccount(@RequestHeader(value = AUTHORIZATION) String cognitoToken,
-                                                                        @RequestHeader(value = "x-itau-auth", required = false) String xItauAuth,
-                                                                        @RequestHeader(value = "x-account-id", required = false) String accountId);
+                                                                        @RequestHeader(value = HttpUtils.HTTP_X_ITAU_AUTH_HEADER, required = false) String xItauAuth,
+                                                                        @RequestHeader(value = HttpUtils.HTTP_ACCOUNT_ID_HEADER, required = false) String accountId);
 }

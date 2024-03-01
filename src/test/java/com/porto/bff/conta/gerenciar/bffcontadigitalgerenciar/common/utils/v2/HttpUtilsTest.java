@@ -10,7 +10,7 @@ class HttpUtilsTest {
 
     @Test
     void testConstants(){
-        assertEquals("IAAS", HttpUtils.PROVIDER);
+        assertEquals("IAAS", HttpUtils.HTTP_PROVIDER_VALUE);
     }
 
     @Test

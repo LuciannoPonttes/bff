@@ -14,6 +14,6 @@ public class AccountManagementAdapterImpl implements AccountManagementAdapter {
     private final AccountManagementClient client;
     @Override
     public BackendResponseData<AccountBalanceEntityResponse> getBalanceAccount(String xItauAuth, String accountId) {
-        return this.client.findBySaldoContaIaas(HttpUtils.includeBearerTokenPrefix(xItauAuth), HttpUtils.PROVIDER, accountId, accountId);
+        return this.client.getBalanceAccount(HttpUtils.includeBearerTokenPrefix(xItauAuth), HttpUtils.HTTP_PROVIDER_VALUE, accountId, accountId);
     }
 }

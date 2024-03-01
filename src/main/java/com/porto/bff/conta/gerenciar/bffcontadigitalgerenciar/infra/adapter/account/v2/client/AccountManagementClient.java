@@ -1,6 +1,7 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.account.v2.client;
 
 
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.common.utils.v2.HttpUtils;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.BackendResponseData;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.saldo.v2.AccountBalanceEntityResponse;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -13,8 +14,8 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 @FeignClient(value = "AccountManagementPortoClient", url = "${feign.client.config.porto.host}")
 public interface AccountManagementClient {
     @GetMapping("${feign.client.config.rotes.backend.balance.endpoint}")
-    BackendResponseData<AccountBalanceEntityResponse> findBySaldoContaIaas(@RequestHeader(AUTHORIZATION) String xItauAuth,
-                                                                           @RequestHeader("x-accountProvider") String xAccountProvider,
-                                                                           @RequestHeader("x-account-id") String xAccountId,
-                                                                           @PathVariable("accountId") String accountId);
+    BackendResponseData<AccountBalanceEntityResponse> getBalanceAccount(@RequestHeader(AUTHORIZATION) String xItauAuth,
+                                                                        @RequestHeader(HttpUtils.HTTP_PROVIDER_HEADER) String xAccountProvider,
+                                                                        @RequestHeader(HttpUtils.HTTP_ACCOUNT_ID_HEADER) String xAccountId,
+                                                                        @PathVariable(HttpUtils.HTTP_ACCOUNT_ID_PATH_VARIABLE) String accountId);
 }

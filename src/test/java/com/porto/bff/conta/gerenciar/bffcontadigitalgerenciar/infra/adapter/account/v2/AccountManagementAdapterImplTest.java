@@ -24,7 +24,7 @@ class AccountManagementAdapterImplTest {
     void getBalanceAccount() {
         double balanceValue = 0.0;
         var backendResponseData = new BackendResponseData<>(new AccountBalanceEntityResponse(balanceValue, balanceValue, balanceValue));
-        when(this.client.findBySaldoContaIaas(anyString(), anyString(), anyString(), anyString())).thenReturn(backendResponseData);
+        when(this.client.getBalanceAccount(anyString(), anyString(), anyString(), anyString())).thenReturn(backendResponseData);
         var responseData = assertDoesNotThrow(() ->
                 this.adapter.getBalanceAccount("token", "accountID"));
         assertEquals(responseData, backendResponseData);

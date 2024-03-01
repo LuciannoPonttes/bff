@@ -13,7 +13,11 @@ import static org.springframework.cloud.openfeign.security.OAuth2AccessTokenInte
 @UtilityClass
 public class HttpUtils {
 
-    public static final String PROVIDER = "IAAS";
+    public static final String HTTP_PROVIDER_VALUE = "IAAS";
+    public static final String HTTP_PROVIDER_HEADER = "x-accountProvider";
+    public static final String HTTP_ACCOUNT_ID_HEADER = "x-account-id";
+    public static final String HTTP_X_ITAU_AUTH_HEADER = "x-itau-auth";
+    public static final String HTTP_ACCOUNT_ID_PATH_VARIABLE = "accountId";
 
     public static String includeBearerTokenPrefix(String xItauAuth) {
         var prefix = BEARER.concat(SPACE);
