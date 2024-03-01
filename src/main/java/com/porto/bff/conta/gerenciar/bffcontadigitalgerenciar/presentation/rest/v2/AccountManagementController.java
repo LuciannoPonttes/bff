@@ -7,13 +7,15 @@ import com.porto.experiencia.cliente.conta.digital.commons.web.model.ApiResponse
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+
 @RestController
 @RequiredArgsConstructor
 public class AccountManagementController implements AccountManagementControllerOperations {
-    private final  AccountManagementService service;
+    private final AccountManagementService service;
     private final AccountManagementMapper mapper;
+
     @Override
     public ResponseEntity<ApiResponseData<AccountBalanceDtoResponse>> getBalanceAccount(String cognitoToken, String xItauAuth, String accountId) {
-        return ResponseEntity.ok(this.mapper.toDto(this.service.getBalanceAccount(xItauAuth,accountId)));
+        return ResponseEntity.ok(this.mapper.toDto(this.service.getBalanceAccount(xItauAuth, accountId)));
     }
 }

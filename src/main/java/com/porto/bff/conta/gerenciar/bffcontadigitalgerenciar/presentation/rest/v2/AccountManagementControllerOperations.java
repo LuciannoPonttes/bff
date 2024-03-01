@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
-
-
 @RequestMapping({"v2/conta-digital/gerenciar"})
 @OpenAPIDefinition(
         info = @Info(
@@ -32,7 +30,7 @@ public interface AccountManagementControllerOperations {
     @Operation(
             summary = "Consulta de dados da conta",
             description = "para acessar tem que ter o escopo tipo iaas-accounts.read",
-            tags = { "Gerenciar-V2" }
+            tags = {"Gerenciar-Conta-V2"}
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Sucesso"),
@@ -54,6 +52,6 @@ public interface AccountManagementControllerOperations {
     })
     @GetMapping("/saldo")
     ResponseEntity<ApiResponseData<AccountBalanceDtoResponse>> getBalanceAccount(@RequestHeader(value = AUTHORIZATION) String cognitoToken,
-                                                                        @RequestHeader(value = HttpUtils.HTTP_X_ITAU_AUTH_HEADER, required = false) String xItauAuth,
-                                                                        @RequestHeader(value = HttpUtils.HTTP_ACCOUNT_ID_HEADER, required = false) String accountId);
+                                                                                 @RequestHeader(value = HttpUtils.HTTP_X_ITAU_AUTH_HEADER, required = false) String xItauAuth,
+                                                                                 @RequestHeader(value = HttpUtils.HTTP_ACCOUNT_ID_HEADER, required = false) String accountId);
 }
