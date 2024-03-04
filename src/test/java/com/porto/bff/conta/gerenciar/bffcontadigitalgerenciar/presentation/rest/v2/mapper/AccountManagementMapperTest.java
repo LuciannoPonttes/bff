@@ -13,8 +13,8 @@ class AccountManagementMapperTest {
     void toDto() {
         var entity = new BackendResponseData<>(new AccountBalanceEntityResponse(10.49, 13.56, 12.51));
         var dto = this.mapper.toDto(entity);
-        assertEquals(dto.dados().bloqueado(), entity.data().blocked());
-        assertEquals(dto.dados().disponivel(), entity.data().available());
-        assertEquals(dto.dados().reservada(), entity.data().reserved());
+        assertEquals("R$ 12,51", dto.dados().blocked());
+        assertEquals("R$ 10,49",dto.dados().available());
+        assertEquals("R$ 13,56",dto.dados().reserved());
     }
 }

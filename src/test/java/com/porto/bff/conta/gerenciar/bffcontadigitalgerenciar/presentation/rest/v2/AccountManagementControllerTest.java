@@ -1,5 +1,7 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v2;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.service.account.v2.AccountManagementService;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.BackendResponseData;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.saldo.v2.AccountBalanceEntityResponse;
@@ -39,6 +41,9 @@ class AccountManagementControllerTest {
     @Autowired
     MockMvc mockMvc;
 
+    @Autowired
+    ObjectMapper objectMapper;
+
     @Test
     void getBalanceAccount() {
         var backendResponseData = new BackendResponseData<>(new AccountBalanceEntityResponse(0.0, 0.0, 0.0));
@@ -48,7 +53,7 @@ class AccountManagementControllerTest {
     }
 
     @Test
-    void testGetUserById() throws Exception {
+    void getBalanceAccountError() throws Exception {
         when(this.service.getBalanceAccount(anyString(), anyString())).thenThrow(new FeignClientException("ERROR", "498", Collections.emptyList()));
         this.mockMvc.perform(get("/v2/conta-digital/gerenciar/saldo")
                         .header(AUTHORIZATION, "token")
@@ -57,6 +62,14 @@ class AccountManagementControllerTest {
                 )
                 .andExpect(status().is(498))
                 .andExpect(content().json("{\"erros\":[]}"));
+    }
+
+    @Test
+    void testResponseBody() throws JsonProcessingException {
+        var dto = this.mapper.toDto(new BackendResponseData<>(new AccountBalanceEntityResponse(10.5, 12.46, 34.76)));
+        var responseJson = this.objectMapper.writeValueAsString(dto);
+        var expected = "{\"dados\":{\"disponivel\":\"R$ 10,50\",\"reservada\":\"R$ 12,46\",\"bloqueado\":\"R$ 34,76\"}}";
+        assertEquals(expected, responseJson);
     }
 
 }
