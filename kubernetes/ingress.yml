@@ -14,6 +14,13 @@ spec:
                 name: bff-conta-digital-gerenciar
                 port:
                   number: 8080
+          - path: /portobank/v2/conta-digital/gerenciar/dados-conta
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: bff-conta-digital-gerenciar
+                port:
+                  number: 8080
           - path: /portobank/v1/conta-digital/gerenciar/saldo
             pathType: ImplementationSpecific
             backend:
