@@ -34,6 +34,11 @@ public interface AccountManagementControllerOperations {
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Sucesso"),
+            @ApiResponse(responseCode = "400", description = "Falha na Requisição", content =
+                    {
+                            @Content(mediaType = "application/json", schema =
+                            @Schema(implementation = ResponseErrorApi.class))
+                    }),
             @ApiResponse(responseCode = "404", description = "Conta não encontrada", content =
                     {
                             @Content(mediaType = "application/json", schema =
