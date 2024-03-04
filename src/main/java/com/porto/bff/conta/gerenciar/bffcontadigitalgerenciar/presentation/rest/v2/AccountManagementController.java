@@ -1,12 +1,16 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v2;
 
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.service.account.v2.AccountManagementService;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.contas.dto.ContaResponseDto;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.contas.dto.DadosResponseDto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v2.dto.AccountBalanceDtoResponse;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v2.mapper.AccountManagementMapper;
 import com.porto.experiencia.cliente.conta.digital.commons.web.model.ApiResponseData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,5 +21,10 @@ public class AccountManagementController implements AccountManagementControllerO
     @Override
     public ResponseEntity<ApiResponseData<AccountBalanceDtoResponse>> getBalanceAccount(String cognitoToken, String xItauAuth, String accountId) {
         return ResponseEntity.ok(this.mapper.toDto(this.service.getBalanceAccount(xItauAuth, accountId)));
+    }
+
+    @Override
+    public ResponseEntity<DadosResponseDto<ContaResponseDto>> getAccountData(String cognitoToken, String xItauAuth, String accountId) {
+        return null;
     }
 }
