@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AccountManagementServiceImpl implements AccountManagementService {
     private final AccountManagementAdapter adapter;
+
     @Override
     public BackendResponseData<AccountBalanceEntityResponse> getBalanceAccount(String xItauAuth, String accountId) {
         return this.adapter.getBalanceAccount(xItauAuth, accountId);
@@ -18,6 +19,6 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 
     @Override
     public BackendResponseData<AccountDataEntityResponse> getAccountData(String xItauAuth, String accountId) {
-        return null;
+        return this.adapter.getAccountData(xItauAuth, accountId);
     }
 }
