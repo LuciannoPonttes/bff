@@ -18,6 +18,9 @@ public class HttpUtils {
     public static final String HTTP_ACCOUNT_ID_HEADER = "x-account-id";
     public static final String HTTP_X_ITAU_AUTH_HEADER = "x-itau-auth";
     public static final String HTTP_ACCOUNT_ID_PATH_VARIABLE = "accountId";
+    public static final String HTTP_ACCOUNT_FIELDS_VALUE = "id,bankAccount,status,type,createdAt,updatedAt";
+    public static final String HTTP_ACCOUNT_FIELDS_PARAM = "fields";
+
 
     public static String includeBearerTokenPrefix(String xItauAuth) {
         var prefix = BEARER.concat(SPACE);

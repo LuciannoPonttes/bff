@@ -20,6 +20,7 @@ public class AccountManagementAdapterImpl implements AccountManagementAdapter {
 
     @Override
     public BackendResponseData<AccountDataEntityResponse> getAccountData(String xItauAuth, String accountId) {
-        return this.client.getAccountData(HttpUtils.includeBearerTokenPrefix(xItauAuth), HttpUtils.HTTP_PROVIDER_VALUE, accountId, accountId);
+        return this.client.getAccountData(HttpUtils.includeBearerTokenPrefix(xItauAuth), HttpUtils.HTTP_PROVIDER_VALUE,
+                accountId, accountId, HttpUtils.HTTP_ACCOUNT_FIELDS_VALUE);
     }
 }

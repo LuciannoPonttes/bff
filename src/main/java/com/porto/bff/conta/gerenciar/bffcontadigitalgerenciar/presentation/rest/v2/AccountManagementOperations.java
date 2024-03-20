@@ -2,10 +2,9 @@ package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest
 
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.common.utils.ApiDocsConstants;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.common.utils.v2.HttpUtils;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.contas.dto.ContaResponseDto;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.contas.dto.DadosResponseDto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.exception.ResponseErrorApi;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v2.dto.AccountBalanceDtoResponse;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v2.dto.AccountDataDtoResponse;
 import com.porto.experiencia.cliente.conta.digital.commons.web.model.ApiResponseData;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,7 +27,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
                 description = ApiDocsConstants.API_DOC_DESCRICAO
         )
 )
-public interface AccountManagementControllerOperations {
+public interface AccountManagementOperations {
     @Operation(
             summary = "Consulta de dados da conta",
             description = "para acessar tem que ter o escopo tipo iaas-accounts.read",
@@ -91,7 +90,7 @@ public interface AccountManagementControllerOperations {
                     })
     })
     @GetMapping("/dados-conta")
-    ResponseEntity<DadosResponseDto<ContaResponseDto>> getAccountData(@RequestHeader(value = AUTHORIZATION) String cognitoToken,
-                                                                      @RequestHeader(value = HttpUtils.HTTP_X_ITAU_AUTH_HEADER, required = false) String xItauAuth,
-                                                                      @RequestHeader(value = HttpUtils.HTTP_ACCOUNT_ID_HEADER, required = false) String accountId);
+    ResponseEntity<ApiResponseData<AccountDataDtoResponse>> getAccountData(@RequestHeader(value = AUTHORIZATION) String cognitoToken,
+                                                                           @RequestHeader(value = HttpUtils.HTTP_X_ITAU_AUTH_HEADER, required = false) String xItauAuth,
+                                                                           @RequestHeader(value = HttpUtils.HTTP_ACCOUNT_ID_HEADER, required = false) String accountId);
 }

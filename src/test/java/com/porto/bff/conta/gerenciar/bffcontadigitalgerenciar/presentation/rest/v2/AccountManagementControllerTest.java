@@ -66,7 +66,7 @@ class AccountManagementControllerTest {
 
     @Test
     void testResponseBody() throws JsonProcessingException {
-        var dto = this.mapper.toDto(new BackendResponseData<>(new AccountBalanceEntityResponse(10.5, 12.46, 34.76)));
+        var dto = this.mapper.toAccountBalanceDto(new BackendResponseData<>(new AccountBalanceEntityResponse(10.5, 12.46, 34.76)));
         var responseJson = this.objectMapper.writeValueAsString(dto);
         var expected = "{\"dados\":{\"disponivel\":\"R$ 10,50\",\"reservada\":\"R$ 12,46\",\"bloqueado\":\"R$ 34,76\"}}";
         assertEquals(expected, responseJson);
