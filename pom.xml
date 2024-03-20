@@ -27,15 +27,20 @@
         <native.maven.plugin.version>0.9.21</native.maven.plugin.version>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.porto.experiencia.cliente.superapp.conta.digital</groupId>
+                <artifactId>bfx-conta-digital-commons</artifactId>
+                <version>${bfx-conta-digital-commons.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <!-- Porto Seguro -->
-        <dependency>
-            <groupId>com.porto.experiencia.cliente.superapp.conta.digital</groupId>
-            <artifactId>bfx-conta-digital-commons</artifactId>
-            <version>${bfx-conta-digital-commons.version}</version>
-            <type>pom</type>
-            <scope>import</scope>
-        </dependency>
         <dependency>
             <groupId>com.porto.experiencia.cliente.superapp.conta.digital</groupId>
             <artifactId>conta-digital-commons-web</artifactId>
@@ -113,7 +118,6 @@
             <groupId>org.wiremock</groupId>
             <artifactId>wiremock</artifactId>
             <version>3.0.4</version>
-            <!--			<scope>test</scope>-->
         </dependency>
 
         <dependency>

@@ -1,7 +1,7 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v2.mapper;
 
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.BackendResponseData;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.saldo.v2.AccountBalanceEntityResponse;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.account.balance.v2.AccountBalanceEntityResponse;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,9 +12,9 @@ class AccountManagementMapperTest {
     @Test
     void toDto() {
         var entity = new BackendResponseData<>(new AccountBalanceEntityResponse(10.49, 13.56, 12.51));
-        var dto = this.mapper.toDto(entity);
-        assertEquals(dto.dados().bloqueado(), entity.data().blocked());
-        assertEquals(dto.dados().disponivel(), entity.data().available());
-        assertEquals(dto.dados().reservada(), entity.data().reserved());
+        var dto = this.mapper.toAccountBalanceDto(entity);
+        assertEquals("R$ 12,51", dto.dados().blocked());
+        assertEquals("R$ 10,49",dto.dados().available());
+        assertEquals("R$ 13,56",dto.dados().reserved());
     }
 }
