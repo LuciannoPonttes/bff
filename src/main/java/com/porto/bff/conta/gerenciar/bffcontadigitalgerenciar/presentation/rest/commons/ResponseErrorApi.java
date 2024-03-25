@@ -1,9 +1,8 @@
-package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.exception;
+package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.commons;
 
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -11,7 +10,7 @@ import java.util.List;
 public class ResponseErrorApi {
 
 
-    private List<ResponseErrorItem> erros = new ArrayList<>();
+    private List<ResponseErrorItem> erros;
 
     public ResponseErrorApi(List<ResponseErrorItem> errors) {
         this.erros = errors;

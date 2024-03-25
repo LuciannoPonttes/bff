@@ -3,8 +3,10 @@ package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.BackendResponseData;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.account.balance.v2.AccountBalanceEntityResponse;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.account.data.v2.AccountDataEntityResponse;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.account.sumary.v2.AccountSummaryEntityResponse;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v2.dto.AccountBalanceDtoResponse;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v2.dto.AccountDataDtoResponse;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v2.dto.AccountSummaryDtoResponse;
 import com.porto.experiencia.cliente.conta.digital.commons.web.model.ApiResponseData;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -32,15 +34,33 @@ public interface AccountManagementMapper {
         return currencyInstance.format(balance).replaceAll("\\p{Z}", SPACE);
     }
 
-    @Mapping(source = "data.id", target = "dados.id")
-    @Mapping(source = "data.status", target = "dados.status")
-    @Mapping(source = "data.type", target = "dados.type")
-    @Mapping(source = "data.createdAt", target = "dados.createdAt")
-    @Mapping(source = "data.updatedAt", target = "dados.updatedAt")
-    @Mapping(source = "data.bankAccount.bank", target = "dados.bankAccount.bank")
-    @Mapping(source = "data.bankAccount.branch", target = "dados.bankAccount.branch")
-    @Mapping(source = "data.bankAccount.number", target = "dados.bankAccount.number")
-    @Mapping(source = "data.bankAccount.checkDigit", target = "dados.bankAccount.checkDigit")
-    @Mapping(target = "dados.bankAccount.bankName", constant = BANK_NAME)
+    @Mapping(source = "data", target = "dados")
     ApiResponseData<AccountDataDtoResponse> toAccountDataDto(BackendResponseData<AccountDataEntityResponse> accountData);
+
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "status", target = "status")
+    @Mapping(source = "type", target = "type")
+    @Mapping(source = "createdAt", target = "createdAt")
+    @Mapping(source = "updatedAt", target = "updatedAt")
+    @Mapping(source = "bankAccount.bank", target = "bankAccount.bank")
+    @Mapping(source = "bankAccount.branch", target = "bankAccount.branch")
+    @Mapping(source = "bankAccount.number", target = "bankAccount.number")
+    @Mapping(source = "bankAccount.checkDigit", target = "bankAccount.checkDigit")
+    @Mapping(target = "bankAccount.bankName", constant = BANK_NAME)
+    AccountDataDtoResponse toAccountDataDto(AccountDataEntityResponse accountData);
+
+    @Mapping(source = "data", target = "dados")
+    ApiResponseData<AccountSummaryDtoResponse> toSummaryDto(BackendResponseData<AccountSummaryEntityResponse> summaryData);
+
+    @Mapping(constant = BANK_NAME, target = "bankName")
+    @Mapping(source = "document", target = "document")
+    @Mapping(source = "account.bankAccount.bank", target = "bank")
+    @Mapping(source = "account.bankAccount.number", target = "number")
+    @Mapping(source = "account.bankAccount.checkDigit", target = "checkDigit")
+    @Mapping(source = "account.bankAccount.branch", target = "branch")
+    @Mapping(source = "account.status", target = "status")
+    @Mapping(source = "balance.available", target = "balance")
+    @Mapping(source = "hasPortoCard", target = "hasPortoCard")
+    @Mapping(source = "pixKeyCount", target = "pixKeyCount")
+    AccountSummaryDtoResponse toSummaryDto(AccountSummaryEntityResponse summaryData);
 }
