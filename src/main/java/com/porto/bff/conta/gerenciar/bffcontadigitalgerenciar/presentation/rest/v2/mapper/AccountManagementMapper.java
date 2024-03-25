@@ -14,6 +14,7 @@ import org.mapstruct.Named;
 
 import java.text.NumberFormat;
 import java.util.Locale;
+import java.util.Objects;
 
 import static org.apache.commons.lang3.StringUtils.SPACE;
 
@@ -34,6 +35,11 @@ public interface AccountManagementMapper {
         return currencyInstance.format(balance).replaceAll("\\p{Z}", SPACE);
     }
 
+    @Named("buildBank")
+    default String buildBank(String bankCode) {
+       return Objects.isNull(bankCode) ? "341" : bankCode;
+    }
+
     @Mapping(source = "data", target = "dados")
     ApiResponseData<AccountDataDtoResponse> toAccountDataDto(BackendResponseData<AccountDataEntityResponse> accountData);
 
@@ -42,7 +48,7 @@ public interface AccountManagementMapper {
     @Mapping(source = "type", target = "type")
     @Mapping(source = "createdAt", target = "createdAt")
     @Mapping(source = "updatedAt", target = "updatedAt")
-    @Mapping(source = "bankAccount.bank", target = "bankAccount.bank")
+    @Mapping(source = "bankAccount.bank", target = "bankAccount.bank", qualifiedByName = "buildBank")
     @Mapping(source = "bankAccount.branch", target = "bankAccount.branch")
     @Mapping(source = "bankAccount.number", target = "bankAccount.number")
     @Mapping(source = "bankAccount.checkDigit", target = "bankAccount.checkDigit")
@@ -54,7 +60,7 @@ public interface AccountManagementMapper {
 
     @Mapping(constant = BANK_NAME, target = "bankName")
     @Mapping(source = "document", target = "document")
-    @Mapping(source = "account.bankAccount.bank", target = "bank")
+    @Mapping(source = "account.bankAccount.bank", target = "bank", qualifiedByName = "buildBank")
     @Mapping(source = "account.bankAccount.number", target = "number")
     @Mapping(source = "account.bankAccount.checkDigit", target = "checkDigit")
     @Mapping(source = "account.bankAccount.branch", target = "branch")
