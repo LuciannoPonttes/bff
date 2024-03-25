@@ -3,6 +3,7 @@ package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.servi
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.BackendResponseData;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.account.balance.v2.AccountBalanceEntityResponse;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.account.data.v2.AccountDataEntityResponse;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.account.sumary.v2.AccountSummaryEntityResponse;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.account.v2.AccountManagementAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,5 +21,10 @@ public class AccountManagementServiceImpl implements AccountManagementService {
     @Override
     public BackendResponseData<AccountDataEntityResponse> getAccountData(String xItauAuth, String accountId) {
         return this.adapter.getAccountData(xItauAuth, accountId);
+    }
+
+    @Override
+    public BackendResponseData<AccountSummaryEntityResponse> getSummaryAccount(String cognitoToken, String xItauAuth, String accountId) {
+        return this.adapter.getSummaryAccount(cognitoToken, xItauAuth, accountId);
     }
 }
