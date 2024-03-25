@@ -1,4 +1,4 @@
-package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.exception;
+package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.commons;
 
 import org.junit.jupiter.api.Test;
 

@@ -5,6 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.service.account.v2.AccountManagementService;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.BackendResponseData;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.account.balance.v2.AccountBalanceEntityResponse;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.account.data.v2.AccountDataEntityResponse;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.account.data.v2.BankAccount;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.account.sumary.v2.AccountSummaryEntityResponse;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v2.mapper.AccountManagementMapper;
 import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.FeignClientException;
 import org.junit.jupiter.api.Test;
@@ -70,6 +73,22 @@ class AccountManagementControllerTest {
         var responseJson = this.objectMapper.writeValueAsString(dto);
         var expected = "{\"dados\":{\"disponivel\":\"R$ 10,50\",\"reservada\":\"R$ 12,46\",\"bloqueado\":\"R$ 34,76\"}}";
         assertEquals(expected, responseJson);
+    }
+
+    @Test
+    void testGetSummaryAccount() {
+        String cognitoToken = "testToken";
+        String xItauAuth = "testAuth";
+        String accountId = "testId";
+        var bankAccount = new BankAccount("", "", "", "", "", "");
+        var account = new AccountDataEntityResponse("", bankAccount, "", "", "", "");
+        var balance = new AccountBalanceEntityResponse(10.0, 11.0, 0.0);
+        var summary = new AccountSummaryEntityResponse("", account, balance, true, "");
+        var summaryData = new BackendResponseData<>(summary);
+        when(service.getSummaryAccount(cognitoToken, xItauAuth, accountId)).thenReturn(summaryData);
+        var response = this.controller.getSummaryAccount(cognitoToken, xItauAuth, accountId);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
 }
