@@ -59,7 +59,7 @@ public interface AccountManagementMapper {
     @Mapping(source = "account.bankAccount.checkDigit", target = "checkDigit")
     @Mapping(source = "account.bankAccount.branch", target = "branch")
     @Mapping(source = "account.status", target = "status")
-    @Mapping(source = "balance.available", target = "balance")
+    @Mapping(source = "balance.available", target = "balance", qualifiedByName = "buildBalance")
     @Mapping(source = "hasPortoCard", target = "hasPortoCard")
     @Mapping(source = "pixKeyCount", target = "pixKeyCount")
     AccountSummaryDtoResponse toSummaryDto(AccountSummaryEntityResponse summaryData);
