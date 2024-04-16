@@ -77,6 +77,6 @@ class AccountManagementAdapterImplTest {
         when(client.getBalanceAccount(anyString(), anyString(), anyString(), anyString())).thenReturn(new BackendResponseData<>(balance));
         when(client.getAccountData(anyString(), anyString(), anyString(), anyString(), anyString())).thenReturn(new BackendResponseData<>(account));
         when(cardPortoClient.getCardsByuser(cognitoToken)).thenThrow(FeignClientException.class);
-        assertThrows(FeignClientException.class, () -> this.adapter.getSummaryAccount(cognitoToken, xItauAuth, accountId));
+        assertDoesNotThrow(() -> this.adapter.getSummaryAccount(cognitoToken, xItauAuth, accountId));
     }
 }

@@ -6,6 +6,7 @@ import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.Backe
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.account.balance.v2.AccountBalanceEntityResponse;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.account.data.v2.AccountDataEntityResponse;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.account.sumary.v2.AccountSummaryEntityResponse;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.cartoes.ListaCartoesResponse;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.account.v2.client.AccountManagementClient;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.client.CartoesPortoClient;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.decodertoken.DecodificarAccessToken;
@@ -47,7 +48,8 @@ public class AccountManagementAdapterImpl implements AccountManagementAdapter {
         var accountResponseFuture = CompletableFuture.supplyAsync(() ->
                 this.client.getAccountData(HttpUtils.includeBearerTokenPrefix(xItauAuth), HttpUtils.HTTP_PROVIDER_VALUE,
                         accountId, accountId, HttpUtils.HTTP_ACCOUNT_FIELDS_VALUE));
-        var portoCardResponseFuture = CompletableFuture.supplyAsync(() -> this.cardPortoClient.getCardsByuser(cognitoToken));
+        var portoCardResponseFuture = CompletableFuture.supplyAsync(() -> this.cardPortoClient.getCardsByuser(cognitoToken))
+                .exceptionally(throwable -> new ListaCartoesResponse());
         try {
             CompletableFuture.allOf(accountResponseFuture, balanceResponseFuture, portoCardResponseFuture).join();
             var hasPortoCard = Objects.nonNull(portoCardResponseFuture.join())
