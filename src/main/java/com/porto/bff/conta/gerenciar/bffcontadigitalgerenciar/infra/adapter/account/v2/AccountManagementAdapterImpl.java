@@ -30,13 +30,13 @@ public class AccountManagementAdapterImpl implements AccountManagementAdapter {
 
     @Override
     public BackendResponseData<AccountBalanceEntityResponse> getBalanceAccount(String xItauAuth, String accountId) {
-        return this.client.getBalanceAccount(HttpUtils.includeBearerTokenPrefix(xItauAuth), HttpUtils.HTTP_PROVIDER_VALUE, accountId, accountId);
+        return new BackendResponseData<>(this.client.getBalanceAccount(HttpUtils.includeBearerTokenPrefix(xItauAuth), HttpUtils.HTTP_PROVIDER_VALUE, accountId, accountId));
     }
 
     @Override
     public BackendResponseData<AccountDataEntityResponse> getAccountData(String xItauAuth, String accountId) {
-        return this.client.getAccountData(HttpUtils.includeBearerTokenPrefix(xItauAuth), HttpUtils.HTTP_PROVIDER_VALUE,
-                accountId, accountId, HttpUtils.HTTP_ACCOUNT_FIELDS_VALUE);
+        return new BackendResponseData<>(this.client.getAccountData(HttpUtils.includeBearerTokenPrefix(xItauAuth), HttpUtils.HTTP_PROVIDER_VALUE,
+                accountId, accountId, HttpUtils.HTTP_ACCOUNT_FIELDS_VALUE));
     }
 
     @SneakyThrows
@@ -55,7 +55,7 @@ public class AccountManagementAdapterImpl implements AccountManagementAdapter {
             var hasPortoCard = Objects.nonNull(portoCardResponseFuture.join())
                     && Objects.nonNull(portoCardResponseFuture.join().getDados())
                     && !CollectionUtils.isEmpty(portoCardResponseFuture.join().getDados().getLista());
-            return new BackendResponseData<>(new AccountSummaryEntityResponse(document, accountResponseFuture.join().data(), balanceResponseFuture.join().data(),
+            return new BackendResponseData<>(new AccountSummaryEntityResponse(document, accountResponseFuture.join(), balanceResponseFuture.join(),
                     hasPortoCard, EMPTY));
         } catch (CompletionException exception) {
             throw exception.getCause();
