@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.apache.commons.lang3.StringUtils;
 
-import static com.porto.experiencia.cliente.superapp.conta.digital.utils.ValidToken.isValidHeader;
 
 
 @Service
@@ -28,7 +27,7 @@ public class GerenciarContaIaasServiceImpl implements GerenciarContaIaasService 
 
     @Override
     public DataResponseIassPorto<BalanceResponseIaasPorto> getContaSaldo(String xItauAuth, String contaId) {
-        isValidHeader(xItauAuth, contaId);
+        isValidHeaderProjet(xItauAuth, contaId);
         return this.adapter.getContaSaldo(xItauAuth, contaId);
     }
 
