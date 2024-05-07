@@ -10,12 +10,10 @@ import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.accou
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.account.sumary.v2.AccountSummaryEntityResponse;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.account.v2.AccountManagementAdapterImpl;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.account.v2.client.AccountManagementClient;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.decodertoken.DecodificarAccessToken;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v2.mapper.AccountManagementMapper;
 import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.BusinessException;
 import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.FeignClientException;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -50,16 +48,6 @@ class AccountManagementControllerTest {
 
     @Autowired
     ObjectMapper objectMapper;
-
-    @Autowired
-    AccountManagementClient client;
-    @Autowired
-    AccountManagementAdapterImpl adapter;
-
-    @Mock
-    private DecodificarAccessToken tokenDecoder;
-
-
 
     @Test
     void getBalanceAccount() {

@@ -8,6 +8,7 @@ import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.accou
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.cartoes.ListaCartoesResponse;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.account.v2.client.AccountManagementClient;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.client.CartoesPortoClient;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.decodertoken.DecodificarAccessToken;
 import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.BusinessException;
 import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.FeignClientException;
 import org.junit.jupiter.api.Test;
@@ -26,8 +27,12 @@ class AccountManagementAdapterImplTest {
     AccountManagementAdapterImpl adapter;
     @Mock
     AccountManagementClient client;
+
     @Mock
     CartoesPortoClient cardPortoClient;
+
+    @Mock
+    DecodificarAccessToken tokenDecoder;
 
     @Test
     void getBalanceAccount() {
