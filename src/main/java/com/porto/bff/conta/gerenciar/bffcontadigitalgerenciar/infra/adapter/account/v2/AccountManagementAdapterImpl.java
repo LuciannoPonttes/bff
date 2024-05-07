@@ -9,11 +9,18 @@ import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.accou
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.account.v2.client.AccountManagementClient;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.client.CartoesPortoClient;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.decodertoken.DecodificarAccessToken;
+import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.BusinessException;
+import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.FeignClientException;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StreamUtils;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
@@ -23,19 +30,28 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
 @Component
 @RequiredArgsConstructor
 public class AccountManagementAdapterImpl implements AccountManagementAdapter {
+
     private final AccountManagementClient client;
     private final CartoesPortoClient cardPortoClient;
     private final DecodificarAccessToken tokenDecoder;
 
     @Override
     public BackendResponseData<AccountBalanceEntityResponse> getBalanceAccount(String xItauAuth, String accountId) {
-        return this.client.getBalanceAccount(HttpUtils.includeBearerTokenPrefix(xItauAuth), HttpUtils.HTTP_PROVIDER_VALUE, accountId, accountId);
+        try {
+            return this.client.getBalanceAccount(HttpUtils.includeBearerTokenPrefix(xItauAuth), HttpUtils.HTTP_PROVIDER_VALUE, accountId, accountId);
+        }catch (FeignClientException exception){
+            throw new BusinessException(400,"DADOS_CONTA_ERROR",exception.getMessage());
+        }
     }
 
     @Override
     public BackendResponseData<AccountDataEntityResponse> getAccountData(String xItauAuth, String accountId) {
-        return this.client.getAccountData(HttpUtils.includeBearerTokenPrefix(xItauAuth), HttpUtils.HTTP_PROVIDER_VALUE,
-                accountId, accountId, HttpUtils.HTTP_ACCOUNT_FIELDS_VALUE);
+        try {
+            return this.client.getAccountData(HttpUtils.includeBearerTokenPrefix(xItauAuth), HttpUtils.HTTP_PROVIDER_VALUE,
+                    accountId, accountId, HttpUtils.HTTP_ACCOUNT_FIELDS_VALUE);
+        }catch (FeignClientException exception){
+            throw new BusinessException(400,"SALDO_CONTA_ERROR",exception.getMessage());
+        }
     }
 
     @SneakyThrows
@@ -56,7 +72,7 @@ public class AccountManagementAdapterImpl implements AccountManagementAdapter {
             return new BackendResponseData<>(new AccountSummaryEntityResponse(document, accountResponseFuture.join().data(), balanceResponseFuture.join().data(),
                     hasPortoCard, EMPTY));
         } catch (CompletionException exception) {
-            throw exception.getCause();
+            throw new BusinessException(400,"SUMARIO_ERROR", exception.getCause().getMessage());
         }
     }
 }

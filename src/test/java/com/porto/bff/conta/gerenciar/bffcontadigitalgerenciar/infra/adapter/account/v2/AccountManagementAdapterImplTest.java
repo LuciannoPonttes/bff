@@ -9,6 +9,7 @@ import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.carto
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.account.v2.client.AccountManagementClient;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.client.CartoesPortoClient;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.decodertoken.DecodificarAccessToken;
+import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.BusinessException;
 import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.FeignClientException;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -77,6 +78,6 @@ class AccountManagementAdapterImplTest {
         when(client.getBalanceAccount(anyString(), anyString(), anyString(), anyString())).thenReturn(new BackendResponseData<>(balance));
         when(client.getAccountData(anyString(), anyString(), anyString(), anyString(), anyString())).thenReturn(new BackendResponseData<>(account));
         when(cardPortoClient.getCardsByuser(cognitoToken)).thenThrow(FeignClientException.class);
-        assertThrows(FeignClientException.class, () -> this.adapter.getSummaryAccount(cognitoToken, xItauAuth, accountId));
+        assertThrows(BusinessException.class, () -> this.adapter.getSummaryAccount(cognitoToken, xItauAuth, accountId));
     }
 }
