@@ -12,7 +12,7 @@ class ListaCartoesResponseTest {
     @Test
     public void testListaCartoesResponse() {
         // Given
-        ListarCartoesResponseDomain dados = ListarCartoesResponseDomain.builder()
+        PortoCardResponseData dados = PortoCardResponseData.builder()
                 .codigoProduto("PROD001")
                 .cliente(ClienteDomain.builder().email("test@example.com").nome("John Doe").build())
                 .lista(List.of(
@@ -22,7 +22,7 @@ class ListaCartoesResponseTest {
                 .build();
 
         // When
-        ListaCartoesResponse listaCartoesResponse = new ListaCartoesResponse();
+        PortoCardResponse listaCartoesResponse = new PortoCardResponse();
         listaCartoesResponse.setDados(dados);
 
         // Then

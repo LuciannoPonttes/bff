@@ -17,7 +17,7 @@ class ListarCartoesResponseDomainTest {
                 ListarCartoesResponseBodyDomain.builder().estado("Inativo").build()
         );
 
-        ListarCartoesResponseDomain response = ListarCartoesResponseDomain.builder()
+        PortoCardResponseData response = PortoCardResponseData.builder()
                 .codigoProduto(codigoProduto)
                 .cliente(cliente)
                 .lista(lista)
@@ -30,7 +30,7 @@ class ListarCartoesResponseDomainTest {
 
     @Test
     public void testListarCartoesResponseDomainNoArgsConstructor() {
-        ListarCartoesResponseDomain response = new ListarCartoesResponseDomain();
+        PortoCardResponseData response = new PortoCardResponseData();
 
         assertThat(response.getCodigoProduto()).isNull();
         assertThat(response.getCliente()).isNull();
@@ -46,7 +46,7 @@ class ListarCartoesResponseDomainTest {
                 ListarCartoesResponseBodyDomain.builder().estado("Inativo").build()
         );
 
-        ListarCartoesResponseDomain response = new ListarCartoesResponseDomain(codigoProduto, cliente, lista);
+        PortoCardResponseData response = new PortoCardResponseData(codigoProduto, cliente, lista);
         response.setCodigoProduto(codigoProduto);
         assertThat(response.getCodigoProduto()).isEqualTo(codigoProduto);
         assertThat(response.getCliente()).isEqualTo(cliente);
