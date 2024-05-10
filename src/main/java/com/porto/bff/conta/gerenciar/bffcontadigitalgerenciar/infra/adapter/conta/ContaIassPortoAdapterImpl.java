@@ -2,11 +2,11 @@ package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.con
 
 
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.DataResponseIassPorto;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.cartoes.ListaCartoesResponse;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.cartoes.PortoCardResponse;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta.AccountResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.saldo.BalanceResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.sumario.SumarioResponseIaasPorto;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.client.CartoesPortoClient;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.client.PortoCardClient;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.client.ContaIaasPortoClient;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.decodertoken.DecodificarAccessToken;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.pix.client.PixManagementClient;
@@ -21,7 +21,7 @@ import java.util.List;
 public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
 
     private final ContaIaasPortoClient client;
-    private final CartoesPortoClient cartoesPortoClient;
+    private final PortoCardClient cartoesPortoClient;
     private final DecodificarAccessToken decodificador;
 
     private final PixManagementClient pixManagementClient;
@@ -57,7 +57,7 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
 
 
     private boolean verificaExistenciaCartao(String tokenCognito) {
-        ListaCartoesResponse cardsByUser = null;
+        PortoCardResponse cardsByUser = null;
 
         try {
             cardsByUser = this.cartoesPortoClient.getCardsByuser(tokenCognito);
@@ -74,7 +74,7 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
         return prefixBearer + xItauAuth;
     }
 
-     String formatarMensagemParaExbirNoFront(int quantidade) {
+     public static String buildMessagePixKeys(int quantidade) {
         if (quantidade == 0) {
             return "Cadastre suas Chaves Pix";
         } else if (quantidade == 1) {
@@ -89,7 +89,7 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
         try {
             ApiResponseData<List<Object>> listChavePix = this.pixManagementClient
                     .getPixKeyFromAnAccount(contaId, tokenCognito, this.getBearerInput(xItauAuth));
-            mensagemChave = formatarMensagemParaExbirNoFront(listChavePix.dados().size());
+            mensagemChave = buildMessagePixKeys(listChavePix.dados().size());
             return mensagemChave;
         } catch (Exception e) {
             return mensagemChave;

@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ListarCartoesResponseDomain {
+public class PortoCardResponseData {
   private String codigoProduto;
   private ClienteDomain cliente;
   private List<ListarCartoesResponseBodyDomain> lista;
