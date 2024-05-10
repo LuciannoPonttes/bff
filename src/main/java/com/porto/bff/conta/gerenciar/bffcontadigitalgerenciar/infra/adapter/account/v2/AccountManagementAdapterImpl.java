@@ -11,8 +11,6 @@ import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.acco
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.client.PortoCardClient;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.decodertoken.DecodificarAccessToken;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.pix.v2.client.PixManagementV2Client;
-import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.BusinessException;
-import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.FeignClientException;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
@@ -35,21 +33,14 @@ public class AccountManagementAdapterImpl implements AccountManagementAdapter {
 
     @Override
     public BackendResponseData<AccountBalanceEntityResponse> getBalanceAccount(String xItauAuth, String accountId) {
-        try {
-            return new BackendResponseData<>(this.client.getBalanceAccount(HttpUtils.includeBearerTokenPrefix(xItauAuth), HttpUtils.HTTP_PROVIDER_VALUE, accountId, accountId));
-        } catch (FeignClientException exception) {
-            throw new BusinessException(400, "DADOS_CONTA_ERROR", exception.getMessage());
-        }
+        return new BackendResponseData<>(this.client.getBalanceAccount(HttpUtils.includeBearerTokenPrefix(xItauAuth), HttpUtils.HTTP_PROVIDER_VALUE, accountId, accountId));
+
     }
 
     @Override
     public BackendResponseData<AccountDataEntityResponse> getAccountData(String xItauAuth, String accountId) {
-        try {
-            return new BackendResponseData<>(this.client.getAccountData(HttpUtils.includeBearerTokenPrefix(xItauAuth), HttpUtils.HTTP_PROVIDER_VALUE,
-                    accountId, accountId, HttpUtils.HTTP_ACCOUNT_FIELDS_VALUE));
-        } catch (FeignClientException exception) {
-            throw new BusinessException(400, "SALDO_CONTA_ERROR", exception.getMessage());
-        }
+        return new BackendResponseData<>(this.client.getAccountData(HttpUtils.includeBearerTokenPrefix(xItauAuth), HttpUtils.HTTP_PROVIDER_VALUE,
+                accountId, accountId, HttpUtils.HTTP_ACCOUNT_FIELDS_VALUE));
     }
 
     @SneakyThrows
@@ -59,14 +50,14 @@ public class AccountManagementAdapterImpl implements AccountManagementAdapter {
         var balanceResponseFuture = CompletableFuture.supplyAsync(() ->
                 this.client.getBalanceAccount(HttpUtils.includeBearerTokenPrefix(xItauAuth), HttpUtils.HTTP_PROVIDER_VALUE, accountId, accountId));
         var pixKeysResponseFuture = CompletableFuture.supplyAsync(() ->
-                this.pixKeysClient.getPixKeyFromAnAccount(cognitoToken ,HttpUtils.includeBearerTokenPrefix(xItauAuth), accountId));
+                this.pixKeysClient.getPixKeyFromAnAccount(cognitoToken, HttpUtils.includeBearerTokenPrefix(xItauAuth), accountId));
         var accountResponseFuture = CompletableFuture.supplyAsync(() ->
                 this.client.getAccountData(HttpUtils.includeBearerTokenPrefix(xItauAuth), HttpUtils.HTTP_PROVIDER_VALUE,
                         accountId, accountId, HttpUtils.HTTP_ACCOUNT_FIELDS_VALUE));
         var portoCardResponseFuture = CompletableFuture.supplyAsync(() -> this.cardPortoClient.getCardsByuser(cognitoToken))
                 .exceptionally(throwable -> new PortoCardResponse());
         try {
-            CompletableFuture.allOf(accountResponseFuture, balanceResponseFuture, portoCardResponseFuture, pixKeysResponseFuture).join();
+            CompletableFuture.allOf(accountResponseFuture, balanceResponseFuture, portoCardResponseFuture).join();
             var hasPortoCard = Objects.nonNull(portoCardResponseFuture.join())
                     && Objects.nonNull(portoCardResponseFuture.join().getDados())
                     && !CollectionUtils.isEmpty(portoCardResponseFuture.join().getDados().getLista());
@@ -74,7 +65,7 @@ public class AccountManagementAdapterImpl implements AccountManagementAdapter {
             return new BackendResponseData<>(new AccountSummaryEntityResponse(document, accountResponseFuture.join(), balanceResponseFuture.join(),
                     hasPortoCard, pixKeyCount));
         } catch (CompletionException exception) {
-            throw new BusinessException(400, "SUMARIO_ERROR", exception.getCause().getMessage());
+            throw exception.getCause();
         }
     }
 }

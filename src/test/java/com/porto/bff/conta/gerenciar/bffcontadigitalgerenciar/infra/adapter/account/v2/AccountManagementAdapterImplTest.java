@@ -10,7 +10,6 @@ import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.acco
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.client.PortoCardClient;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.decodertoken.DecodificarAccessToken;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.pix.v2.client.PixManagementV2Client;
-import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.BusinessException;
 import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.FeignClientException;
 import com.porto.experiencia.cliente.conta.digital.commons.web.model.ApiResponseData;
 import org.junit.jupiter.api.Test;
@@ -84,6 +83,6 @@ class AccountManagementAdapterImplTest {
         when(client.getBalanceAccount(anyString(), anyString(), anyString(), anyString())).thenReturn((balance));
         when(client.getAccountData(anyString(), anyString(), anyString(), anyString(), anyString())).thenThrow(FeignClientException.class);
         when(cardPortoClient.getCardsByuser(cognitoToken)).thenThrow(FeignClientException.class);
-        assertThrows(BusinessException.class, () -> this.adapter.getSummaryAccount(cognitoToken, xItauAuth, accountId));
+        assertThrows(FeignClientException.class, () -> this.adapter.getSummaryAccount(cognitoToken, xItauAuth, accountId));
     }
 }
