@@ -11,6 +11,7 @@ import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.acco
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.client.PortoCardClient;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.decodertoken.DecodificarAccessToken;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.pix.v2.client.PixManagementV2Client;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.config.LogConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
@@ -47,14 +48,14 @@ public class AccountManagementAdapterImpl implements AccountManagementAdapter {
     @Override
     public BackendResponseData<AccountSummaryEntityResponse> getSummaryAccount(String cognitoToken, String xItauAuth, String accountId) {
         var document = this.tokenDecoder.getCpfPorToken(cognitoToken);
-        var balanceResponseFuture = CompletableFuture.supplyAsync(() ->
-                this.client.getBalanceAccount(HttpUtils.includeBearerTokenPrefix(xItauAuth), HttpUtils.HTTP_PROVIDER_VALUE, accountId, accountId));
-        var pixKeysResponseFuture = CompletableFuture.supplyAsync(() ->
-                this.pixKeysClient.getPixKeyFromAnAccount(cognitoToken, HttpUtils.includeBearerTokenPrefix(xItauAuth), accountId));
-        var accountResponseFuture = CompletableFuture.supplyAsync(() ->
+        var balanceResponseFuture = CompletableFuture.supplyAsync(LogConfig.withMdc(() ->
+                this.client.getBalanceAccount(HttpUtils.includeBearerTokenPrefix(xItauAuth), HttpUtils.HTTP_PROVIDER_VALUE, accountId, accountId)));
+        var pixKeysResponseFuture = CompletableFuture.supplyAsync(LogConfig.withMdc(() ->
+                this.pixKeysClient.getPixKeyFromAnAccount(cognitoToken, HttpUtils.includeBearerTokenPrefix(xItauAuth), accountId)));
+        var accountResponseFuture = CompletableFuture.supplyAsync(LogConfig.withMdc(() ->
                 this.client.getAccountData(HttpUtils.includeBearerTokenPrefix(xItauAuth), HttpUtils.HTTP_PROVIDER_VALUE,
-                        accountId, accountId, HttpUtils.HTTP_ACCOUNT_FIELDS_VALUE));
-        var portoCardResponseFuture = CompletableFuture.supplyAsync(() -> this.cardPortoClient.getCardsByuser(cognitoToken))
+                        accountId, accountId, HttpUtils.HTTP_ACCOUNT_FIELDS_VALUE)));
+        var portoCardResponseFuture = CompletableFuture.supplyAsync(LogConfig.withMdc(() -> this.cardPortoClient.getCardsByuser(cognitoToken)))
                 .exceptionally(throwable -> new PortoCardResponse());
         try {
             CompletableFuture.allOf(accountResponseFuture, balanceResponseFuture, portoCardResponseFuture).join();
