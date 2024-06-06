@@ -21,7 +21,7 @@ import static org.apache.commons.lang3.StringUtils.SPACE;
 @Mapper(componentModel = "spring")
 public interface AccountManagementMapper {
 
-    String BANK_NAME = "Porto Bank - Banco Itaucard S/A";
+    String BANK_NAME = "Porto Bank -  Itaú Unibanco";
 
     @Mapping(source = "data.available", target = "dados.available", qualifiedByName = "buildBalance")
     @Mapping(source = "data.reserved", target = "dados.reserved", qualifiedByName = "buildBalance")
