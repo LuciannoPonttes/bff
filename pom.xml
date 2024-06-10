@@ -5,7 +5,7 @@
 
     <groupId>com.porto.bff.conta.gerenciar</groupId>
     <artifactId>bff-conta-digital-gerenciar</artifactId>
-    <version>2.0.0</version>
+    <version>2.0.1</version>
     <name>bff-conta-digital-gerenciar</name>
     <description>Projeto responsável por exibir as transações da conta IaaS</description>
 
