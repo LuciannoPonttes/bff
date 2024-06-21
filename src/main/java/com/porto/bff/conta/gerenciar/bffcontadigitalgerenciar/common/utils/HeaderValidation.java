@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class HeaderValidation {
 
-    public void isValidHeaderProjet(String xItauAuth, String contaId) {
-        if (StringUtils.isEmpty(xItauAuth) || StringUtils.isEmpty(contaId)) {
+    public void isValidHeaderProjet(String xItauAuth, String accountId) {
+        if (StringUtils.isEmpty(xItauAuth) || StringUtils.isEmpty(accountId)) {
             throw new BusinessException(498, "IAAS_EXPIRATION_TOKEN", "AccessToken Inválido, gerar outro");
         }
     }
