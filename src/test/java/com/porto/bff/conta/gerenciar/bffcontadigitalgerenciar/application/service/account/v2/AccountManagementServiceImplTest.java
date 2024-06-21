@@ -1,5 +1,6 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.service.account.v2;
 
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.common.utils.HeaderValidation;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.BackendResponseData;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.account.balance.v2.AccountBalanceEntityResponse;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.account.data.v2.AccountDataEntityResponse;
@@ -14,8 +15,7 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @MockitoSettings
 class AccountManagementServiceImplTest {
@@ -25,6 +25,8 @@ class AccountManagementServiceImplTest {
 
     @Mock
     AccountManagementAdapterImpl adapter;
+    @Mock
+    HeaderValidation headerValidation;
 
 
     @Test
@@ -32,6 +34,7 @@ class AccountManagementServiceImplTest {
         double balanceValue = 0.0;
         var backendResponseData = new BackendResponseData<>(new AccountBalanceEntityResponse(balanceValue, balanceValue, balanceValue));
         when(this.adapter.getBalanceAccount(anyString(), anyString())).thenReturn(backendResponseData);
+        doNothing().when(headerValidation).isValidHeaderProjet(anyString(), anyString());
         var responseData = assertDoesNotThrow(() ->
                 this.service.getBalanceAccount("token", "accountID"));
         assertEquals(responseData, backendResponseData);
