@@ -98,7 +98,7 @@ public interface AccountManagementOperations {
     @Operation(
             summary = "Consulta do sumario",
             description = "para acessar tem que ter o escopo tipo iaas-accounts.read",
-            tags = {"Gerenciar"}
+            tags = {"Gerenciar-Conta-Digital-V2"}
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Sucesso"),

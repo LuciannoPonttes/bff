@@ -37,7 +37,7 @@ public interface GerenciamentoContasControllerOperations {
     @Operation(
             summary = "Consulta de dados da conta",
             description = "para acessar tem que ter o escopo tipo iaas-accounts.read",
-            tags = { "Gerenciar" }
+            tags = {"Gerenciar-Conta-Digital-V1"}
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Sucesso"),
@@ -63,7 +63,7 @@ public interface GerenciamentoContasControllerOperations {
     @Operation(
             summary = "Consulta de dados da conta",
             description = "para acessar tem que ter o escopo tipo iaas-accounts.read",
-            tags = { "Gerenciar" }
+            tags = {"Gerenciar-Conta-Digital-V1"}
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Sucesso"),
@@ -88,7 +88,7 @@ public interface GerenciamentoContasControllerOperations {
     @Operation(
             summary = "Consulta do sumario",
             description = "para acessar tem que ter o escopo tipo iaas-accounts.read",
-            tags = { "Gerenciar" }
+            tags = {"Gerenciar-Conta-Digital-V1"}
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Sucesso"),
