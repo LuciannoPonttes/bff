@@ -1,6 +1,10 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta;
 
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.DataResponseIassPorto;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.cartoes.ClienteDomain;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.cartoes.ListarCartoesResponseBodyDomain;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.cartoes.PortoCardResponse;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.cartoes.PortoCardResponseData;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta.AccountFlagsResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta.AccountResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta.BankAccountResponseIassPorto;
@@ -23,6 +27,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.TestPropertySource;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -30,8 +35,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.cloud.openfeign.security.OAuth2AccessTokenInterceptor.BEARER;
 
 @SpringBootTest
@@ -247,5 +251,55 @@ class ContaIassPortoAdapterImplTest {
 
         assertEquals("", result); // Make sure the expected result is returned when an exception occurs
     }
+
+    @Test
+    @DisplayName("Deve verificar a existência do cartão com sucesso")
+    void verificaExistenciaCartaoTest() {
+
+        PortoCardClient cartoesPortoClientMock = mock(PortoCardClient.class);
+
+        ListarCartoesResponseBodyDomain cartao = ListarCartoesResponseBodyDomain.builder()
+                .estado("ativo")
+                .bandeira("Visa")
+                .descricaoFormatada("Cartão de Crédito")
+                .finalCartao("1234")
+                .flagTitular("Titular")
+                .melhorDataCompra("2024-08-06")
+                .cartaoTipo("Crédito")
+                .cartaoLogoCode("LOGO")
+                .corPlastico("Azul")
+                .statusBloqueio("Desbloqueado")
+                .build();
+
+        ClienteDomain cliente = ClienteDomain.builder()
+                .email("cliente@exemplo.com")
+                .nome("Cliente Exemplo")
+                .build();
+
+        PortoCardResponseData responseData = PortoCardResponseData.builder()
+                .codigoProduto("123")
+                .cliente(cliente)
+                .lista(Collections.singletonList(cartao))
+                .build();
+
+        PortoCardResponse mockResponse = new PortoCardResponse();
+        mockResponse.setDados(responseData);
+
+        when(cartoesPortoClientMock.getCardsByuser(anyString())).thenReturn(mockResponse);
+
+
+        ContaIassPortoAdapterImpl contaIassPortoAdapter = new ContaIassPortoAdapterImpl(
+                mock(ContaIaasPortoClient.class),
+                cartoesPortoClientMock,
+                mock(DecodificarAccessToken.class),
+                mock(PixManagementClient.class)
+        );
+
+        contaIassPortoAdapter.sumarioConta("tokenCognito", "Bearer xItauAuth", "contaId");
+
+        verify(cartoesPortoClientMock).getCardsByuser("tokenCognito");
+    }
+
+
 
 }
