@@ -55,4 +55,24 @@ class AccountManagementServiceImplTest {
         verify(adapter).getSummaryAccount(cognitoToken, xItauAuth, accountId);
         assertEquals(expectedResponse, actualResponse);
     }
+
+
+    @Test
+    void testGetAccountData() {
+        var bankAccount = new BankAccount("", "", "", "", "", "");
+        AccountDataEntityResponse dataResponse = new AccountDataEntityResponse("",bankAccount,"","","","");
+        BackendResponseData<AccountDataEntityResponse> backendResponse = new BackendResponseData<>(dataResponse);
+
+
+        when(adapter.getAccountData(anyString(), anyString())).thenReturn(backendResponse);
+
+        String xItauAuth = "auth";
+        String accountId = "12345";
+        BackendResponseData<AccountDataEntityResponse> result = service.getAccountData(xItauAuth, accountId);
+
+        verify(headerValidation).isValidHeaderProjet(xItauAuth, accountId);
+        verify(adapter).getAccountData(xItauAuth, accountId);
+        assertEquals(dataResponse, result.data());
+    }
+
 }

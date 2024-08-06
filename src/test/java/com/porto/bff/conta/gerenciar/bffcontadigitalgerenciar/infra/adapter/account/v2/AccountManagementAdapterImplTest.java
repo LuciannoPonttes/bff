@@ -1,11 +1,15 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.account.v2;
 
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.service.account.v2.AccountManagementServiceImpl;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.BackendResponseData;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.account.balance.v2.AccountBalanceEntityResponse;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.account.data.v2.AccountDataEntityResponse;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.account.data.v2.BankAccount;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.account.sumary.v2.AccountSummaryEntityResponse;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.cartoes.ClienteDomain;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.cartoes.ListarCartoesResponseBodyDomain;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.cartoes.PortoCardResponse;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.cartoes.PortoCardResponseData;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.account.v2.client.AccountManagementClient;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.client.PortoCardClient;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.decodertoken.DecodificarAccessToken;
@@ -39,6 +43,9 @@ class AccountManagementAdapterImplTest {
 
     @Mock
     DecodificarAccessToken tokenDecoder;
+
+    @InjectMocks
+    private AccountManagementServiceImpl accountManagementService;
 
     @Test
     void getBalanceAccount() {
@@ -84,5 +91,64 @@ class AccountManagementAdapterImplTest {
         when(client.getAccountData(anyString(), anyString(), anyString(), anyString(), anyString())).thenThrow(FeignClientException.class);
         when(cardPortoClient.getCardsByuser(cognitoToken)).thenThrow(FeignClientException.class);
         assertThrows(FeignClientException.class, () -> this.adapter.getSummaryAccount(cognitoToken, xItauAuth, accountId));
+    }
+
+    @Test
+    void testGetAccountData() {
+
+        String xItauAuth = "Bearer token";
+        String accountId = "12345";
+        AccountDataEntityResponse expectedResponse = new AccountDataEntityResponse(
+                "12345",
+                new BankAccount("", "", "", "", "", ""),
+                "active",
+                "type",
+                "2024-08-06T12:34:56",
+                "2024-08-06T12:34:56"
+        );
+
+
+        when(client.getAccountData(anyString(), anyString(), anyString(), anyString(), anyString()))
+                .thenReturn(expectedResponse);
+
+        BackendResponseData<AccountDataEntityResponse> actualResponse = adapter.getAccountData(xItauAuth, accountId);
+
+        assertEquals(expectedResponse, actualResponse.data());
+    }
+
+    @Test
+    void testGetSummaryAccountWithNonEmptyPortoCardList() {
+        String cognitoToken = "cognitoToken";
+        String xItauAuth = "xItauAuth";
+        String accountId = "accountId";
+
+        var card = new ListarCartoesResponseBodyDomain(
+                "active", "Visa", "Standard Card", "1234", "personal", "2024-08-06", "credit", "visa-logo", "black", "none"
+        );
+        var portoCardResponseData = new PortoCardResponseData(
+                "productCode",
+                new ClienteDomain(), // Mock ClienteDomain if needed
+                Collections.singletonList(card)
+        );
+        var portoCardResponse = new PortoCardResponse();
+        portoCardResponse.setDados(portoCardResponseData);
+
+        var bankAccount = new BankAccount("", "", "", "", "", "");
+        var account = new AccountDataEntityResponse("", bankAccount, "", "", "", "");
+        var balance = new AccountBalanceEntityResponse(10.0, 11.0, 0.0);
+        var pixKeyResponse = new ApiResponseData<>(Collections.emptyList());
+
+        when(tokenDecoder.getCpfPorToken(cognitoToken)).thenReturn("document");
+        when(client.getBalanceAccount(anyString(), anyString(), anyString(), anyString())).thenReturn(balance);
+        when(client.getAccountData(anyString(), anyString(), anyString(), anyString(), anyString())).thenReturn(account);
+        when(pixKeysClient.getPixKeyFromAnAccount(anyString(), anyString(), anyString())).thenReturn(pixKeyResponse);
+        when(cardPortoClient.getCardsByuser(cognitoToken)).thenReturn(portoCardResponse);
+
+        BackendResponseData<AccountSummaryEntityResponse> result = this.adapter.getSummaryAccount(cognitoToken, xItauAuth, accountId);
+
+        assertNotNull(result);
+        assertEquals("document", result.data().document());
+        assertEquals(10.0, result.data().balance().available());
+        assertTrue(result.data().hasPortoCard());
     }
 }

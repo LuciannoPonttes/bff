@@ -8,17 +8,22 @@ import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.accou
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.account.data.v2.AccountDataEntityResponse;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.account.data.v2.BankAccount;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.account.sumary.v2.AccountSummaryEntityResponse;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.account.v2.AccountManagementAdapterImpl;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.account.v2.client.AccountManagementClient;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v2.dto.AccountDataDtoResponse;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v2.dto.BankAccountDto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v2.mapper.AccountManagementMapper;
 import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.BusinessException;
 import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.FeignClientException;
+import com.porto.experiencia.cliente.conta.digital.commons.web.model.ApiResponseData;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import java.util.Collections;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -48,6 +53,42 @@ class AccountManagementControllerTest {
 
     @Autowired
     ObjectMapper objectMapper;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    void testGetAccountData() {
+        String cognitoToken = "dummyCognitoToken";
+        String xItauAuth = "dummyXItauAuth";
+        String accountId = "dummyAccountId";
+
+        BankAccountDto bankAccountDto = new BankAccountDto(
+                "Banco XYZ", "001", "1234", "567890", "0"
+        );
+
+        BankAccount bankAccount = new BankAccount(
+                "Company XYZ", "001", "1234", "567890", "0", "Checking"
+        );
+        var backendResponseData = new BackendResponseData<>(new AccountDataEntityResponse(
+                "123", bankAccount, "Active", "Checking", "01/01/2020", "01/01/2021"
+        ));
+
+        AccountDataDtoResponse dtoResponse = new AccountDataDtoResponse(
+                "123", bankAccountDto, "Active", "Checking", "01/01/2020", "01/01/2021"
+        );
+
+        ApiResponseData<AccountDataDtoResponse> apiResponseData = new ApiResponseData<>(dtoResponse);
+
+        when(service.getAccountData(anyString(), anyString())).thenReturn(backendResponseData);
+
+        ResponseEntity<ApiResponseData<AccountDataDtoResponse>> response = controller.getAccountData(cognitoToken, xItauAuth, accountId);
+
+        Assertions.assertNotNull(response);
+    }
+
 
     @Test
     void getBalanceAccount() {
