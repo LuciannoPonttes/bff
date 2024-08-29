@@ -12,8 +12,13 @@ import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.cont
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.decodertoken.DecodificarAccessToken;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.pix.v2.client.PixManagementV2Client;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.config.LogConfig;
+import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.BusinessException;
+import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.FeignClientException;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
+
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -33,9 +38,19 @@ public class AccountManagementAdapterImpl implements AccountManagementAdapter {
     private final DecodificarAccessToken tokenDecoder;
 
     @Override
+    @Retryable(retryFor = { BusinessException.class }, backoff = @Backoff(delay = 150))
     public BackendResponseData<AccountBalanceEntityResponse> getBalanceAccount(String xItauAuth, String accountId) {
-        return new BackendResponseData<>(this.client.getBalanceAccount(HttpUtils.includeBearerTokenPrefix(xItauAuth), HttpUtils.HTTP_PROVIDER_VALUE, accountId, accountId));
-
+        try {
+            AccountBalanceEntityResponse response = this.client.getBalanceAccount(
+                    HttpUtils.includeBearerTokenPrefix(xItauAuth),
+                    HttpUtils.HTTP_PROVIDER_VALUE,
+                    accountId,
+                    accountId
+            );
+            return new BackendResponseData<>(response); // Correção na criação do BackendResponseData
+        } catch (FeignClientException e) {
+            throw new BusinessException(Integer.valueOf(e.getCodigo()), "BALANCE_ACCOUNT_ERROR", e.getMessage());
+        }
     }
 
     @Override

@@ -14,6 +14,7 @@ import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.acco
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.client.PortoCardClient;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.decodertoken.DecodificarAccessToken;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.pix.v2.client.PixManagementV2Client;
+import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.BusinessException;
 import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.FeignClientException;
 import com.porto.experiencia.cliente.conta.digital.commons.web.model.ApiResponseData;
 import org.junit.jupiter.api.Test;
@@ -25,7 +26,7 @@ import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @MockitoSettings
 class AccountManagementAdapterImplTest {
@@ -151,4 +152,22 @@ class AccountManagementAdapterImplTest {
         assertEquals(10.0, result.data().balance().available());
         assertTrue(result.data().hasPortoCard());
     }
+
+    @Test
+    void testGetBalanceAccountWithRetry() {
+        String xItauAuth = "authToken";
+        String accountId = "12345";
+
+        when(client.getBalanceAccount(anyString(), anyString(), anyString(), anyString()))
+                .thenThrow(new FeignClientException(null,"404",null));
+
+
+        assertThrows(BusinessException.class, () -> {
+            adapter.getBalanceAccount(xItauAuth, accountId);
+        });
+
+        verify(client, times(3)).getBalanceAccount(anyString(), anyString(), anyString(), anyString());
+    }
+
+
 }
