@@ -21,6 +21,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoSettings;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Collections;
 
@@ -28,13 +31,15 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
-@MockitoSettings
+@SpringBootTest
 class AccountManagementAdapterImplTest {
 
     @InjectMocks
     AccountManagementAdapterImpl adapter;
     @Mock
     AccountManagementClient client;
+
+
 
     @Mock
     PortoCardClient cardPortoClient;
@@ -47,6 +52,29 @@ class AccountManagementAdapterImplTest {
 
     @InjectMocks
     private AccountManagementServiceImpl accountManagementService;
+
+    @MockBean
+    AccountManagementClient client2;
+
+    @Autowired
+    AccountManagementAdapterImpl adapter2;
+
+    @Test
+    void testGetBalanceAccountWithRetry() {
+        String xItauAuth = "authToken";
+        String accountId = "12345";
+
+        when(client2.getBalanceAccount(anyString(), anyString(), anyString(), anyString()))
+                .thenThrow(new FeignClientException(null,"404",null));
+
+
+        assertThrows(BusinessException.class, () -> {
+            adapter2.getBalanceAccount(xItauAuth, accountId);
+        });
+
+        verify(client2, times(3)).getBalanceAccount(anyString(), anyString(), anyString(), anyString());
+    }
+
 
     @Test
     void getBalanceAccount() {
@@ -151,22 +179,6 @@ class AccountManagementAdapterImplTest {
         assertEquals("document", result.data().document());
         assertEquals(10.0, result.data().balance().available());
         assertTrue(result.data().hasPortoCard());
-    }
-
-    @Test
-    void testGetBalanceAccountWithRetry() {
-        String xItauAuth = "authToken";
-        String accountId = "12345";
-
-        when(client.getBalanceAccount(anyString(), anyString(), anyString(), anyString()))
-                .thenThrow(new FeignClientException(null,"404",null));
-
-
-        assertThrows(BusinessException.class, () -> {
-            adapter.getBalanceAccount(xItauAuth, accountId);
-        });
-
-        verify(client, times(3)).getBalanceAccount(anyString(), anyString(), anyString(), anyString());
     }
 
 
