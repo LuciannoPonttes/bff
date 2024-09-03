@@ -20,13 +20,10 @@ import com.porto.experiencia.cliente.conta.digital.commons.web.model.ApiResponse
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoSettings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
 import java.util.Collections;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
@@ -39,8 +36,6 @@ class AccountManagementAdapterImplTest {
     @Mock
     AccountManagementClient client;
 
-
-
     @Mock
     PortoCardClient cardPortoClient;
 
@@ -50,14 +45,18 @@ class AccountManagementAdapterImplTest {
     @Mock
     DecodificarAccessToken tokenDecoder;
 
-    @InjectMocks
-    private AccountManagementServiceImpl accountManagementService;
-
     @MockBean
     AccountManagementClient client2;
 
     @Autowired
     AccountManagementAdapterImpl adapter2;
+
+    @MockBean
+    PixManagementV2Client pixKeysClient2;
+
+
+    @MockBean
+    DecodificarAccessToken tokenDecoder2;
 
     @Test
     void testGetBalanceAccountWithRetry() {
@@ -75,6 +74,20 @@ class AccountManagementAdapterImplTest {
         verify(client2, times(3)).getBalanceAccount(anyString(), anyString(), anyString(), anyString());
     }
 
+    @Test
+    void testGetAccountDataWithRetry() {
+        String xItauAuth = "authToken";
+        String accountId = "12345";
+
+        when(client2.getAccountData(anyString(), anyString(), anyString(), anyString(), anyString()))
+                .thenThrow(new FeignClientException(null, "404", null));
+
+        assertThrows(BusinessException.class, () -> {
+            adapter2.getAccountData(xItauAuth, accountId);
+        });
+
+        verify(client2, times(3)).getAccountData(anyString(), anyString(), anyString(), anyString(), anyString());
+    }
 
     @Test
     void getBalanceAccount() {
@@ -88,38 +101,30 @@ class AccountManagementAdapterImplTest {
     }
 
     @Test
-    void testGetSummaryAccount() {
+    void testGetSummaryAccountWithRetry() {
         String cognitoToken = "cognitoToken";
-        String xItauAuth = "xItauAuth";
-        String accountId = "accountId";
+        String xItauAuth = "authToken";
+        String accountId = "12345";
 
-        var bankAccount = new BankAccount("", "", "", "", "", "");
-        var account = new AccountDataEntityResponse("", bankAccount, "", "", "", "");
-        var balance = new AccountBalanceEntityResponse(10.0, 11.0, 0.0);
+        when(client2.getBalanceAccount(anyString(), anyString(), anyString(), anyString()))
+                .thenThrow(new FeignClientException(null, "404", null));
 
-        when(tokenDecoder.getCpfPorToken(cognitoToken)).thenReturn("document");
-        when(client.getBalanceAccount(anyString(), anyString(), anyString(), anyString())).thenReturn((balance));
-        when(client.getAccountData(anyString(), anyString(), anyString(), anyString(), anyString())).thenReturn((account));
-        when(this.pixKeysClient.getPixKeyFromAnAccount(anyString(), anyString(), anyString())).thenReturn(new ApiResponseData<>(Collections.emptyList()));
-        when(cardPortoClient.getCardsByuser(cognitoToken)).thenReturn(new PortoCardResponse());
 
-        BackendResponseData<AccountSummaryEntityResponse> result = this.adapter.getSummaryAccount(cognitoToken, xItauAuth, accountId);
-        assertNotNull(result);
-        assertEquals("document", result.data().document());
-        assertEquals(10.0, result.data().balance().available());
-    }
+        when(pixKeysClient2.getPixKeyFromAnAccount(anyString(), anyString(), anyString()))
+                .thenThrow(new FeignClientException(null, "404", null));
 
-    @Test
-    void testGetSummaryAccount2() {
-        String cognitoToken = "cognitoToken";
-        String xItauAuth = "xItauAuth";
-        String accountId = "accountId";
-        var balance = new AccountBalanceEntityResponse(10.0, 11.0, 0.0);
-        when(tokenDecoder.getCpfPorToken(cognitoToken)).thenReturn("document");
-        when(client.getBalanceAccount(anyString(), anyString(), anyString(), anyString())).thenReturn((balance));
-        when(client.getAccountData(anyString(), anyString(), anyString(), anyString(), anyString())).thenThrow(FeignClientException.class);
-        when(cardPortoClient.getCardsByuser(cognitoToken)).thenThrow(FeignClientException.class);
-        assertThrows(FeignClientException.class, () -> this.adapter.getSummaryAccount(cognitoToken, xItauAuth, accountId));
+
+        when(client2.getAccountData(anyString(), anyString(), anyString(), anyString(), anyString()))
+                .thenThrow(new FeignClientException(null, "404", null));
+
+
+        assertThrows(BusinessException.class, () -> {
+            adapter2.getSummaryAccount(cognitoToken, xItauAuth, accountId);
+        });
+
+        verify(client2, times(3)).getBalanceAccount(anyString(), anyString(), anyString(), anyString());
+        verify(pixKeysClient2, times(3)).getPixKeyFromAnAccount(anyString(), anyString(), anyString());
+       verify(client2, times(3)).getAccountData(anyString(), anyString(), anyString(), anyString(), anyString());
     }
 
     @Test
@@ -180,6 +185,5 @@ class AccountManagementAdapterImplTest {
         assertEquals(10.0, result.data().balance().available());
         assertTrue(result.data().hasPortoCard());
     }
-
 
 }

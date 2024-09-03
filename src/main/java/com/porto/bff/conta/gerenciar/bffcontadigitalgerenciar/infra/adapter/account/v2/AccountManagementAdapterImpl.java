@@ -23,7 +23,6 @@ import org.springframework.util.CollectionUtils;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
-
 import static com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.ContaIassPortoAdapterImpl.buildMessagePixKeys;
 
 @Component
@@ -52,32 +51,76 @@ public class AccountManagementAdapterImpl implements AccountManagementAdapter {
     }
 
     @Override
+    @Retryable(retryFor = { BusinessException.class }, backoff = @Backoff(delay = 150))
     public BackendResponseData<AccountDataEntityResponse> getAccountData(String xItauAuth, String accountId) {
-        return new BackendResponseData<>(this.client.getAccountData(HttpUtils.includeBearerTokenPrefix(xItauAuth), HttpUtils.HTTP_PROVIDER_VALUE,
-                accountId, accountId, HttpUtils.HTTP_ACCOUNT_FIELDS_VALUE));
+        try {
+            return new BackendResponseData<>(this.client.getAccountData(
+                    HttpUtils.includeBearerTokenPrefix(xItauAuth),
+                    HttpUtils.HTTP_PROVIDER_VALUE,
+                    accountId,
+                    accountId,
+                    HttpUtils.HTTP_ACCOUNT_FIELDS_VALUE
+            ));
+        } catch (FeignClientException e) {
+            throw new BusinessException(Integer.valueOf(e.getCodigo()), "ACCOUNT_DATA_ERROR", e.getMessage());
+        }
     }
 
-    @SneakyThrows
     @Override
+    @SneakyThrows
+    @Retryable(retryFor = { BusinessException.class }, backoff = @Backoff(delay = 150))
     public BackendResponseData<AccountSummaryEntityResponse> getSummaryAccount(String cognitoToken, String xItauAuth, String accountId) {
         var document = this.tokenDecoder.getCpfPorToken(cognitoToken);
-        var balanceResponseFuture = CompletableFuture.supplyAsync(LogConfig.withMdc(() ->
-                this.client.getBalanceAccount(HttpUtils.includeBearerTokenPrefix(xItauAuth), HttpUtils.HTTP_PROVIDER_VALUE, accountId, accountId)));
-        var pixKeysResponseFuture = CompletableFuture.supplyAsync(LogConfig.withMdc(() ->
-                this.pixKeysClient.getPixKeyFromAnAccount(cognitoToken, HttpUtils.includeBearerTokenPrefix(xItauAuth), accountId)));
-        var accountResponseFuture = CompletableFuture.supplyAsync(LogConfig.withMdc(() ->
-                this.client.getAccountData(HttpUtils.includeBearerTokenPrefix(xItauAuth), HttpUtils.HTTP_PROVIDER_VALUE,
-                        accountId, accountId, HttpUtils.HTTP_ACCOUNT_FIELDS_VALUE)));
-        var portoCardResponseFuture = CompletableFuture.supplyAsync(LogConfig.withMdc(() -> this.cardPortoClient.getCardsByuser(cognitoToken)))
-                .exceptionally(throwable -> new PortoCardResponse());
+
+        var balanceResponseFuture = CompletableFuture.supplyAsync(LogConfig.withMdc(() -> {
+            try {
+                return this.client.getBalanceAccount(HttpUtils.includeBearerTokenPrefix(xItauAuth), HttpUtils.HTTP_PROVIDER_VALUE, accountId, accountId);
+            } catch (FeignClientException e) {
+                throw new BusinessException(Integer.valueOf(e.getCodigo()), "BALANCE_ACCOUNT_ERROR", e.getMessage());
+            }
+        }));
+
+        var pixKeysResponseFuture = CompletableFuture.supplyAsync(LogConfig.withMdc(() -> {
+            try {
+                return this.pixKeysClient.getPixKeyFromAnAccount(cognitoToken, HttpUtils.includeBearerTokenPrefix(xItauAuth), accountId);
+            } catch (FeignClientException e) {
+                throw new BusinessException(Integer.valueOf(e.getCodigo()), "PIX_KEY_ERROR", e.getMessage());
+            }
+        }));
+
+        var accountResponseFuture = CompletableFuture.supplyAsync(LogConfig.withMdc(() -> {
+            try {
+                return this.client.getAccountData(HttpUtils.includeBearerTokenPrefix(xItauAuth), HttpUtils.HTTP_PROVIDER_VALUE,
+                        accountId, accountId, HttpUtils.HTTP_ACCOUNT_FIELDS_VALUE);
+            } catch (FeignClientException e) {
+                throw new BusinessException(Integer.valueOf(e.getCodigo()), "ACCOUNT_DATA_ERROR", e.getMessage());
+            }
+        }));
+
+        var portoCardResponseFuture = CompletableFuture.supplyAsync(LogConfig.withMdc(() -> {
+            try {
+                return this.cardPortoClient.getCardsByuser(cognitoToken);
+            } catch (Exception e) {
+                return new PortoCardResponse();
+            }
+        }));
+
         try {
             CompletableFuture.allOf(accountResponseFuture, balanceResponseFuture, portoCardResponseFuture).join();
+
             var hasPortoCard = Objects.nonNull(portoCardResponseFuture.join())
                     && Objects.nonNull(portoCardResponseFuture.join().getDados())
                     && !CollectionUtils.isEmpty(portoCardResponseFuture.join().getDados().getLista());
+
             var pixKeyCount = buildMessagePixKeys(pixKeysResponseFuture.join().dados().size());
-            return new BackendResponseData<>(new AccountSummaryEntityResponse(document, accountResponseFuture.join(), balanceResponseFuture.join(),
-                    hasPortoCard, pixKeyCount));
+
+            return new BackendResponseData<>(new AccountSummaryEntityResponse(
+                    document,
+                    accountResponseFuture.join(),
+                    balanceResponseFuture.join(),
+                    hasPortoCard,
+                    pixKeyCount
+            ));
         } catch (CompletionException exception) {
             throw exception.getCause();
         }
