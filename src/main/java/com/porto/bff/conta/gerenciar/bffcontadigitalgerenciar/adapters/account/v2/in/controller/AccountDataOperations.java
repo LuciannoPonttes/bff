@@ -1,8 +1,8 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.account.v2.in.controller;
 
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.account.v2.in.controller.response.dto.AccountDataResponseDto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.common.utils.v2.HttpUtils;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.commons.ResponseErrorApi;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v2.dto.AccountDataDtoResponse;
 import com.porto.experiencia.cliente.conta.digital.commons.web.model.ApiResponseData;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -47,7 +47,7 @@ public interface AccountDataOperations {
                     })
     })
     @GetMapping("/hexa-dados-conta")//Irá mudar para /dados-conta/
-    ResponseEntity<ApiResponseData<AccountDataDtoResponse>> getAccountData(@RequestHeader(value = AUTHORIZATION) String cognitoToken,
+    ResponseEntity<ApiResponseData<AccountDataResponseDto>> getAccountData(@RequestHeader(value = AUTHORIZATION) String cognitoToken,
                                                                                  @RequestHeader(value = HttpUtils.HTTP_X_ITAU_AUTH_HEADER, required = false) String xItauAuth,
                                                                                  @RequestHeader(value = HttpUtils.HTTP_ACCOUNT_ID_HEADER, required = false) String accountId);
 }
