@@ -1,8 +1,8 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.contas.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.mapper.GerenciarMapper;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.service.conta.GerenciarContaIaasService;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application_old.mapper.GerenciarMapper;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application_old.service.conta.GerenciarContaIaasService;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.DataResponseIassPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta.AccountFlagsResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta.AccountResponseIaasPorto;
@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
 

@@ -1,4 +1,4 @@
-package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.service.conta;
+package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application_old.service.conta;
 
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.DataResponseIassPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta.AccountResponseIaasPorto;

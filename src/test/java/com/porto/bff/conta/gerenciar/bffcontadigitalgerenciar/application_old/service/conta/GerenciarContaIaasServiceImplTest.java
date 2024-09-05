@@ -1,4 +1,4 @@
-package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.service.conta;
+package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application_old.service.conta;
 
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.DataResponseIassPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta.AccountFlagsResponseIaasPorto;
@@ -8,7 +8,6 @@ import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.saldo
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.sumario.SumarioResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.ContaIassPortoAdapter;
 import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.BusinessException;
-import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.FeignClientException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
