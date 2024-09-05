@@ -1,6 +1,8 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.account.v2.in.controller;
 
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.account.v2.out.client.mapper.AccountDataDtoResponseMapper;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.account.v2.in.controller.mapper.AccountDataMapper;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.ports.account.in.AccountDataInputPort;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v2.dto.AccountDataDtoResponse;
 import com.porto.experiencia.cliente.conta.digital.commons.web.model.ApiResponseData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -10,10 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AccountDataController implements AccountDataOperations {
 
+    private final AccountDataInputPort accountDataInputPort;
+    private final AccountDataMapper accountDataMapper;
+
     @Override
-    public ResponseEntity<ApiResponseData<AccountDataDtoResponseMapper>> getAccountData(String cognitoToken, String xItauAuth, String accountId) {
-        String teste = "teste";
-        return null;
-        //return ResponseEntity.ok(this.mapper.toAccountDataDto(this.service.getAccountData(xItauAuth, accountId)));
+    public ResponseEntity<ApiResponseData<AccountDataDtoResponse>> getAccountData(String cognitoToken, String xItauAuth, String accountId) {
+        return ResponseEntity.ok(this.accountDataMapper.toAccountDataDto(this.accountDataInputPort.getAccountData(xItauAuth, accountId)));
+
     }
+
 }
