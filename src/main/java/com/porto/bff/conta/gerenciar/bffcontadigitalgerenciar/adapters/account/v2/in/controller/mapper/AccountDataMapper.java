@@ -1,6 +1,7 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.account.v2.in.controller.mapper;
 
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.account.v2.in.controller.response.dto.AccountDataResponseDto;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.account.AccountDataEntityResponseDomain;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.BackendResponseData;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.account.data.v2.AccountDataEntityResponse;
 import com.porto.experiencia.cliente.conta.digital.commons.web.model.ApiResponseData;
@@ -21,7 +22,8 @@ public interface AccountDataMapper {
     }
 
     @Mapping(source = "data", target = "dados")
-    ApiResponseData<AccountDataResponseDto> toAccountDataDto(BackendResponseData<AccountDataEntityResponse> accountData);
+    ApiResponseData<AccountDataResponseDto> toAccountDataDto(BackendResponseData<AccountDataEntityResponseDomain> accountData);
+
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "status", target = "status")
@@ -33,6 +35,6 @@ public interface AccountDataMapper {
     @Mapping(source = "bankAccount.number", target = "bankAccount.number")
     @Mapping(source = "bankAccount.checkDigit", target = "bankAccount.checkDigit")
     @Mapping(target = "bankAccount.bankName", constant = BANK_NAME)
-    AccountDataResponseDto toAccountDataDto(AccountDataEntityResponse accountData);
+    AccountDataResponseDto toAccountDataDto(AccountDataEntityResponseDomain accountData);
 
 }

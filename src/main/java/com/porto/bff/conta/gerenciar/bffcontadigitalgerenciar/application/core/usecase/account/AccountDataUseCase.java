@@ -1,6 +1,7 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.usecase.account;
 
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.account.v2.out.client.DataAccountClient;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.account.AccountDataEntityResponseDomain;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.ports.account.in.AccountDataInputPort;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.common.utils.HeaderValidation;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.common.utils.v2.HttpUtils;
@@ -23,7 +24,7 @@ public class AccountDataUseCase implements AccountDataInputPort {
 
     @Override
     @Retryable(retryFor = { BusinessException.class }, backoff = @Backoff(delay = 150))
-    public BackendResponseData<AccountDataEntityResponse> getAccountData(String xItauAuth, String accountId) {
+    public BackendResponseData<AccountDataEntityResponseDomain> getAccountData(String xItauAuth, String accountId) {
         headerValidation.isValidHeaderProjet(xItauAuth,accountId);
         try {
             return new BackendResponseData<>(this.dataAccountClient.getAccountData(
