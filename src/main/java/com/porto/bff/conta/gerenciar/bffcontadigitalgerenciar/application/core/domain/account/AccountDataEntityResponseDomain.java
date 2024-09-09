@@ -1,4 +1,5 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.account;
+
 public record AccountDataEntityResponseDomain(
         String id,
         BankAccountDomain bankAccount,
