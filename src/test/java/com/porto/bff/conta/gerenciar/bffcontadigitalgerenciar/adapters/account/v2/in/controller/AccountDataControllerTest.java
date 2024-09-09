@@ -145,6 +145,6 @@ public class AccountDataControllerTest {
         var expected = "{\"dados\":{\"disponivel\":\"R$ 10,50\",\"reservada\":\"R$ 12,46\",\"bloqueado\":\"R$ 34,76\"}}";
         assertEquals(expected, responseJson);
     }
-
 */
+
 }
