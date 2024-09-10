@@ -1,8 +1,8 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.balance.v2.in.controller;
 
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.balance.v2.in.controller.response.dto.BalanceDtoResponse;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.common.utils.v2.HttpUtils;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.commons.ResponseErrorApi;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v2.dto.AccountBalanceDtoResponse;
 import com.porto.experiencia.cliente.conta.digital.commons.web.model.ApiResponseData;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @RequestMapping({"v2/conta-digital/gerenciar"})
-public interface BalanceAccountOperations {
+public interface BalanceOperations {
 
     @Operation(
             summary = "Consulta de dados da conta",
@@ -48,7 +48,7 @@ public interface BalanceAccountOperations {
                     })
     })
     @GetMapping("/hexa-saldo")
-    ResponseEntity<ApiResponseData<AccountBalanceDtoResponse>> getBalanceAccount(@RequestHeader(value = AUTHORIZATION) String cognitoToken,
-                                                                                 @RequestHeader(value = HttpUtils.HTTP_X_ITAU_AUTH_HEADER, required = false) String xItauAuth,
-                                                                                 @RequestHeader(value = HttpUtils.HTTP_ACCOUNT_ID_HEADER, required = false) String accountId);
+    ResponseEntity<ApiResponseData<BalanceDtoResponse>> getBalanceAccount(@RequestHeader(value = AUTHORIZATION) String cognitoToken,
+                                                                          @RequestHeader(value = HttpUtils.HTTP_X_ITAU_AUTH_HEADER, required = false) String xItauAuth,
+                                                                          @RequestHeader(value = HttpUtils.HTTP_ACCOUNT_ID_HEADER, required = false) String accountId);
 }

@@ -2,6 +2,7 @@ package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.account.
 
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.account.v2.in.controller.response.dto.AccountDataResponseDto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.account.AccountDataEntityResponseDomain;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.backend.BackendResponseDataDomain;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.BackendResponseData;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.account.data.v2.AccountDataEntityResponse;
 import com.porto.experiencia.cliente.conta.digital.commons.web.model.ApiResponseData;
@@ -22,7 +23,7 @@ public interface AccountDataMapper {
     }
 
     @Mapping(source = "data", target = "dados")
-    ApiResponseData<AccountDataResponseDto> toAccountDataDto(BackendResponseData<AccountDataEntityResponseDomain> accountData);
+    ApiResponseData<AccountDataResponseDto> toAccountDataDto(BackendResponseDataDomain<AccountDataEntityResponseDomain> accountData);
 
 
     @Mapping(source = "id", target = "id")

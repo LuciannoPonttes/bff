@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.account.v2.in.controller.response.dto.AccountDataResponseDto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.account.AccountDataEntityResponseDomain;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.account.BankAccountDomain;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.backend.BackendResponseDataDomain;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.ports.account.in.AccountDataInputPort;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application_old.service.account.v2.AccountManagementService;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.BackendResponseData;
@@ -78,7 +79,7 @@ public class AccountDataControllerTest {
         BankAccountDomain bankAccount = new BankAccountDomain(
                 "Company XYZ", "001", "1234", "567890", "0", "Checking"
         );
-        var backendResponseData = new BackendResponseData<>(new AccountDataEntityResponseDomain(
+        var backendResponseData = new BackendResponseDataDomain<>(new AccountDataEntityResponseDomain(
                 "123", bankAccount, "Active", "Checking", "01/01/2020", "01/01/2021"
         ));
 
@@ -98,18 +99,6 @@ public class AccountDataControllerTest {
 
 
 /*
-    @Test
-    void getBalanceErro400() throws Exception {
-
-        when(this.service.getAccountData(anyString(), anyString())).thenThrow(new BusinessException(400, "SUMARIO_ERROR", "Erro ao Integrar com a Portobank"));
-
-        this.mockMvc.perform(get("/v2/conta-digital/gerenciar/saldo")
-                        .header(AUTHORIZATION, "token")
-                        .header("x-itau-auth", "token")
-                        .header("x-account-id", "accountId")
-                )
-                .andExpect(status().is(400));
-    }
 
     @Test
     void getAccountData400() throws Exception {
@@ -122,28 +111,6 @@ public class AccountDataControllerTest {
                         .header("x-account-id", "accountId")
                 )
                 .andExpect(status().is(400));
-    }
-
-
-    @Test
-    void getBalanceAccountError() throws Exception {
-        when(this.service.getAccountData(anyString(), anyString())).thenThrow(new FeignClientException("ERROR", "498", Collections.emptyList()));
-        this.mockMvc.perform(get("/v2/conta-digital/gerenciar/saldo")
-                        .header(AUTHORIZATION, "token")
-                        .header("x-itau-auth", "token")
-                        .header("x-account-id", "accountId")
-                )
-                .andExpect(status().is(498))
-                .andExpect(content().json("{\"erros\":[]}"));
-    }
-
-
-    @Test
-    void testResponseBody() throws JsonProcessingException {
-        var dto = this.mapper.toAccountBalanceDto(new BackendResponseData<>(new AccountBalanceEntityResponse(10.5, 12.46, 34.76)));
-        var responseJson = this.objectMapper.writeValueAsString(dto);
-        var expected = "{\"dados\":{\"disponivel\":\"R$ 10,50\",\"reservada\":\"R$ 12,46\",\"bloqueado\":\"R$ 34,76\"}}";
-        assertEquals(expected, responseJson);
     }
 */
 

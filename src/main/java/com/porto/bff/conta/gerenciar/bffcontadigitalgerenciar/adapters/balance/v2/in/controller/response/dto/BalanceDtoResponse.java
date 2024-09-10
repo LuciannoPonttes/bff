@@ -2,7 +2,7 @@ package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.balance.
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public record BalanceAccountDtoResponse (
+public record BalanceDtoResponse(
         @JsonProperty("disponivel")
         String available,
         @JsonProperty("reservada")

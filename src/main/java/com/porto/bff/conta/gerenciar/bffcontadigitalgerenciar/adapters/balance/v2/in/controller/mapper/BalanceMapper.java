@@ -1,8 +1,8 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.balance.v2.in.controller.mapper;
 
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.balance.v2.in.controller.response.dto.BalanceAccountDtoResponse;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.balance.AccountBalanceEntityResponseDomain;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.BackendResponseData;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.balance.v2.in.controller.response.dto.BalanceDtoResponse;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.backend.BackendResponseDataDomain;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.balance.BalanceEntityResponseDomain;
 import com.porto.experiencia.cliente.conta.digital.commons.web.model.ApiResponseData;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -14,12 +14,12 @@ import java.util.Locale;
 import static org.apache.commons.lang3.StringUtils.SPACE;
 
 @Mapper(componentModel = "spring")
-public interface BalanceAccountMapper {
+public interface BalanceMapper {
 
     @Mapping(source = "data.available", target = "dados.available", qualifiedByName = "buildBalance")
     @Mapping(source = "data.reserved", target = "dados.reserved", qualifiedByName = "buildBalance")
     @Mapping(source = "data.blocked", target = "dados.blocked", qualifiedByName = "buildBalance")
-    ApiResponseData<BalanceAccountDtoResponse> toAccountBalanceDto(BackendResponseData<AccountBalanceEntityResponseDomain> entity);
+    ApiResponseData<BalanceDtoResponse> toAccountBalanceDto(BackendResponseDataDomain<BalanceEntityResponseDomain> entity);
 
     @Named("buildBalance")
     default String buildBalance(Double balance) {
