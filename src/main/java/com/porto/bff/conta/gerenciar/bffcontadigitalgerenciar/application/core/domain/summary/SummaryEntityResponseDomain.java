@@ -1,13 +1,14 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.summary;
 
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.account.balance.v2.AccountBalanceEntityResponse;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.account.data.v2.AccountDataEntityResponse;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.account.AccountDataEntityResponseDomain;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.balance.BalanceEntityResponseDomain;
 
 public record SummaryEntityResponseDomain (
         String document,
-        AccountDataEntityResponse account,
-        AccountBalanceEntityResponse balance,
+        AccountDataEntityResponseDomain account,
+        BalanceEntityResponseDomain balance,
         boolean hasPortoCard,
         String pixKeyCount
 ) {
+
 }

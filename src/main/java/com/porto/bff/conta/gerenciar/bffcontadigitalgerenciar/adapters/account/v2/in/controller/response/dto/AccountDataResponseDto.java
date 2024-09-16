@@ -2,7 +2,7 @@ package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.account.
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v2.dto.BankAccountDto;
+
 
 public record AccountDataResponseDto(
 

@@ -1,25 +1,14 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.account.v2;
 
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.account.v2.client.AccountManagementClient;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.client.PortoCardClient;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.decodertoken.DecodificarAccessToken;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.pix.v2.client.PixManagementV2Client;
-import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.BusinessException;
-import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.FeignClientException;
+//import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.account.v2.client.AccountManagementClient;
 import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @Disabled
 class AccountManagementAdapterImplTest {
 
-
+/*
     @MockBean
     AccountManagementClient client;
 
@@ -95,5 +84,5 @@ class AccountManagementAdapterImplTest {
         verify(client, times(3)).getAccountData(anyString(), anyString(), anyString(), anyString(), anyString());
         verify(cardPortoClient, times(3)).getCardsByuser(anyString());
     }
-
+*/
 }

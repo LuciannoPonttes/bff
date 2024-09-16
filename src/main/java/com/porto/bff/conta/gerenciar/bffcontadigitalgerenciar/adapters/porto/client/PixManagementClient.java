@@ -1,4 +1,4 @@
-package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.pix.client;
+package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.client;
 
 
 import com.porto.experiencia.cliente.conta.digital.commons.web.model.ApiResponseData;

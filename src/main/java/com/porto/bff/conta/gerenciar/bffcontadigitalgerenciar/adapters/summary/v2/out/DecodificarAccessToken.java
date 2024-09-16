@@ -1,16 +1,19 @@
-package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.decodertoken;
+package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.summary.v2.out;
 
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.ports.decodertoken.out.DecodificarAccessTokenOutPutPort;
 import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.BusinessException;
 import com.porto.experiencia.cliente.conta.digital.commons.web.tokendecoder.AccessTokenDecoder;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 
 //import static com.porto.experiencia.cliente.cartoes.contestacao.common.enums.ErrosEnum.CPF;
 
 @Component
-@RequiredArgsConstructor
-public class DecodificarAccessTokenImpl implements DecodificarAccessToken {
+public class DecodificarAccessToken implements DecodificarAccessTokenOutPutPort {
+
+    public DecodificarAccessToken(AccessTokenDecoder decoder) {
+        this.decoder = decoder;
+    }
 
     private final AccessTokenDecoder decoder;
 

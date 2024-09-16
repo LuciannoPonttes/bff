@@ -8,9 +8,9 @@ import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.ports.
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.common.utils.HeaderValidation;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.common.utils.v2.HttpUtils;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.summary.v2.out.response.PortoCardResponse;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.account.v2.client.AccountManagementClient;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.pix.v2.client.PixManagementV2Client;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.config.LogConfig;
+
+//import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.pix.v2.client.PixManagementV2Client;
+//import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.config.LogConfig;
 import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.BusinessException;
 import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.FeignClientException;
 import org.springframework.util.CollectionUtils;
@@ -19,11 +19,11 @@ import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 
-import static com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.ContaIassPortoAdapterImpl.buildMessagePixKeys;
+//import static com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.ContaIassPortoAdapterImpl.buildMessagePixKeys;
 
 
-public class SummaryUserCase implements SummaryInputPort {
-
+public class SummaryUserCase {
+/*
     private final AccountManagementClient client;
     private final CardClient cardPortoClient;
     private final PixManagementV2Client pixKeysClient;
@@ -101,5 +101,5 @@ public class SummaryUserCase implements SummaryInputPort {
                 throw new RuntimeException(e);
             }
         }
-    }
+    }*/
 }

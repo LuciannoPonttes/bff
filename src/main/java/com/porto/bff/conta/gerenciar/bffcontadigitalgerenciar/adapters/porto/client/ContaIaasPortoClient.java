@@ -1,4 +1,4 @@
-package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.client;
+package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.client;
 
 
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.contas.dto.ContaRequestDto;

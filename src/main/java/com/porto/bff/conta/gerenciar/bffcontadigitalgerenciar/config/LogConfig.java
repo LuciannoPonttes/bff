@@ -1,4 +1,4 @@
-package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.config;
+package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.config;
 
 import lombok.experimental.UtilityClass;
 import org.slf4j.MDC;

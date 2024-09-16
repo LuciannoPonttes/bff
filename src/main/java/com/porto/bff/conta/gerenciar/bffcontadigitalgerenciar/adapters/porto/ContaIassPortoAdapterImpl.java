@@ -1,4 +1,4 @@
-package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta;
+package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto;
 
 
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.DataResponseIassPorto;
@@ -6,10 +6,10 @@ import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.summary.v
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta.AccountResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.saldo.BalanceResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.sumario.SumarioResponseIaasPorto;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.client.PortoCardClient;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.client.ContaIaasPortoClient;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.decodertoken.DecodificarAccessToken;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.pix.client.PixManagementClient;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.client.PortoCardClient;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.client.ContaIaasPortoClient;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.decodertoken.DecodificarAccessToken;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.client.PixManagementClient;
 import com.porto.experiencia.cliente.conta.digital.commons.web.model.ApiResponseData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

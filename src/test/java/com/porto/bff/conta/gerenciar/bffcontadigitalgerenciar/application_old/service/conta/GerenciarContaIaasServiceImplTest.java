@@ -6,7 +6,7 @@ import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta.BankAccountResponseIassPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.saldo.BalanceResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.sumario.SumarioResponseIaasPorto;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.ContaIassPortoAdapter;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.ContaIassPortoAdapter;
 import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.BusinessException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;

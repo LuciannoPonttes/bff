@@ -3,14 +3,13 @@ package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.
 
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.account.AccountDataEntityResponseDomain;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.backend.BackendResponseDataDomain;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.ports.account.in.AccountDataInputPort;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.common.utils.HeaderValidation;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.ports.account.out.DataAccountClientOutPort;
 
 
 
 public class AccountDataUseCase {
-
+/*
     private final DataAccountClientOutPort client;
     private final HeaderValidation headerValidation;
 
@@ -26,8 +25,8 @@ public class AccountDataUseCase {
                 xItauAuth,
                 "ITAU",
                 accountId,
-                accountId
-        );
+                accountId,
+                HttpUtils.HTTP_ACCOUNT_FIELDS_VALUE);
         return new BackendResponseDataDomain<>(accountData);
-    }
+    }*/
 }

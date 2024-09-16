@@ -9,13 +9,11 @@ import com.porto.experiencia.cliente.conta.digital.commons.web.model.ApiResponse
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
-
 import java.util.Objects;
-
-import static com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v2.mapper.AccountManagementMapper.BANK_NAME;
 
 @Mapper(componentModel = "spring")
 public interface AccountDataMapper {
+    String BANK_NAME = "Porto Bank - Itaú Unibanco";
 
     @Named("buildBank")
     default String buildBank(String bankCode) {
