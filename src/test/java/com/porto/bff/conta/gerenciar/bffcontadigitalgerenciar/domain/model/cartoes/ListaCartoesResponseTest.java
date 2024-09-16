@@ -1,5 +1,9 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.cartoes;
 
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.summary.v2.out.response.CustomerResponse;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.summary.v2.out.response.ListCardsResponseBody;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.summary.v2.out.response.PortoCardResponseData;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.summary.v2.out.response.PortoCardResponse;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -14,10 +18,10 @@ class ListaCartoesResponseTest {
         // Given
         PortoCardResponseData dados = PortoCardResponseData.builder()
                 .codigoProduto("PROD001")
-                .cliente(ClienteDomain.builder().email("test@example.com").nome("John Doe").build())
+                .cliente(CustomerResponse.builder().email("test@example.com").nome("John Doe").build())
                 .lista(List.of(
-                        ListarCartoesResponseBodyDomain.builder().estado("Ativo").build(),
-                        ListarCartoesResponseBodyDomain.builder().estado("Inativo").build()
+                        ListCardsResponseBody.builder().estado("Ativo").build(),
+                        ListCardsResponseBody.builder().estado("Inativo").build()
                 ))
                 .build();
 

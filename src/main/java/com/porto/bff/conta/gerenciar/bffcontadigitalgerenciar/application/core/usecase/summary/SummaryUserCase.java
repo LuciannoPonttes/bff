@@ -3,24 +3,16 @@ package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.summary.v2.out.client.CardClient;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.backend.BackendResponseDataDomain;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.summary.SummaryEntityResponseDomain;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.ports.summary.SummaryInputPort;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.ports.decodertoken.out.DecodificarAccessTokenOutPutPort;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.ports.summary.in.SummaryInputPort;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.common.utils.HeaderValidation;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.common.utils.v2.HttpUtils;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.BackendResponseData;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.account.sumary.v2.AccountSummaryEntityResponse;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.cartoes.PortoCardResponse;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.summary.v2.out.response.PortoCardResponse;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.account.v2.client.AccountManagementClient;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.client.PortoCardClient;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.decodertoken.DecodificarAccessToken;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.pix.v2.client.PixManagementV2Client;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.config.LogConfig;
 import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.BusinessException;
 import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.FeignClientException;
-import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
-import org.springframework.retry.annotation.Backoff;
-import org.springframework.retry.annotation.Retryable;
-import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Objects;
@@ -29,20 +21,25 @@ import java.util.concurrent.CompletionException;
 
 import static com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.ContaIassPortoAdapterImpl.buildMessagePixKeys;
 
-@Component
-@RequiredArgsConstructor
+
 public class SummaryUserCase implements SummaryInputPort {
 
     private final AccountManagementClient client;
     private final CardClient cardPortoClient;
     private final PixManagementV2Client pixKeysClient;
-    private final DecodificarAccessToken tokenDecoder;
+    private final DecodificarAccessTokenOutPutPort tokenDecoder;
     private final HeaderValidation headerValidation;
 
+    public SummaryUserCase(AccountManagementClient client, CardClient cardPortoClient, PixManagementV2Client pixKeysClient, DecodificarAccessTokenOutPutPort tokenDecoder, HeaderValidation headerValidation) {
+        this.client = client;
+        this.cardPortoClient = cardPortoClient;
+        this.pixKeysClient = pixKeysClient;
+        this.tokenDecoder = tokenDecoder;
+        this.headerValidation = headerValidation;
+    }
+
     @Override
-    @SneakyThrows
-    @Retryable(retryFor = { BusinessException.class }, backoff = @Backoff(delay = 150))
-    public BackendResponseDataDomain<SummaryEntityResponseDomain> getSummaryAccount(String cognitoToken, String xItauAuth, String accountId) {
+    public BackendResponseDataDomain<SummaryEntityResponseDomain> getSummaryAccount(String cognitoToken, String xItauAuth, String accountId)  {
         headerValidation.isValidHeaderProjet(xItauAuth,accountId);
 
         var document = this.tokenDecoder.getCpfPorToken(cognitoToken);
@@ -98,7 +95,11 @@ public class SummaryUserCase implements SummaryInputPort {
                     pixKeyCount
             ));
         } catch (CompletionException exception) {
-            throw exception.getCause();
+            try {
+                throw exception.getCause();
+            } catch (Throwable e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

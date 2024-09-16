@@ -1,7 +1,7 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.client;
 
 
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.cartoes.PortoCardResponse;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.summary.v2.out.response.PortoCardResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;

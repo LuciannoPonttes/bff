@@ -1,5 +1,8 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.cartoes;
 
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.summary.v2.out.response.CustomerResponse;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.summary.v2.out.response.ListCardsResponseBody;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.summary.v2.out.response.PortoCardResponseData;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -11,10 +14,10 @@ class ListarCartoesResponseDomainTest {
     @Test
     public void testListarCartoesResponseDomainBuilder() {
         String codigoProduto = "PROD001";
-        ClienteDomain cliente = ClienteDomain.builder().email("test@example.com").nome("John Doe").build();
-        List<ListarCartoesResponseBodyDomain> lista = List.of(
-                ListarCartoesResponseBodyDomain.builder().estado("Ativo").build(),
-                ListarCartoesResponseBodyDomain.builder().estado("Inativo").build()
+        CustomerResponse cliente = CustomerResponse.builder().email("test@example.com").nome("John Doe").build();
+        List<ListCardsResponseBody> lista = List.of(
+                ListCardsResponseBody.builder().estado("Ativo").build(),
+                ListCardsResponseBody.builder().estado("Inativo").build()
         );
 
         PortoCardResponseData response = PortoCardResponseData.builder()
@@ -40,10 +43,10 @@ class ListarCartoesResponseDomainTest {
     @Test
     public void testListarCartoesResponseDomainAllArgsConstructor() {
         String codigoProduto = "PROD001";
-        ClienteDomain cliente = ClienteDomain.builder().email("test@example.com").nome("John Doe").build();
-        List<ListarCartoesResponseBodyDomain> lista = List.of(
-                ListarCartoesResponseBodyDomain.builder().estado("Ativo").build(),
-                ListarCartoesResponseBodyDomain.builder().estado("Inativo").build()
+        CustomerResponse cliente = CustomerResponse.builder().email("test@example.com").nome("John Doe").build();
+        List<ListCardsResponseBody> lista = List.of(
+                ListCardsResponseBody.builder().estado("Ativo").build(),
+                ListCardsResponseBody.builder().estado("Inativo").build()
         );
 
         PortoCardResponseData response = new PortoCardResponseData(codigoProduto, cliente, lista);

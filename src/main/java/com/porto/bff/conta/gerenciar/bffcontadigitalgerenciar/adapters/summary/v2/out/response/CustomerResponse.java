@@ -1,4 +1,4 @@
-package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.cartoes;
+package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.summary.v2.out.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ClienteDomain {
+public class CustomerResponse {
   private String email;
   private String nome;
 }

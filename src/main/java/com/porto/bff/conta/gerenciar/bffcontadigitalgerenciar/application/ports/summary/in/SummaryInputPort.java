@@ -1,4 +1,4 @@
-package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.ports.summary;
+package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.ports.summary.in;
 
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.backend.BackendResponseDataDomain;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.summary.SummaryEntityResponseDomain;

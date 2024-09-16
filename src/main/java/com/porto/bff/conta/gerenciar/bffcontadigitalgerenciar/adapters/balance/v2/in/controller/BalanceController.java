@@ -17,7 +17,7 @@ public class BalanceController implements BalanceOperations {
 
     @Override
     public ResponseEntity<ApiResponseData<BalanceDtoResponse>> getBalanceAccount(String cognitoToken, String xItauAuth, String accountId) {
-      return ResponseEntity.ok(this. balanceMapper.toAccountBalanceDto(this.balanceInputPort.getBalanceAccount(xItauAuth, accountId)));
+        return ResponseEntity.ok(this. balanceMapper.toAccountBalanceDto(this.balanceInputPort.getBalanceAccount(xItauAuth, accountId)));
     }
 
 }

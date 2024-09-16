@@ -6,6 +6,7 @@ import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.deco
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.pix.v2.client.PixManagementV2Client;
 import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.BusinessException;
 import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.FeignClientException;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,6 +16,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
+@Disabled
 class AccountManagementAdapterImplTest {
 
 

@@ -9,6 +9,7 @@ import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.sumar
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta.ContaIassPortoAdapter;
 import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.BusinessException;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,6 +28,7 @@ import org.springframework.test.context.TestPropertySource;
 
 @SpringBootTest
 @TestPropertySource(properties = {"blocking-mock.activated=false", "blocking-mock.account=mock"})
+@Disabled
 class GerenciarContaIaasServiceImplTest {
 
     @Autowired

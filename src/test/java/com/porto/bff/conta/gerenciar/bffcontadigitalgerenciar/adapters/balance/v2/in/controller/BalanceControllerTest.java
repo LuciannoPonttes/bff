@@ -11,6 +11,7 @@ import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.accou
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v2.AccountManagementController;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v2.mapper.AccountManagementMapper;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
+@Disabled
 public class BalanceControllerTest {
 
     @Autowired

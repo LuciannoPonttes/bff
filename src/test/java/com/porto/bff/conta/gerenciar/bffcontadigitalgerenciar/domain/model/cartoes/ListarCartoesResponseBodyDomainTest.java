@@ -1,5 +1,6 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.cartoes;
 
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.summary.v2.out.response.ListCardsResponseBody;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,7 +23,7 @@ class ListarCartoesResponseBodyDomainTest {
         String statusBloqueio = "Desbloqueado";
 
         // When
-        ListarCartoesResponseBodyDomain cartao = ListarCartoesResponseBodyDomain.builder()
+        ListCardsResponseBody cartao = ListCardsResponseBody.builder()
                 .estado(estado)
                 .bandeira(bandeira)
                 .descricaoFormatada(descricaoFormatada)
@@ -50,7 +51,7 @@ class ListarCartoesResponseBodyDomainTest {
 
     @Test
     public void testListarCartoesResponseBodyDomainNoArgsConstructor() {
-        ListarCartoesResponseBodyDomain cartao = new ListarCartoesResponseBodyDomain();
+        ListCardsResponseBody cartao = new ListCardsResponseBody();
 
         assertThat(cartao.getEstado()).isNull();
         assertThat(cartao.getBandeira()).isNull();
@@ -77,7 +78,7 @@ class ListarCartoesResponseBodyDomainTest {
         String corPlastico = "Azul";
         String statusBloqueio = "Desbloqueado";
 
-        ListarCartoesResponseBodyDomain cartao = new ListarCartoesResponseBodyDomain(
+        ListCardsResponseBody cartao = new ListCardsResponseBody(
                 estado, bandeira, descricaoFormatada, finalCartao, flagTitular, melhorDataCompra,
                 cartaoTipo, cartaoLogoCode, corPlastico, statusBloqueio
         );
@@ -96,7 +97,7 @@ class ListarCartoesResponseBodyDomainTest {
         assertThat(cartao.getStatusBloqueio()).isEqualTo(statusBloqueio);
     }
 
-    private ListarCartoesResponseBodyDomain getListarCartoesResponseBodyDomain() {
+    private ListCardsResponseBody getListarCartoesResponseBodyDomain() {
         String estado = "Ativo";
         String bandeira = "MasterCard";
         String descricaoFormatada = "**** **** **** 1234";
@@ -108,7 +109,7 @@ class ListarCartoesResponseBodyDomainTest {
         String corPlastico = "Azul";
         String statusBloqueio = "Desbloqueado";
 
-        ListarCartoesResponseBodyDomain cartao = ListarCartoesResponseBodyDomain.builder()
+        ListCardsResponseBody cartao = ListCardsResponseBody.builder()
                 .estado(estado)
                 .bandeira(bandeira)
                 .descricaoFormatada(descricaoFormatada)

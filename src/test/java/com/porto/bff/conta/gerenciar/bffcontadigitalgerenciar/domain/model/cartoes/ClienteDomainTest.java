@@ -1,5 +1,6 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.cartoes;
 
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.summary.v2.out.response.CustomerResponse;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -11,7 +12,7 @@ class ClienteDomainTest {
         String email = "test@example.com";
         String nome = "John Doe";
 
-        ClienteDomain cliente = ClienteDomain.builder()
+        CustomerResponse cliente = CustomerResponse.builder()
                 .email(email)
                 .nome(nome)
                 .build();
@@ -22,7 +23,7 @@ class ClienteDomainTest {
 
     @Test
     public void testClienteDomainNoArgsConstructor() {
-        ClienteDomain cliente = new ClienteDomain();
+        CustomerResponse cliente = new CustomerResponse();
 
         assertThat(cliente.getEmail()).isNull();
         assertThat(cliente.getNome()).isNull();
@@ -33,7 +34,7 @@ class ClienteDomainTest {
         String email = "test@example.com";
         String nome = "John Doe";
 
-        ClienteDomain cliente = new ClienteDomain(email, nome);
+        CustomerResponse cliente = new CustomerResponse(email, nome);
         cliente.setEmail(email);
         cliente.setNome(nome);
         assertThat(cliente.getEmail()).isEqualTo(email);

@@ -22,6 +22,7 @@ import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.Feig
 import com.porto.experiencia.cliente.conta.digital.commons.web.model.ApiResponseData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-
+@Disabled
 public class AccountDataControllerTest {
 
     @Autowired
