@@ -2,7 +2,7 @@ package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.balance.
 
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.balance.v2.in.controller.response.dto.BalanceDtoResponse;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.common.utils.v2.HttpUtils;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.commons.ResponseErrorApi;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.common.ResponseErrorApi;
 import com.porto.experiencia.cliente.conta.digital.commons.web.model.ApiResponseData;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

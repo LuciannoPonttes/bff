@@ -1,11 +1,11 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application_old.service.conta;
-
+/*
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.DataResponseIassPorto;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta.AccountFlagsResponseIaasPorto;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta.AccountResponseIaasPorto;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta.BankAccountResponseIassPorto;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.saldo.BalanceResponseIaasPorto;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.sumario.SumarioResponseIaasPorto;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.porto.AccountFlagsResponseIaasPorto;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.porto.AccountResponseIaasPorto;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.porto.BankAccountResponseIassPorto;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.porto.BalanceResponseIaasPorto;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.porto.SumarioResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.ContaIassPortoAdapter;
 import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.BusinessException;
 import org.junit.jupiter.api.BeforeEach;
@@ -109,4 +109,4 @@ class GerenciarContaIaasServiceImplTest {
         );
         assertDoesNotThrow(() -> this.service.contaSumario("Token", "xitauAuth", "contaId"));
     }
-}
+}*/

@@ -1,5 +1,6 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.commons;
 
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.common.ResponseErrorApi;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;

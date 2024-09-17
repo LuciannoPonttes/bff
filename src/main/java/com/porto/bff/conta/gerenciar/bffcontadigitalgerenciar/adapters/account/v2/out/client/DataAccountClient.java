@@ -3,7 +3,6 @@ package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.account.
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.account.AccountDataEntityResponseDomain;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.balance.BalanceEntityResponseDomain;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.common.utils.v2.HttpUtils;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.account.data.v2.AccountDataEntityResponse;
 import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.BusinessException;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.retry.annotation.Backoff;

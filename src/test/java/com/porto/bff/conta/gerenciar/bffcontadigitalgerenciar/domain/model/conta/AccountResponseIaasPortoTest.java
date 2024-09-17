@@ -1,5 +1,8 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta;
 
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.porto.AccountFlagsResponseIaasPorto;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.porto.AccountResponseIaasPorto;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.porto.BankAccountResponseIassPorto;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

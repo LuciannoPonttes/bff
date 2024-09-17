@@ -1,5 +1,6 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.contas.dto;
 
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.porto.PoliticasBloqueioContaEnum;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -1,5 +1,7 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.contas.dto;
 
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.Dados;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.Flags;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;

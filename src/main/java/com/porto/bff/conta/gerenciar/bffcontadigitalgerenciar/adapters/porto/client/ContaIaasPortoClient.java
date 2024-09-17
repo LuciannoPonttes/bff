@@ -1,11 +1,8 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.client;
 
 
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.contas.dto.ContaRequestDto;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.contas.dto.RequestDeleteDto;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.DataResponseIassPorto;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta.AccountResponseIaasPorto;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.saldo.BalanceResponseIaasPorto;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.porto.*;
+
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 

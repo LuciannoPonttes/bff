@@ -1,5 +1,7 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.decodertoken;
 
+import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.BusinessException;
+import com.porto.experiencia.cliente.conta.digital.commons.web.tokendecoder.AccessTokenDecoder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -8,8 +10,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class DecodificarAccessTokenImpl {
-/*
+public class DecodificarAccessTokenImpl implements DecodificarAccessToken {
+
     private final AccessTokenDecoder decoder;
 
     @Override
@@ -17,5 +19,5 @@ public class DecodificarAccessTokenImpl {
 //        return "11122233344";
         return decoder.getCpf(accessToken).orElseThrow(() ->
                 new BusinessException(400, "ERRO_DECODIFICAR_DOCUMENTO", "Não foi possível decodificar o documento"));
-    }*/
+    }
 }

@@ -1,11 +1,12 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto;
 
 
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.DataResponseIassPorto;
+
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.summary.v2.out.response.PortoCardResponse;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.conta.AccountResponseIaasPorto;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.saldo.BalanceResponseIaasPorto;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.domain.model.sumario.SumarioResponseIaasPorto;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.porto.AccountResponseIaasPorto;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.porto.BalanceResponseIaasPorto;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.porto.DataResponseIassPorto;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.porto.SumarioResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.client.PortoCardClient;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.client.ContaIaasPortoClient;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.decodertoken.DecodificarAccessToken;
