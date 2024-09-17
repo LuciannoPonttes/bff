@@ -2,7 +2,7 @@ package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.
 
 import java.util.List;
 
-public record BloqueiosContaDto(
+public record AccountBlockingDto(
         List<String> politica,
         boolean permiteCashIn,
         boolean permiteCashOut,
@@ -10,7 +10,7 @@ public record BloqueiosContaDto(
         String tituloBloqueioPix,
         String subTituloBloqueio
 ) {
-    public BloqueiosContaDto() {
+    public AccountBlockingDto() {
         this(List.of(), true, true, "", "", "");
     }
 }

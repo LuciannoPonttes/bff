@@ -2,14 +2,14 @@ package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto;
 
 
 
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.client.AccountIaasPortoClient;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.decodertoken.DecoderAccessToken;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.summary.v2.out.response.PortoCardResponse;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.porto.AccountResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.porto.BalanceResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.porto.DataResponseIassPorto;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.porto.SumarioResponseIaasPorto;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.porto.SummaryResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.client.PortoCardClient;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.client.ContaIaasPortoClient;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.decodertoken.DecodificarAccessToken;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.client.PixManagementClient;
 import com.porto.experiencia.cliente.conta.digital.commons.web.model.ApiResponseData;
 import lombok.RequiredArgsConstructor;
@@ -19,27 +19,27 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
+public class AccountIassPortoAdapterImpl implements AccountIassPortoAdapter {
 
-    private final ContaIaasPortoClient client;
+    private final AccountIaasPortoClient client;
     private final PortoCardClient cartoesPortoClient;
-    private final DecodificarAccessToken decodificador;
+    private final DecoderAccessToken decodificador;
 
     private final PixManagementClient pixManagementClient;
 
 
     @Override
-    public DataResponseIassPorto<AccountResponseIaasPorto> getConta(String xItauAuth, String contaId) {
+    public DataResponseIassPorto<AccountResponseIaasPorto> getAccount(String xItauAuth, String contaId) {
         return this.client.findByIdContaIaas(this.getBearerInput(xItauAuth), "IAAS", contaId, contaId);
     }
 
     @Override
-    public DataResponseIassPorto<BalanceResponseIaasPorto> getContaSaldo(String xItauAuth, String contaId) {
+    public DataResponseIassPorto<BalanceResponseIaasPorto> getBalance(String xItauAuth, String contaId) {
         return this.client.findBySaldoContaIaas(getBearerInput(xItauAuth), "IAAS", contaId, contaId);
     }
 
     @Override
-    public DataResponseIassPorto<SumarioResponseIaasPorto> sumarioConta(String tokenCognito, String xItauAuth, String contaId) {
+    public DataResponseIassPorto<SummaryResponseIaasPorto> getSummary(String tokenCognito, String xItauAuth, String contaId) {
         DataResponseIassPorto<AccountResponseIaasPorto> dadosConta =
                 this.client.findByIdContaIaas(this.getBearerInput(xItauAuth), "IAAS", contaId, contaId);
         DataResponseIassPorto<BalanceResponseIaasPorto> saldoConta =
@@ -48,7 +48,7 @@ public class ContaIassPortoAdapterImpl implements ContaIassPortoAdapter {
 
 
         var quantidadeChavePix = obterQuantidadeChavesPixDaConta(tokenCognito, xItauAuth, contaId);
-        return new DataResponseIassPorto<>(new SumarioResponseIaasPorto(
+        return new DataResponseIassPorto<>(new SummaryResponseIaasPorto(
                 this.decodificador.getCpfPorToken(tokenCognito),
                 dadosConta,
                 saldoConta,

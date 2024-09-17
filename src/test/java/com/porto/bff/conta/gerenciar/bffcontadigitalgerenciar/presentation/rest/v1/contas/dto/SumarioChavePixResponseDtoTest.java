@@ -1,6 +1,6 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.contas.dto;
 
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.porto.SumarioChavePixResponseDto;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.porto.PixKeySummaryResponseDto;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,7 +9,7 @@ class SumarioChavePixResponseDtoTest {
 
     @Test
     void testSumarioChavePixResponseDto() {
-        SumarioChavePixResponseDto sumarioChavePixResponseDto = new SumarioChavePixResponseDto(
+        PixKeySummaryResponseDto sumarioChavePixResponseDto = new PixKeySummaryResponseDto(
                 "BancoX",
                 "123",
                 "7890",
@@ -33,7 +33,7 @@ class SumarioChavePixResponseDtoTest {
         assertEquals(true, sumarioChavePixResponseDto.possuiCartao());
         assertEquals("Pix is available", sumarioChavePixResponseDto.msgChavePix());
 
-        SumarioChavePixResponseDto anotherSumarioChavePixResponseDto = new SumarioChavePixResponseDto(
+        PixKeySummaryResponseDto anotherSumarioChavePixResponseDto = new PixKeySummaryResponseDto(
                 "BancoX",
                 "123",
                 "7890",

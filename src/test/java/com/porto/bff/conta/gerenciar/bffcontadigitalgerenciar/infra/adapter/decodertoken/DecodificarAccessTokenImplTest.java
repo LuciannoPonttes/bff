@@ -13,12 +13,12 @@ class DecodificarAccessTokenImplTest {
 
 /*
     private AccessTokenDecoder decoder;
-    private DecodificarAccessTokenImpl decodificarAccessToken;
+    private DecoderAccessTokenImpl decodificarAccessToken;
 
     @BeforeEach
     public void setUp() {
         decoder = mock(AccessTokenDecoder.class);
-        decodificarAccessToken = new DecodificarAccessTokenImpl(decoder);
+        decodificarAccessToken = new DecoderAccessTokenImpl(decoder);
     }
 
     @Test

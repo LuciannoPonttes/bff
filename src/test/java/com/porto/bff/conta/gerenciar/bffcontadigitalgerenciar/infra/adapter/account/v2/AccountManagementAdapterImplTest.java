@@ -23,7 +23,7 @@ class AccountManagementAdapterImplTest {
 
 
     @MockBean
-    DecodificarAccessToken tokenDecoder;
+    DecoderAccessToken tokenDecoder;
 
     @Test
     void testGetBalanceAccountWithRetry() {

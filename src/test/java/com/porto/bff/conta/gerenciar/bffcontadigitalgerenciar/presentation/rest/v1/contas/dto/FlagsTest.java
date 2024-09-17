@@ -1,6 +1,6 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.contas.dto;
 
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.Dados;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.AccountData;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.Flags;
 import org.junit.jupiter.api.Test;
 
@@ -19,8 +19,8 @@ class FlagsTest {
 
 
         flags.setDados(Arrays.asList(
-                Dados.builder().contaId("123").politicas(Arrays.asList("politica1", "politica2")).build(),
-                Dados.builder().contaId("456").politicas(Arrays.asList("politica3", "politica4")).build()
+                AccountData.builder().contaId("123").politicas(Arrays.asList("politica1", "politica2")).build(),
+                AccountData.builder().contaId("456").politicas(Arrays.asList("politica3", "politica4")).build()
         ));
 
 
@@ -39,9 +39,9 @@ class FlagsTest {
     @Test
     public void testAllArgsConstructor() {
 
-        List<Dados> dadosList = Arrays.asList(
-                Dados.builder().contaId("789").politicas(Arrays.asList("politica5", "politica6")).build(),
-                Dados.builder().contaId("012").politicas(Arrays.asList("politica7", "politica8")).build()
+        List<AccountData> dadosList = Arrays.asList(
+                AccountData.builder().contaId("789").politicas(Arrays.asList("politica5", "politica6")).build(),
+                AccountData.builder().contaId("012").politicas(Arrays.asList("politica7", "politica8")).build()
         );
 
         Flags flags = new Flags(dadosList);
@@ -54,8 +54,8 @@ class FlagsTest {
     public void testBuscaPoliticasPorContaId() {
 
         Flags flags = new Flags(Arrays.asList(
-                Dados.builder().contaId("123").politicas(Arrays.asList("politica1", "politica2")).build(),
-                Dados.builder().contaId("456").politicas(Arrays.asList("politica3", "politica4")).build()
+                AccountData.builder().contaId("123").politicas(Arrays.asList("politica1", "politica2")).build(),
+                AccountData.builder().contaId("456").politicas(Arrays.asList("politica3", "politica4")).build()
         ));
 
 
@@ -70,8 +70,8 @@ class FlagsTest {
     public void testBuilder() {
         Flags flags = Flags.builder()
                 .dados(Arrays.asList(
-                        Dados.builder().contaId("123").politicas(Arrays.asList("politica1", "politica2")).build(),
-                        Dados.builder().contaId("456").politicas(Arrays.asList("politica3", "politica4")).build()
+                        AccountData.builder().contaId("123").politicas(Arrays.asList("politica1", "politica2")).build(),
+                        AccountData.builder().contaId("456").politicas(Arrays.asList("politica3", "politica4")).build()
                 ))
                 .build();
 
@@ -83,16 +83,16 @@ class FlagsTest {
     @Test
     public void testDataAnnotation2() {
         Flags flags = new Flags(Arrays.asList(
-                Dados.builder().contaId("123").politicas(Arrays.asList("politica1", "politica2")).build(),
-                Dados.builder().contaId("456").politicas(Arrays.asList("politica3", "politica4")).build()
+                AccountData.builder().contaId("123").politicas(Arrays.asList("politica1", "politica2")).build(),
+                AccountData.builder().contaId("456").politicas(Arrays.asList("politica3", "politica4")).build()
         ));
 
-        List<Dados> retrievedDados = flags.getDados();
+        List<AccountData> retrievedDados = flags.getDados();
         assertThat(retrievedDados).hasSize(2);
 
         Flags sameFlags = new Flags(Arrays.asList(
-                Dados.builder().contaId("123").politicas(Arrays.asList("politica1", "politica2")).build(),
-                Dados.builder().contaId("456").politicas(Arrays.asList("politica3", "politica4")).build()
+                AccountData.builder().contaId("123").politicas(Arrays.asList("politica1", "politica2")).build(),
+                AccountData.builder().contaId("456").politicas(Arrays.asList("politica3", "politica4")).build()
         ));
         assertThat(flags).isEqualTo(sameFlags);
 
@@ -102,7 +102,7 @@ class FlagsTest {
         assertThat(toStringResult).contains("dados=");
 
         flags.setDados(Arrays.asList(
-                Dados.builder().contaId("789").politicas(Arrays.asList("politica5", "politica6")).build()
+                AccountData.builder().contaId("789").politicas(Arrays.asList("politica5", "politica6")).build()
         ));
         assertThat(flags.getDados()).hasSize(1);
     }

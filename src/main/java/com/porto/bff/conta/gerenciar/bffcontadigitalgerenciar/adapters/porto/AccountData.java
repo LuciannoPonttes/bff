@@ -10,7 +10,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Dados {
+public class AccountData {
     String contaId;
     List<String> politicas;
 }

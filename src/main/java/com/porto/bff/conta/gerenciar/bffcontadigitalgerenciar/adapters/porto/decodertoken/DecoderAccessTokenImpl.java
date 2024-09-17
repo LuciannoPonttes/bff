@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class DecodificarAccessTokenImpl implements DecodificarAccessToken {
+public class DecoderAccessTokenImpl implements DecoderAccessToken {
 
     private final AccessTokenDecoder decoder;
 

@@ -22,7 +22,7 @@ import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 
-import static com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.ContaIassPortoAdapterImpl.buildMessagePixKeys;
+import static com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.AccountIassPortoAdapterImpl.buildMessagePixKeys;
 
 public class AccountManagementUserCase implements AccountDataInputPort {
 

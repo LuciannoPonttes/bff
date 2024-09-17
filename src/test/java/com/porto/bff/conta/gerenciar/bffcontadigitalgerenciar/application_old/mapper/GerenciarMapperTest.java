@@ -19,9 +19,9 @@ class GerenciarMapperTest {
     private GerenciarMapper mapper;
     private DataResponseIassPorto<AccountResponseIaasPorto> conta;
     private DataResponseIassPorto<BalanceResponseIaasPorto> balance;
-    private DataResponseIassPorto<SumarioResponseIaasPorto> sumario;
-    private DadosResponseDto<ContaResponseDto> contaDto;
-    private DadosResponseDto<SaldoResponseDto> saldoDto;
+    private DataResponseIassPorto<SummaryResponseIaasPorto> sumario;
+    private DataResponseDto<AccountResponseDto> contaDto;
+    private DataResponseDto<BalanceResponseDto> saldoDto;
     private List<AccountFlagsResponseIaasPorto> accountFlagsResponseIaasPorto;
     String NUMERO_BANCO = "341";
 
@@ -57,7 +57,7 @@ class GerenciarMapperTest {
                 )
         );
         sumario = new DataResponseIassPorto<>(
-                new SumarioResponseIaasPorto(
+                new SummaryResponseIaasPorto(
                         "0000000000",
                         this.conta,
                         this.balance,
@@ -135,40 +135,40 @@ class GerenciarMapperTest {
     @Test
     public void testParaDadosContaResponseDtoWithNullInput() {
         DataResponseIassPorto<AccountResponseIaasPorto> conta = null;
-        DadosResponseDto<ContaResponseDto> result = mapper.paraDadosContaResponseDto(conta);
+        DataResponseDto<AccountResponseDto> result = mapper.paraDadosContaResponseDto(conta);
         assertNull(result, "Result should be null when input is null");
     }
 
     @Test
     public void testParaContaResponseDtoWithNullInput() {
         AccountResponseIaasPorto account = null;
-        ContaResponseDto result = mapper.paraContaResponseDto(account);
+        AccountResponseDto result = mapper.paraContaResponseDto(account);
         assertNull(result, "Result should be null when input is null");
     }
     @Test
     public void testParaDadosSaldoResponseDtoWithNullInput() {
         DataResponseIassPorto<BalanceResponseIaasPorto> balance = null;
-        DadosResponseDto<SaldoResponseDto> result = mapper.paraDadosSaldoResponseDto(balance);
+        DataResponseDto<BalanceResponseDto> result = mapper.paraDadosSaldoResponseDto(balance);
         assertNull(result, "Result should be null when input is null");
     }
     @Test
     public void testParaContaSaldoResponseDtoWithNullInput() {
         BalanceResponseIaasPorto balance = null;
-        SaldoResponseDto result = mapper.paraContaSaldoResponseDto(balance);
+        BalanceResponseDto result = mapper.paraContaSaldoResponseDto(balance);
         assertNull(result, "Result should be null when input is null");
     }
     @Test
     public void testParaDadosSumarioResponseDtoWithNullInput() {
-        DataResponseIassPorto<SumarioResponseIaasPorto> sumario = null;
-        DadosResponseDto<SumarioResponseDto> result = mapper.paraDadosSumarioResponseDto(sumario);
+        DataResponseIassPorto<SummaryResponseIaasPorto> sumario = null;
+        DataResponseDto<SummaryResponseDto> result = mapper.paraDadosSumarioResponseDto(sumario);
         assertNull(result, "Result should be null when input is null");
     }
 
     @Test
     public void testParaContaSumarioResponseDtoWithNullInput() {
-        SumarioResponseIaasPorto sumario = null;
+        SummaryResponseIaasPorto sumario = null;
 
-        SumarioResponseDto result = mapper.paraContaSumarioResponseDto(sumario);
+        SummaryResponseDto result = mapper.paraContaSumarioResponseDto(sumario);
 
         assertNull(result, "Result should be null when input is null");
     }

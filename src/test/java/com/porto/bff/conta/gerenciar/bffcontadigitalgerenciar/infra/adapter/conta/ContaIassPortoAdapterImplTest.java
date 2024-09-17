@@ -12,11 +12,11 @@ import static org.mockito.ArgumentMatchers.any;
 class ContaIassPortoAdapterImplTest {
 /*
     @Autowired
-    private ContaIassPortoAdapter adapter;
+    private AccountIassPortoAdapter adapter;
     @MockBean
-    private ContaIaasPortoClient client;
+    private AccountIaasPortoClient client;
     @MockBean
-    private DecodificarAccessToken decodificador;
+    private DecoderAccessToken decodificador;
     private DataResponseIassPorto<AccountResponseIaasPorto> responseIassPorto;
     private DataResponseIassPorto<BalanceResponseIaasPorto> saldoResponse;
     private FeignException.FeignClientException feignClientException;
@@ -64,9 +64,9 @@ class ContaIassPortoAdapterImplTest {
 
     @Test
     @DisplayName("Deve obter dados da conta com sucesso")
-    void getConta() {
+    void getAccount() {
         when(this.client.findByIdContaIaas(anyString(), anyString(), anyString(), anyString())).thenReturn(responseIassPorto);
-        assertDoesNotThrow(() -> this.adapter.getConta(BEARER, UUID.randomUUID().toString()));
+        assertDoesNotThrow(() -> this.adapter.getAccount(BEARER, UUID.randomUUID().toString()));
     }
 
     @Test
@@ -87,11 +87,11 @@ class ContaIassPortoAdapterImplTest {
 
     @Test
     void testSumarioConta() {
-        ContaIaasPortoClient contaIaasPortoClientMock = mock(ContaIaasPortoClient.class);
+        AccountIaasPortoClient contaIaasPortoClientMock = mock(AccountIaasPortoClient.class);
         PixManagementClient pixManagementClientMock = mock(PixManagementClient.class);
-        DecodificarAccessToken decodificarAccessTokenMock = mock(DecodificarAccessToken.class);
+        DecoderAccessToken decodificarAccessTokenMock = mock(DecoderAccessToken.class);
 
-        ContaIassPortoAdapterImpl contaIassPortoAdapter = new ContaIassPortoAdapterImpl(
+        AccountIassPortoAdapterImpl contaIassPortoAdapter = new AccountIassPortoAdapterImpl(
                 contaIaasPortoClientMock,
                 mock(PortoCardClient.class),
                 decodificarAccessTokenMock,
@@ -111,7 +111,7 @@ class ContaIassPortoAdapterImplTest {
         ApiResponseData<List<Object>> listChavePix = new ApiResponseData<>(List.of("chave1", "chave2"));
         when(pixManagementClientMock.getPixKeyFromAnAccount(any(), any(), any())).thenReturn(listChavePix);
 
-        DataResponseIassPorto<SumarioResponseIaasPorto> result = contaIassPortoAdapter.sumarioConta(tokenCognito, xItauAuth, contaId);
+        DataResponseIassPorto<SummaryResponseIaasPorto> result = contaIassPortoAdapter.sumarioConta(tokenCognito, xItauAuth, contaId);
 
         assertEquals("cpf", result.data().document());
         assertEquals(dadosConta, result.data().account());
@@ -122,11 +122,11 @@ class ContaIassPortoAdapterImplTest {
 
     @Test
     void testSumarioContaBearer() {
-        ContaIaasPortoClient contaIaasPortoClientMock = mock(ContaIaasPortoClient.class);
+        AccountIaasPortoClient contaIaasPortoClientMock = mock(AccountIaasPortoClient.class);
         PixManagementClient pixManagementClientMock = mock(PixManagementClient.class);
-        DecodificarAccessToken decodificarAccessTokenMock = mock(DecodificarAccessToken.class);
+        DecoderAccessToken decodificarAccessTokenMock = mock(DecoderAccessToken.class);
 
-        ContaIassPortoAdapterImpl contaIassPortoAdapter = new ContaIassPortoAdapterImpl(
+        AccountIassPortoAdapterImpl contaIassPortoAdapter = new AccountIassPortoAdapterImpl(
                 contaIaasPortoClientMock,
                 mock(PortoCardClient.class),
                 decodificarAccessTokenMock,
@@ -146,7 +146,7 @@ class ContaIassPortoAdapterImplTest {
         ApiResponseData<List<Object>> listChavePix = new ApiResponseData<>(List.of("chave1", "chave2"));
         when(pixManagementClientMock.getPixKeyFromAnAccount(any(), any(), any())).thenReturn(listChavePix);
 
-        DataResponseIassPorto<SumarioResponseIaasPorto> result = contaIassPortoAdapter.sumarioConta(tokenCognito, xItauAuth, contaId);
+        DataResponseIassPorto<SummaryResponseIaasPorto> result = contaIassPortoAdapter.sumarioConta(tokenCognito, xItauAuth, contaId);
 
         assertEquals("cpf", result.data().document());
         assertEquals(dadosConta, result.data().account());
@@ -160,10 +160,10 @@ class ContaIassPortoAdapterImplTest {
     void testFormatarMensagemParaExbirNoFront0() {
         PixManagementClient pixManagementClientMock = mock(PixManagementClient.class);
         when(pixManagementClientMock.getPixKeyFromAnAccount(any(), any(), any())).thenThrow(new RuntimeException("Some error"));
-        ContaIassPortoAdapterImpl contaIassPortoAdapter = new ContaIassPortoAdapterImpl(
-                mock(ContaIaasPortoClient.class),
+        AccountIassPortoAdapterImpl contaIassPortoAdapter = new AccountIassPortoAdapterImpl(
+                mock(AccountIaasPortoClient.class),
                 mock(PortoCardClient.class),
-                mock(DecodificarAccessToken.class),
+                mock(DecoderAccessToken.class),
                 pixManagementClientMock
         );
 
@@ -176,10 +176,10 @@ class ContaIassPortoAdapterImplTest {
     void testFormatarMensagemParaExbirNoFront1() {
         PixManagementClient pixManagementClientMock = mock(PixManagementClient.class);
         when(pixManagementClientMock.getPixKeyFromAnAccount(any(), any(), any())).thenThrow(new RuntimeException("Some error"));
-        ContaIassPortoAdapterImpl contaIassPortoAdapter = new ContaIassPortoAdapterImpl(
-                mock(ContaIaasPortoClient.class),
+        AccountIassPortoAdapterImpl contaIassPortoAdapter = new AccountIassPortoAdapterImpl(
+                mock(AccountIaasPortoClient.class),
                 mock(PortoCardClient.class),
-                mock(DecodificarAccessToken.class),
+                mock(DecoderAccessToken.class),
                 pixManagementClientMock
         );
 
@@ -192,10 +192,10 @@ class ContaIassPortoAdapterImplTest {
     void testFormatarMensagemParaExbirNoFront2() {
         PixManagementClient pixManagementClientMock = mock(PixManagementClient.class);
         when(pixManagementClientMock.getPixKeyFromAnAccount(any(), any(), any())).thenThrow(new RuntimeException("Some error"));
-        ContaIassPortoAdapterImpl contaIassPortoAdapter = new ContaIassPortoAdapterImpl(
-                mock(ContaIaasPortoClient.class),
+        AccountIassPortoAdapterImpl contaIassPortoAdapter = new AccountIassPortoAdapterImpl(
+                mock(AccountIaasPortoClient.class),
                 mock(PortoCardClient.class),
-                mock(DecodificarAccessToken.class),
+                mock(DecoderAccessToken.class),
                 pixManagementClientMock
         );
 
@@ -209,10 +209,10 @@ class ContaIassPortoAdapterImplTest {
         PixManagementClient pixManagementClientMock = mock(PixManagementClient.class);
         when(pixManagementClientMock.getPixKeyFromAnAccount(any(), any(), any())).thenThrow(new RuntimeException("Some error"));
 
-        ContaIassPortoAdapterImpl contaIassPortoAdapter = new ContaIassPortoAdapterImpl(
-                mock(ContaIaasPortoClient.class),
+        AccountIassPortoAdapterImpl contaIassPortoAdapter = new AccountIassPortoAdapterImpl(
+                mock(AccountIaasPortoClient.class),
                 mock(PortoCardClient.class),
-                mock(DecodificarAccessToken.class),
+                mock(DecoderAccessToken.class),
                 pixManagementClientMock
         );
 
@@ -257,10 +257,10 @@ class ContaIassPortoAdapterImplTest {
         when(cartoesPortoClientMock.getCardsByuser(anyString())).thenReturn(mockResponse);
 
 
-        ContaIassPortoAdapterImpl contaIassPortoAdapter = new ContaIassPortoAdapterImpl(
-                mock(ContaIaasPortoClient.class),
+        AccountIassPortoAdapterImpl contaIassPortoAdapter = new AccountIassPortoAdapterImpl(
+                mock(AccountIaasPortoClient.class),
                 cartoesPortoClientMock,
-                mock(DecodificarAccessToken.class),
+                mock(DecoderAccessToken.class),
                 mock(PixManagementClient.class)
         );
 

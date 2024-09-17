@@ -21,9 +21,9 @@ class GerenciamentoContasControllerTest {
 
     @Test
     void testDadosConta() throws IOException {
-        ResponseEntity<DadosResponseDto<ContaResponseDto>> responseEntity = gerenciamentoContasController.dadosConta("token", "xItauAuth", "contaId");
+        ResponseEntity<DataResponseDto<AccountResponseDto>> responseEntity = gerenciamentoContasController.dadosConta("token", "xItauAuth", "contaId");
 
-        verify(gerenciarContaIaasService, times(1)).getConta(anyString(), anyString());
+        verify(gerenciarContaIaasService, times(1)).getAccount(anyString(), anyString());
         verify(gerenciarMapper, times(1)).paraDadosContaResponseDto(any());
 
     }
@@ -33,7 +33,7 @@ class GerenciamentoContasControllerTest {
         when(gerenciarContaIaasService.getContaSaldo(anyString(), anyString())).thenReturn(mock());
         when(gerenciarMapper.paraDadosSaldoResponseDto(any())).thenReturn(mock());
 
-        ResponseEntity<DadosResponseDto<SaldoResponseDto>> responseEntity = gerenciamentoContasController.saldoConta("token", "xItauAuth", "contaId");
+        ResponseEntity<DataResponseDto<BalanceResponseDto>> responseEntity = gerenciamentoContasController.saldoConta("token", "xItauAuth", "contaId");
 
         verify(gerenciarContaIaasService, times(1)).getContaSaldo(anyString(), anyString());
         verify(gerenciarMapper, times(1)).paraDadosSaldoResponseDto(any());
@@ -58,9 +58,9 @@ class GerenciamentoContasControllerTest {
         String tokenCognito = "token";
         String xItauAuth = "xItauAuth";
         String contaId = "contaId";
-        DataResponseIassPorto<SumarioResponseIaasPorto> mockSumarioResponse = new DataResponseIassPorto<>(getSumarioResponseIaasPorto());
+        DataResponseIassPorto<SummaryResponseIaasPorto> mockSumarioResponse = new DataResponseIassPorto<>(getSumarioResponseIaasPorto());
         when(gerenciarContaIaasService.contaSumario(eq(tokenCognito), eq(xItauAuth), eq(contaId))).thenReturn(mockSumarioResponse);
-        ResponseEntity<DadosResponseDto<SumarioResponseDto>> responseEntity = gerenciamentoContasController.sumarioConta(tokenCognito, xItauAuth, contaId);
+        ResponseEntity<DataResponseDto<SummaryResponseDto>> responseEntity = gerenciamentoContasController.sumarioConta(tokenCognito, xItauAuth, contaId);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 
     }
@@ -74,17 +74,17 @@ class GerenciamentoContasControllerTest {
         String tokenCognito = "tokenCognito";
         String xItauAuth = "xItauAuth";
         String contaId = "contaId";
-        SumarioResponseIaasPorto sumarioResponseIaasPorto = getSumarioResponseIaasPorto();
+        SummaryResponseIaasPorto sumarioResponseIaasPorto = getSumarioResponseIaasPorto();
         when(gerenciarContaIaasService.contaSumario(tokenCognito, xItauAuth, contaId))
                 .thenReturn(new DataResponseIassPorto<>(sumarioResponseIaasPorto));
 
 
-        DadosResponseDto<SumarioResponseDto> expectedResponseDto = new DadosResponseDto<>(getSumarioResponseDto());
+        DataResponseDto<SummaryResponseDto> expectedResponseDto = new DataResponseDto<>(getSumarioResponseDto());
         when(gerenciarMapper.paraDadosSumarioResponseDto(any()))
                 .thenReturn(expectedResponseDto);
 
 
-        ResponseEntity<DadosResponseDto<SumarioResponseDto>> result = gerenciamentoContasController.sumarioConta(tokenCognito, xItauAuth, contaId);
+        ResponseEntity<DataResponseDto<SummaryResponseDto>> result = gerenciamentoContasController.sumarioConta(tokenCognito, xItauAuth, contaId);
 
 
         verify(gerenciarContaIaasService, times(1)).contaSumario(tokenCognito, xItauAuth, contaId);
@@ -96,8 +96,8 @@ class GerenciamentoContasControllerTest {
 
     @Test
     void testSumarioContaWithMockBloqueioAtivo() throws IOException {
-        SumarioResponseIaasPorto sumarioResponseIaasPortoMock = getSumarioResponseIaasPorto();
-        DataResponseIassPorto<SumarioResponseIaasPorto> sumarioResponseIaasPortoDataResponseIassPortoMock = new DataResponseIassPorto<>(sumarioResponseIaasPortoMock);
+        SummaryResponseIaasPorto sumarioResponseIaasPortoMock = getSumarioResponseIaasPorto();
+        DataResponseIassPorto<SummaryResponseIaasPorto> sumarioResponseIaasPortoDataResponseIassPortoMock = new DataResponseIassPorto<>(sumarioResponseIaasPortoMock);
 
         when(gerenciarContaIaasService.contaSumario(anyString(), anyString(), anyString())).thenReturn(sumarioResponseIaasPortoDataResponseIassPortoMock);
 
@@ -105,7 +105,7 @@ class GerenciamentoContasControllerTest {
 
         List<String> politicasPorContaIdMock = List.of("teste");
 
-        ResponseEntity<DadosResponseDto<SumarioResponseDto>> responseEntity = gerenciamentoContasController.sumarioConta("token", "xItauAuth", "contaId");
+        ResponseEntity<DataResponseDto<SummaryResponseDto>> responseEntity = gerenciamentoContasController.sumarioConta("token", "xItauAuth", "contaId");
 
         assertNotNull(responseEntity);
 
@@ -144,8 +144,8 @@ class GerenciamentoContasControllerTest {
 
 
         flags.setDados(Arrays.asList(
-                Dados.builder().contaId("123").politicas(Arrays.asList("politica1", "politica2")).build(),
-                Dados.builder().contaId("456").politicas(Arrays.asList("politica3", "politica4")).build()
+                AccountData.builder().contaId("123").politicas(Arrays.asList("politica1", "politica2")).build(),
+                AccountData.builder().contaId("456").politicas(Arrays.asList("politica3", "politica4")).build()
         ));
 
         return flags;
@@ -185,9 +185,9 @@ class GerenciamentoContasControllerTest {
         return accountFlagsResponse;
     }
 
-    private SumarioResponseIaasPorto getSumarioResponseIaasPorto() {
+    private SummaryResponseIaasPorto getSumarioResponseIaasPorto() {
 
-        SumarioResponseIaasPorto sumarioResponse = new SumarioResponseIaasPorto(
+        SummaryResponseIaasPorto sumarioResponse = new SummaryResponseIaasPorto(
                 "documentValue",
                 new DataResponseIassPorto<>(getAccountResponseIaasPorto()),
                 new DataResponseIassPorto<>(getBalanceResponseIaasPorto()),
@@ -209,8 +209,8 @@ class GerenciamentoContasControllerTest {
         return balanceResponse;
     }
 
-    private SumarioResponseDto getSumarioResponseDto() {
-        SumarioResponseDto sumarioResponseDto = new SumarioResponseDto(
+    private SummaryResponseDto getSumarioResponseDto() {
+        SummaryResponseDto sumarioResponseDto = new SummaryResponseDto(
                 "nomeBancoValue",
                 "codigoBancoValue",
                 "agenciaValue",
@@ -227,8 +227,8 @@ class GerenciamentoContasControllerTest {
         return sumarioResponseDto;
     }
 
-    private BloqueiosContaDto getBloqueiosContaDto() {
-        BloqueiosContaDto bloqueiosContaDto = new BloqueiosContaDto(
+    private AccountBlockingDto getBloqueiosContaDto() {
+        AccountBlockingDto bloqueiosContaDto = new AccountBlockingDto(
                 List.of("politica1", "politica2"), // Replace with your actual list of policies
                 true,
                 true,

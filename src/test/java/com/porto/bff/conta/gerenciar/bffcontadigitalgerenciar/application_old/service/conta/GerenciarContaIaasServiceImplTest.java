@@ -5,8 +5,8 @@ import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.d
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.porto.AccountResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.porto.BankAccountResponseIassPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.porto.BalanceResponseIaasPorto;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.porto.SumarioResponseIaasPorto;
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.ContaIassPortoAdapter;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.porto.SummaryResponseIaasPorto;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.AccountIassPortoAdapter;
 import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.BusinessException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -34,7 +34,7 @@ class GerenciarContaIaasServiceImplTest {
     @Autowired
     private GerenciarContaIaasService service;
     @MockBean
-    private ContaIassPortoAdapter adapter;
+    private AccountIassPortoAdapter adapter;
     private DataResponseIassPorto<AccountResponseIaasPorto> responseIassPorto;
     private DataResponseIassPorto<BalanceResponseIaasPorto> saldoIAASResponse;
 
@@ -68,9 +68,9 @@ class GerenciarContaIaasServiceImplTest {
     }
 
     @Test
-    void getConta() {
-        when(this.adapter.getConta(anyString(), anyString())).thenReturn(responseIassPorto);
-        assertDoesNotThrow(() -> this.service.getConta(BEARER, UUID.randomUUID().toString()));
+    void getAccount() {
+        when(this.adapter.getAccount(anyString(), anyString())).thenReturn(responseIassPorto);
+        assertDoesNotThrow(() -> this.service.getAccount(BEARER, UUID.randomUUID().toString()));
     }
 
     @Test
@@ -99,7 +99,7 @@ class GerenciarContaIaasServiceImplTest {
     @Test
     void contaSumario() {
         when(this.adapter.sumarioConta(anyString(), anyString(), anyString())).thenReturn(
-                new DataResponseIassPorto<>(new SumarioResponseIaasPorto(
+                new DataResponseIassPorto<>(new SummaryResponseIaasPorto(
                         "12345678900",
                         this.responseIassPorto,
                         this.saldoIAASResponse,

@@ -3,7 +3,7 @@ package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.
 
 import lombok.With;
 
-public record SumarioResponseIaasPorto(
+public record SummaryResponseIaasPorto(
         String document,
         @With
         DataResponseIassPorto<AccountResponseIaasPorto> account,

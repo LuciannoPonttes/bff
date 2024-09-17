@@ -12,7 +12,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
         value = "contaIaasFindByIdPortoClient",
         url = "${feign.client.config.porto.host}"
 )
-public interface ContaIaasPortoClient {
+public interface AccountIaasPortoClient {
 
 
     @GetMapping("${feign.client.config.porto.gerenciar.contas.endpoint}")
@@ -39,5 +39,5 @@ public interface ContaIaasPortoClient {
     void editarStatusContaIaas(@RequestHeader(AUTHORIZATION) String xItauAuth,
                                @RequestHeader("x-accountProvider") String xAccountProvider,
                                @PathVariable(value = "accountId") String contaId,
-                               @RequestBody ContaRequestDto requestDto);
+                               @RequestBody AccountRequestDto requestDto);
 }

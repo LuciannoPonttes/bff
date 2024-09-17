@@ -1,6 +1,6 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.porto;
 
-public record SumarioResponseDto(
+public record PixKeySummaryResponseDto(
         String nomeBanco,
         String codigoBanco,
         String agencia,
@@ -8,10 +8,8 @@ public record SumarioResponseDto(
         String digitoConta,
         String saldo,
         String statusConta,
-        BloqueiosContaDto bloqueios,
         String documento,
         Boolean possuiCartao,
-        String quantidadeChavePix
-
+        String msgChavePix
 ) {
 }

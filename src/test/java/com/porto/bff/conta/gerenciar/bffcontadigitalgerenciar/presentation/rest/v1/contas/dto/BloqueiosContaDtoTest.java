@@ -1,6 +1,6 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.presentation.rest.v1.contas.dto;
 
-import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.porto.BloqueiosContaDto;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.porto.AccountBlockingDto;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -12,7 +12,7 @@ class BloqueiosContaDtoTest {
 
     @Test
     void testBloqueiosContaDto() {
-        BloqueiosContaDto bloqueiosContaDto = new BloqueiosContaDto(
+        AccountBlockingDto bloqueiosContaDto = new AccountBlockingDto(
                 List.of("Politica1", "Politica2"),
                 true,
                 true,
@@ -29,7 +29,7 @@ class BloqueiosContaDtoTest {
         assertEquals("SubTituloBloqueio", bloqueiosContaDto.subTituloBloqueio());
 
         // Create another instance for comparison
-        BloqueiosContaDto anotherBloqueiosContaDto = new BloqueiosContaDto(
+        AccountBlockingDto anotherBloqueiosContaDto = new AccountBlockingDto(
                 List.of("Politica1", "Politica2"),
                 true,
                 true,
@@ -43,7 +43,7 @@ class BloqueiosContaDtoTest {
 
     @Test
     void testBloqueiosContaDtoDefaultConstructor() {
-        BloqueiosContaDto defaultBloqueiosContaDto = new BloqueiosContaDto();
+        AccountBlockingDto defaultBloqueiosContaDto = new AccountBlockingDto();
 
         assertEquals(List.of(), defaultBloqueiosContaDto.politica());
         assertEquals(true, defaultBloqueiosContaDto.permiteCashIn());

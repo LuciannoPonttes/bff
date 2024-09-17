@@ -1,4 +1,5 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.porto;
 
-public record DadosResponseDto<T>(T dados) {
+public record EditedAccountResponseDto(String status) {
 }
+

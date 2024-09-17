@@ -3,7 +3,7 @@ package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.
 import java.util.Arrays;
 import java.util.List;
 
-public enum PoliticasBloqueioContaEnum {
+public enum AccountBlockingPoliciesEnum {
     OBITO("8a0ee28d-8e8c493d-ad68-d3583c0601f5", true, false),
     BLOQUEIO_JUDICIAL("def1b676-295a4af3-9a3e5dbb18f18b53", false, false),
     BLOQUEIO_CASHIN_CASHOUT("98a22f32-7ac6-4228-998e83ad0b1e7c9d", false, false),
@@ -24,7 +24,7 @@ public enum PoliticasBloqueioContaEnum {
     public final boolean cashIn;
     public final boolean cashOut;
 
-    PoliticasBloqueioContaEnum(String politica, boolean cashIn, boolean cashOut) {
+    AccountBlockingPoliciesEnum(String politica, boolean cashIn, boolean cashOut) {
         this.politica = politica;
         this.cashIn = cashIn;
         this.cashOut = cashOut;
@@ -32,7 +32,7 @@ public enum PoliticasBloqueioContaEnum {
 
     public static boolean permiteCashIn(List<String> politicasBloqueio) {
 
-        List<PoliticasBloqueioContaEnum> politicas = Arrays.stream(PoliticasBloqueioContaEnum.values()).filter(pu -> politicasBloqueio.contains(pu.politica)).toList();
+        List<AccountBlockingPoliciesEnum> politicas = Arrays.stream(AccountBlockingPoliciesEnum.values()).filter(pu -> politicasBloqueio.contains(pu.politica)).toList();
 
         if (politicas.isEmpty()) return true;
 
@@ -41,7 +41,7 @@ public enum PoliticasBloqueioContaEnum {
 
     public static boolean permiteCashOut(List<String> politicasBloqueio) {
 
-        List<PoliticasBloqueioContaEnum> politicas = Arrays.stream(PoliticasBloqueioContaEnum.values()).filter(pu -> politicasBloqueio.contains(pu.politica)).toList();
+        List<AccountBlockingPoliciesEnum> politicas = Arrays.stream(AccountBlockingPoliciesEnum.values()).filter(pu -> politicasBloqueio.contains(pu.politica)).toList();
 
         if (politicas.isEmpty()) return true;
 
