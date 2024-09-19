@@ -9,6 +9,6 @@ public interface AccountDataInputPort {
 
     BackendResponseDataDomain<AccountDataEntityResponseDomain> getAccountData(String xItauAuth, String accountId);
     BackendResponseDataDomain<BalanceEntityResponseDomain> getBalanceAccount(String xItauAuth, String accountId);
-    BackendResponseDataDomain<SummaryEntityResponseDomain> getSummaryAccount(String cognitoToken, String xItauAuth, String accountId);
+    SummaryEntityResponseDomain getSummaryAccount(String cognitoToken, String xItauAuth, String accountId);
 
 }

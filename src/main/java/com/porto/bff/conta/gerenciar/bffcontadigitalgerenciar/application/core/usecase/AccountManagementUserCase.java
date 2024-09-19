@@ -46,7 +46,7 @@ public class AccountManagementUserCase implements AccountDataInputPort {
 
     @Override
     public BackendResponseDataDomain<AccountDataEntityResponseDomain> getAccountData(String xItauAuth, String accountId) {
-        headerValidation.isValidHeaderProjet(xItauAuth, accountId);
+       headerValidation.isValidHeaderProjet(xItauAuth, accountId);
         AccountDataEntityResponseDomain accountData = this.client.getAccountData(
                 xItauAuth,
                 "ITAU",
@@ -68,7 +68,7 @@ public class AccountManagementUserCase implements AccountDataInputPort {
 
     }
     @Override
-    public BackendResponseDataDomain<SummaryEntityResponseDomain> getSummaryAccount(String cognitoToken, String xItauAuth, String accountId)  {
+    public SummaryEntityResponseDomain getSummaryAccount(String cognitoToken, String xItauAuth, String accountId)  {
         headerValidation.isValidHeaderProjet(xItauAuth,accountId);
 
         var document = this.tokenDecoder.getCpfPorToken(cognitoToken);
@@ -122,7 +122,7 @@ public class AccountManagementUserCase implements AccountDataInputPort {
                     balanceResponseFuture.join(),
                     hasPortoCard,
                     pixKeyCount
-            ));
+            )).data();
         } catch (CompletionException exception) {
             try {
                 throw exception.getCause();

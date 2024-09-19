@@ -47,7 +47,7 @@ public interface BalanceOperations {
                             @Schema(implementation = ResponseErrorApi.class))
                     })
     })
-    @GetMapping("/hexa-saldo")
+    @GetMapping("/saldo")
     ResponseEntity<ApiResponseData<BalanceDtoResponse>> getBalanceAccount(@RequestHeader(value = AUTHORIZATION) String cognitoToken,
                                                                           @RequestHeader(value = HttpUtils.HTTP_X_ITAU_AUTH_HEADER, required = false) String xItauAuth,
                                                                           @RequestHeader(value = HttpUtils.HTTP_ACCOUNT_ID_HEADER, required = false) String accountId);

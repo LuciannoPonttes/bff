@@ -2,7 +2,7 @@ package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.summary.
 
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.summary.v2.in.controller.mapper.SummaryMapper;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.summary.v2.in.controller.response.dto.SummaryDtoResponse;
-import com.porto.experiencia.cliente.conta.digital.commons.web.model.ApiResponseData;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.ports.account.in.AccountDataInputPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class SummaryController implements SummaryOperations{
 
     private final SummaryMapper mapper;
+    private final AccountDataInputPort balanceInputPort;
 
     @Override
-    public ResponseEntity<ApiResponseData<SummaryDtoResponse>> getSummaryAccount(String cognitoToken, String xItauAuth, String accountId) {
-        return null;
-        //return ResponseEntity.ok(this.mapper.toSummaryDto(this.service.getSummaryAccount(cognitoToken, xItauAuth, accountId)));
+    public ResponseEntity<SummaryDtoResponse> getSummaryAccount(String cognitoToken, String xItauAuth, String accountId) {
+        return ResponseEntity.ok(this.mapper.toSummaryDto(this.balanceInputPort.getSummaryAccount(cognitoToken, xItauAuth, accountId)));
     }
 }

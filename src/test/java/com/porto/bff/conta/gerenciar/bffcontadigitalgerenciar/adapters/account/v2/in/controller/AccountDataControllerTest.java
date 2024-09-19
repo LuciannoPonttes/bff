@@ -2,7 +2,9 @@ package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.account.
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.account.v2.in.controller.mapper.AccountDataMapper;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.account.v2.in.controller.response.dto.AccountDataResponseDto;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.account.v2.in.controller.response.dto.BankAccountDto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.account.AccountDataEntityResponseDomain;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.account.BankAccountDomain;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.backend.BackendResponseDataDomain;
@@ -30,7 +32,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @AutoConfigureMockMvc
 @Disabled
 public class AccountDataControllerTest {
-/*
+
     @Autowired
     AccountDataController controller;
 
@@ -38,7 +40,7 @@ public class AccountDataControllerTest {
     AccountDataInputPort service;
 
     @Autowired
-    AccountManagementMapper mapper;
+    AccountDataMapper mapper;
 
     @Autowired
     MockMvc mockMvc;
@@ -68,11 +70,11 @@ public class AccountDataControllerTest {
                 "123", bankAccount, "Active", "Checking", "01/01/2020", "01/01/2021"
         ));
 
-        AccountDataDtoResponse dtoResponse = new AccountDataDtoResponse(
+        AccountDataResponseDto dtoResponse = new AccountDataResponseDto(
                 "123", bankAccountDto, "Active", "Checking", "01/01/2020", "01/01/2021"
         );
 
-        ApiResponseData<AccountDataDtoResponse> apiResponseData = new ApiResponseData<>(dtoResponse);
+        ApiResponseData<AccountDataResponseDto> apiResponseData = new ApiResponseData<>(dtoResponse);
 
         when(service.getAccountData(anyString(), anyString())).thenReturn(backendResponseData);
 

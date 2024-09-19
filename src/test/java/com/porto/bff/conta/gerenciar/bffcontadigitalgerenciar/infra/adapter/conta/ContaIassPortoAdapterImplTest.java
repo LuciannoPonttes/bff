@@ -1,17 +1,44 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.conta;
 
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.AccountIassPortoAdapter;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.AccountIassPortoAdapterImpl;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.client.AccountIaasPortoClient;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.client.PixManagementClient;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.client.PortoCardClient;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.decodertoken.DecoderAccessToken;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.porto.*;
+import com.porto.experiencia.cliente.conta.digital.commons.web.model.ApiResponseData;
+import feign.FeignException;
+import feign.Request;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.TestPropertySource;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.springframework.cloud.openfeign.security.OAuth2AccessTokenInterceptor.BEARER;
 
 @SpringBootTest
 @TestPropertySource(properties = {"blocking-mock.activated=false", "blocking-mock.account=mock"})
 @Disabled
 class ContaIassPortoAdapterImplTest {
 /*
-    @Autowired
+    @MockBean
     private AccountIassPortoAdapter adapter;
     @MockBean
     private AccountIaasPortoClient client;
@@ -73,7 +100,7 @@ class ContaIassPortoAdapterImplTest {
     @DisplayName("Deve obter saldo com sucesso")
     void getContaSaldo() {
         when(this.client.findBySaldoContaIaas(anyString(), anyString(), anyString(), anyString())).thenReturn(saldoResponse);
-        assertDoesNotThrow(() -> this.adapter.getContaSaldo(BEARER, UUID.randomUUID().toString()));
+        assertDoesNotThrow(() -> this.adapter.getBalance(BEARER, UUID.randomUUID().toString()));
     }
 
     @Test
@@ -81,7 +108,7 @@ class ContaIassPortoAdapterImplTest {
     void sumarioConta() {
         when(this.client.findBySaldoContaIaas(anyString(), anyString(), anyString(), anyString())).thenReturn(saldoResponse);
         when(this.client.findByIdContaIaas(anyString(), anyString(), anyString(), anyString())).thenReturn(responseIassPorto);
-        assertDoesNotThrow(() -> this.adapter.sumarioConta(BEARER, UUID.randomUUID().toString(), UUID.randomUUID().toString()));
+        assertDoesNotThrow(() -> this.adapter.getSummary(BEARER, UUID.randomUUID().toString(), UUID.randomUUID().toString()));
     }
 
 
@@ -111,7 +138,7 @@ class ContaIassPortoAdapterImplTest {
         ApiResponseData<List<Object>> listChavePix = new ApiResponseData<>(List.of("chave1", "chave2"));
         when(pixManagementClientMock.getPixKeyFromAnAccount(any(), any(), any())).thenReturn(listChavePix);
 
-        DataResponseIassPorto<SummaryResponseIaasPorto> result = contaIassPortoAdapter.sumarioConta(tokenCognito, xItauAuth, contaId);
+        DataResponseIassPorto<SummaryResponseIaasPorto> result = contaIassPortoAdapter.getSummary(tokenCognito, xItauAuth, contaId);
 
         assertEquals("cpf", result.data().document());
         assertEquals(dadosConta, result.data().account());
@@ -146,7 +173,7 @@ class ContaIassPortoAdapterImplTest {
         ApiResponseData<List<Object>> listChavePix = new ApiResponseData<>(List.of("chave1", "chave2"));
         when(pixManagementClientMock.getPixKeyFromAnAccount(any(), any(), any())).thenReturn(listChavePix);
 
-        DataResponseIassPorto<SummaryResponseIaasPorto> result = contaIassPortoAdapter.sumarioConta(tokenCognito, xItauAuth, contaId);
+        DataResponseIassPorto<SummaryResponseIaasPorto> result = contaIassPortoAdapter.getSummary(tokenCognito, xItauAuth, contaId);
 
         assertEquals("cpf", result.data().document());
         assertEquals(dadosConta, result.data().account());
@@ -269,6 +296,6 @@ class ContaIassPortoAdapterImplTest {
         verify(cartoesPortoClientMock).getCardsByuser("tokenCognito");
     }
 
-*/
 
+*/
 }

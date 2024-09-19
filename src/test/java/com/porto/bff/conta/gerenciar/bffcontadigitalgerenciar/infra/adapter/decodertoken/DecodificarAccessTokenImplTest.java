@@ -1,5 +1,6 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.infra.adapter.decodertoken;
 
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.decodertoken.DecoderAccessTokenImpl;
 import com.porto.experiencia.cliente.conta.digital.commons.domain.exception.BusinessException;
 import com.porto.experiencia.cliente.conta.digital.commons.web.tokendecoder.AccessTokenDecoder;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +12,7 @@ import static org.mockito.Mockito.when;
 
 class DecodificarAccessTokenImplTest {
 
-/*
+
     private AccessTokenDecoder decoder;
     private DecoderAccessTokenImpl decodificarAccessToken;
 
@@ -43,5 +44,5 @@ class DecodificarAccessTokenImplTest {
 
         assertEquals(400, exception.getStatusCode());
         assertEquals("ERRO_DECODIFICAR_DOCUMENTO:Não foi possível decodificar o documento", exception.getMessage());
-    }*/
+    }
 }

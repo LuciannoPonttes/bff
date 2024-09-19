@@ -209,6 +209,8 @@
                         <exclude>**/handler/**</exclude>
                         <exclude>**/enums/**</exclude>
                         <exclude>**/client/**</exclude>
+                        <exclude>**/response/**</exclude>
+
                         <exclude>**/BffContaDigitalGerenciarApplication**</exclude>
                     </excludes>
                 </configuration>

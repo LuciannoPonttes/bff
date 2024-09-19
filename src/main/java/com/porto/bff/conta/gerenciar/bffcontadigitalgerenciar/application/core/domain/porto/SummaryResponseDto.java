@@ -1,5 +1,5 @@
 package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.porto;
-
+/*
 public record SummaryResponseDto(
         String nomeBanco,
         String codigoBanco,
@@ -14,4 +14,4 @@ public record SummaryResponseDto(
         String quantidadeChavePix
 
 ) {
-}
+}*/

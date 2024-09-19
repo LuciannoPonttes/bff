@@ -11,6 +11,7 @@ import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.d
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.core.domain.porto.SummaryResponseIaasPorto;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.client.PortoCardClient;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.porto.client.PixManagementClient;
+import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.application.ports.decodertoken.out.DecodificarAccessTokenOutPutPort;
 import com.porto.experiencia.cliente.conta.digital.commons.web.model.ApiResponseData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -23,7 +24,7 @@ public class AccountIassPortoAdapterImpl implements AccountIassPortoAdapter {
 
     private final AccountIaasPortoClient client;
     private final PortoCardClient cartoesPortoClient;
-    private final DecoderAccessToken decodificador;
+    private final DecodificarAccessTokenOutPutPort decodificador;
 
     private final PixManagementClient pixManagementClient;
 

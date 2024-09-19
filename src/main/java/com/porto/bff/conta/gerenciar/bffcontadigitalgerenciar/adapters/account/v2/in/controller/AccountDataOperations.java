@@ -46,7 +46,7 @@ public interface AccountDataOperations {
                             @Schema(implementation = ResponseErrorApi.class))
                     })
     })
-    @GetMapping("/hexa-dados-conta")//Irá mudar para /dados-conta/
+    @GetMapping("/dados-conta")
     ResponseEntity<ApiResponseData<AccountDataResponseDto>> getAccountData(@RequestHeader(value = AUTHORIZATION) String cognitoToken,
                                                                                  @RequestHeader(value = HttpUtils.HTTP_X_ITAU_AUTH_HEADER, required = false) String xItauAuth,
                                                                                  @RequestHeader(value = HttpUtils.HTTP_ACCOUNT_ID_HEADER, required = false) String accountId);

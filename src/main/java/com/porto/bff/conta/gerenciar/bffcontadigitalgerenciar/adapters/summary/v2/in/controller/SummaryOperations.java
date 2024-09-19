@@ -3,7 +3,6 @@ package com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.summary.
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.adapters.summary.v2.in.controller.response.dto.SummaryDtoResponse;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.common.utils.v2.HttpUtils;
 import com.porto.bff.conta.gerenciar.bffcontadigitalgerenciar.common.ResponseErrorApi;
-import com.porto.experiencia.cliente.conta.digital.commons.web.model.ApiResponseData;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -37,8 +36,8 @@ public interface SummaryOperations {
                             @Schema(implementation = ResponseErrorApi.class))
                     })
     })
-    @GetMapping("/hexa-sumario")
-    ResponseEntity<ApiResponseData<SummaryDtoResponse>> getSummaryAccount(@RequestHeader(value = AUTHORIZATION) String cognitoToken,
+    @GetMapping("/sumario")
+    ResponseEntity<SummaryDtoResponse> getSummaryAccount(@RequestHeader(value = AUTHORIZATION) String cognitoToken,
                                                                           @RequestHeader(value = HttpUtils.HTTP_X_ITAU_AUTH_HEADER, required = false) String xItauAuth,
                                                                           @RequestHeader(value = HttpUtils.HTTP_ACCOUNT_ID_HEADER, required = false) String accountId);
 }
